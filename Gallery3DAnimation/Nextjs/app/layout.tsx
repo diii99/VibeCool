@@ -34,8 +34,6 @@ export default function RootLayout({
       {/* Remove Geist font variables from className and keep antialiased and loading */}
       <body className={"antialiased loading"}>
         {children}
-        <Script src="https://tympanus.net/codrops/adpacks/matomo.js" strategy="afterInteractive" />
-        <Script src="https://lib.youware.com/youware-lib.1747145198.js" id="yourware-lib" strategy="afterInteractive" />
       </body>
     </html>
   );
