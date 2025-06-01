@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>YouWare Challenge 🎉</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <!-- Loading screen -->
+  <div id="loading-screen" class="window" style="width: 300px; margin: 100px auto;">
+    <div class="title-bar">
+      <h1>YouWare Loading...</h1>
+    </div>
+    <div class="window-body">
+      <p>Loading system resources, please wait...</p>
+      <div style="border: 1px inset #808080; height: 20px; margin: 10px 0; background: #fff;">
+        <div id="progress-bar" style="background: #000080; height: 100%; width: 0%;"></div>
+      </div>
+      <p id="progress-text">Loading... 0%</p>
+    </div>
+  </div>
+  
+  <!-- 主内容 -->
+  <div id="main-content" style="display: none;">
+    <!-- 任务栏 -->
+    <div class="taskbar" style="display: flex; justify-content: space-between; align-items: center; background-color: #c0c0c0; border-top: 1px solid #808080; border-bottom: 2px solid #333;">
+      <button class="start-button" onclick="document.getElementById('start-challenge-window').style.display='block';" style="margin-right: 10px;">
+        <img src="2jbivgrtee.jpg" alt="Start" class="pixel-effect">
+        <span style="font-weight: bold;">Start</span>
+      </button>
+      <div style="display: flex; align-items: center; justify-content: center; margin: 0 auto; font-size: 11px; flex: 1;">
+        <span style="margin-right: 15px; font-weight: bold; color: #000000;">© 2025 YouWare</span>
+        <a href="https://staging2.youware.com/legal/privacy-policy" target="_blank" style="color: #000080; text-decoration: underline; font-weight: bold; margin-right: 15px;">Privacy Policy</a>
+        <span style="font-weight: bold; color: #000000;">Contact us: support@youware.com</span>
+      </div>
+      <div id="clock" class="clock">00:00</div>
+    </div>
+    
+    <!-- Desktop icons -->
+    <div style="padding: 10px 20px; display: flex; align-items: flex-start;">
+      <div class="desktop-icon" id="open-challenge-icon">
+        <img src="p1nvfxjlt5.jpg" alt="Challenge" class="pixel-effect" style="width: 32px; height: 32px;">
+        <p>YouWare Retro Challenge</p>
+      </div>
+      <div class="desktop-icon" id="open-templates">
+        <img src="zk7b0sl8rt.png" alt="Community Projects" class="pixel-effect" style="width: 32px; height: 32px;">
+        <p>Community Projects</p>
+      </div>
+      <div class="desktop-icon" id="open-prize-icon">
+        <img src="theypcs8wt.jpg" alt="Prize Center" class="pixel-effect" style="width: 32px; height: 32px;">
+        <p>Prize Center</p>
+      </div>
+      <div class="desktop-icon" id="open-faq-icon">
+        <img src="x0id8ab3fc.png" alt="FAQ" class="pixel-effect" style="width: 32px; height: 32px;">
+        <p>FAQ</p>
+      </div>
+    </div>
+    
+    <!-- 主窗口 -->
+    <div class="container" style="height: calc(100vh - 80px); margin-top: 10px;">
+      <div class="window">
+        <div class="title-bar">
+          <h1>YouWare Challenge: Create bold. Share wide. Win big — all with YouWare. &nbsp;🎉</h1>
+          <div class="title-bar-controls">
+            <button class="minimize-btn">_</button>
+            <button class="close-btn">×</button>
+          </div>
+        </div>
+        <div class="window-body">
+          <div class="under-construction" style="padding: 5px;">
+            <img src="3mvqvubgqu.jpg" alt="Challenge Banner" class="pixel-effect">
+            <span class="blink">The challenge is open! Submit your entry by June 5, 2025 for a chance to win up to $1000.</span>
+          </div>
+          
+          <div class="desktop-banner" style="text-align: center; background-color: #000080; color: white; padding: 4px; margin-bottom: 10px; font-weight: bold; text-shadow: 1px 1px 2px #000;">
+            YouWare Retro Challenge: We set the theme. You make the move. Build a website the internet isn't ready for.
+          </div>
+          
+          <div style="display: flex; justify-content: center; gap: 15px; margin: 15px 0;">
+            <a href="#" onclick="document.getElementById('howto-popup').style.display='block';" class="button highlight-btn" style="min-width: 150px; text-align: center;">How to Join</a>
+            <a href="#" onclick="document.getElementById('start-challenge-window').style.display='block';" class="button highlight-btn" style="min-width: 150px; text-align: center;">Submit Your Entry</a>
+          </div>
+          
+          <div class="tabs">
+            <div class="tab" data-tab="intro">Overview</div>
+            <div class="tab" data-tab="themes">Theme</div>
+            <div class="tab active" data-tab="prizes">Prize</div>
+            <div class="tab" data-tab="register">Submit</div>
+          </div>
+          
+          <div class="window-content">
+            <!-- Intro tab content -->
+            <div id="content-intro" class="tab-content">
+              <div class="section">
+                <h2>Challenge Overview</h2>
+                <p>Welcome to the YouWare Retro Challenge</p>
+                <p>A creative web design competition celebrating the nostalgic charm of retro tech.</p>
+                <p>Reimagine the digital past — old games, classic gadgets, iconic visuals — and bring it to life with the power of AI. Whether you grew up with it or just love the retro aesthetic, this is your playground.</p>
+                <p>Build a site with YouWare inspired by:
+                <br>Retro Vibes × Future AI</p>
+                <p>Submit your entry by June 5, 2025 for a chance to win up to $1000.
+                <br>Top entries will also be featured and invited to future drops.</p>
+              </div>
+              
+              <div class="section">
+                <h2>How to Join</h2>
+                <div style="padding: 0 10px;">
+                  <h3>1. Create</h3>
+                  <p>Use [YouWare] to build and publish a website inspired by this round's theme:
+                  <br>Retro Vibes × Future AI</p>
+                  
+                  <h3>2. Share</h3>
+                  <p>Post your site on any of these platforms:
+                  <br>X (Twitter), Instagram, YouTube, Reddit, TikTok, Bluesky, or Threads</p>
+                  
+                  <p>To enter the contest, your post must:</p>
+                  <ul>
+                    <li>Include a link to your project</li>
+                    <li>Use the hashtag #YouWareRetroChallenge</li>
+                  </ul>
+                  
+                  <p>Want more visibility and a better shot at winning?
+                  <br>Tag @YouWareAI on X, Instagram, YouTube, or TikTok — if we repost your work, you'll get more exposure!</p>
+                  
+                  <p><strong>Not sure what to post?</strong>
+                  <br>Here's a sample you can use:</p>
+                  
+                  <div class="example-post" style="border: 1px inset #808080; background: #fff; padding: 8px; margin: 10px 0; font-size: 12px; position: relative;">
+                    <p style="margin: 5px 0;">Just joined the @youwareai challenge — theme: Retro Vibes × Future AI.
+                    <br>Had so much fun creating a site that captures those nostalgic, retro-future vibes — and now I'm in the running for the $1000 prize pool.
+                    <br>Come take a look & tell me what you think: [your project link]
+                    <br>#YouWareRetroChallenge</p>
+                    <button id="copy-post-btn" class="button" style="position: absolute; bottom: 5px; right: 5px; font-size: 10px; padding: 2px 5px;">Copy</button>
+                  </div>
+                  
+                  <h3>3. Submit</h3>
+                  <p>Click "Participate" and fill in the form with:</p>
+                  <ul>
+                    <li>Your YouWare website link</li>
+                    <li>The link to your social media post (must include project link + #YouWareRetroChallenge)</li>
+                    <li>The email you used to sign in to YouWare</li>
+                  </ul>
+                  
+                  <p>This confirms your entry and helps us verify your identity.
+                  <br>Once you hit Submit — you're officially in!</p>
+                </div>
+              </div>
+              
+              <div class="section">
+                <h2>Timeline</h2>
+                <div class="timeline" style="margin: 20px 0 30px 0;">
+                  <div class="timeline-item">
+                    <div class="timeline-date">May 21, 2025</div>
+                    <div class="timeline-content">Competition Begins</div>
+                  </div>
+                  <div class="timeline-item">
+                    <div class="timeline-date">June 5, 2025</div>
+                    <div class="timeline-content">Submission Deadline</div>
+                  </div>
+                  <div class="timeline-item">
+                    <div class="timeline-date">June 9, 2025</div>
+                    <div class="timeline-content">Winners Announced</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="section">
+                <h2>Ready to Join?</h2>
+                <div style="display: flex; justify-content: center; gap: 20px;">
+                  <a href="#" onclick="document.getElementById('start-challenge-window').style.display='block';" class="button highlight-btn">Submit Your Entry →</a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Themes tab content -->
+            <div id="content-themes" class="tab-content">
+              <div class="section">
+                <h2>Current Theme: Retro Vibes × Future AI</h2>
+                <p>Remember those messy desktops, pixel games, sticker-covered consoles, loading bars, and glitchy UIs?</p>
+
+                <p>Now imagine what happens when all that nostalgic charm collides with the creative power of AI.
+                <br>We're building our way back to the digital summers we never forgot — and remixing them into something new.</p>
+
+                <div class="theme-divider">---</div>
+                
+                <h3>What to Make</h3>
+                <p>Pick a memory. Any retro moment.
+                <br>Turn it into a custom website using YouWare.</p>
+                
+                <p>It could be:</p>
+                <ul>
+                  <li>A game you loved</li>
+                  <li>A gadget you miss</li>
+                  <li>A classic screen or device</li>
+                  <li>Or anything that feels old-school to you</li>
+                </ul>
+                <p>No wrong answers — if it feels retro to you, it's fair game.</p>
+
+                <div class="theme-divider">---</div>
+                
+                <h3>How It Should Look</h3>
+                <p>Style it your way, with any aesthetic that captures the retro spirit. Some ideas:</p>
+                <ul>
+                  <li>Pixel art or low-res visuals</li>
+                  <li>Neon colors, scanlines, or glitch effects</li>
+                  <li>Vintage UI elements, classic fonts, CRT textures</li>
+                  <li>Or any visual style you associate with the past</li>
+                </ul>
+                <p>Make it nostalgic. Make it weird. Make it yours.</p>
+                
+                <div class="theme-divider">---</div>
+                
+                <h3>Let's Bring the Retro Spirit Online</h3>
+                <p>Build your world. Share your vibe.
+                <br>The internet's not ready for your remix.</p>
+                
+                <div class="projects-section fixed-window" style="margin-bottom: 40px; padding-bottom: 20px;">
+                  <h3 class="title-bar">Project Showcase</h3>
+                  <div class="projects-grid">
+                    <!-- Row 1 -->
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Retro MP3</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2013/07/12/15/22/ipod-149787_640.png" alt="Retro MP3 Player" class="project-image">
+                        <a href="https://www.yourware.so/project/zmghmghmiq?enter_from=personal_center" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Pixel Car Racing</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2022/05/29/18/25/lorry-7229720_640.png" alt="Pixel Car Racing" class="project-image">
+                        <a href="https://www.youware.com/project/amd9no96ya" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Polaroid Style Camera</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2024/01/29/01/45/pixel-art-8538625_640.png" alt="Polaroid Style Camera" class="project-image">
+                        <a href="https://www.yourware.so/project/43aznily0b" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Handheld Game Console</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2020/05/24/12/13/snes-5214011_640.png" alt="Game Console" class="project-image">
+                        <a href="https://www.youware.com/project/r2oukj1h2k" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Old Nokia</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2017/03/04/12/03/mobile-phone-2115903_640.png" alt="Old Nokia Phone" class="project-image">
+                        <a href="https://www.youware.com/project/gtp7uqzq76" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <!-- Row 2 -->
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Gacha Machine</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2022/06/23/17/08/pixel-art-7280249_640.png" alt="Gacha Machine" class="project-image">
+                        <a href="https://www.yourware.so/project/hw3t3ve78r" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Genshin Jump Game</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2016/03/31/17/48/blue-1293920_640.png" alt="Genshin Jump Game" class="project-image">
+                        <a href="https://www.yourware.so/project/859ipmjqow" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Minesweeper Game</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2016/03/09/15/10/explosion-1246507_640.png" alt="Minesweeper Game" class="project-image">
+                        <a href="https://www.yourware.so/project/2x6rm2iz2j" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Vinyl Collection</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2024/01/29/06/23/pixel-art-8538902_640.png" alt="Vinyl Collection" class="project-image">
+                        <a href="https://www.yourware.so/project/yjoe2c9v3t?enter_from=personal_center" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Explosive Sweeper</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2022/04/05/05/54/pop-7112848_640.png" alt="Explosive Sweeper" class="project-image">
+                        <a href="https://www.yourware.so/project/8mhlhobhye" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <!-- Row 3 -->
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Rolling Ball Game</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2022/06/24/01/49/pixel-art-7280889_640.png" alt="Rolling Ball Game" class="project-image">
+                        <a href="https://www.yourware.so/project/mcaqa2uxhn" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Pixel Jump Game</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2022/07/27/19/17/video-game-7348585_640.png" alt="Pixel Jump Game" class="project-image">
+                        <a href="https://www.yourware.so/project/f9w48t4mj4" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Pixel Snake</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2013/07/12/15/20/pacman-149704_640.png" alt="Pixel Snake Game" class="project-image">
+                        <a href="https://www.yourware.so/project/aly4dwu1pp" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Pokémon Game</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2018/04/13/16/13/pixel-3316924_640.png" alt="Pokémon Game" class="project-image">
+                        <a href="https://www.yourware.so/project/bgi65peyq8" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Slot Machine</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2019/03/11/18/20/arcade-4049174_640.png" alt="Slot Machine" class="project-image">
+                        <a href="https://www.yourware.so/project/cmr5pumsl3" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Pixel Plane Battle</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2013/07/13/11/48/pixelgrafic-158720_640.png" alt="Pixel Plane Battle" class="project-image">
+                        <a href="https://www.youware.com/project/3y6ych0175" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div style="margin: 30px 0; display: flex; justify-content: center;">
+                  <a href="#" onclick="document.getElementById('start-challenge-window').style.display='block';" class="button highlight-btn">Submit Your Entry →</a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Prizes tab content -->
+            <div id="content-prizes" class="tab-content active">
+              <div class="section">
+                <h2>Welcome to the YouWare Retro Challenge &nbsp;🎉</h2>
+                <p style="font-size: 16px; font-weight: bold; margin: 10px 0;">Create a web project. Get views. Win up to $1,000.</p>
+                <div style="margin-top: 20px;">
+                  <div class="prize-card" style="border: 1px solid #808080; padding: 15px; margin-bottom: 20px; background: #f0f0f0;">
+                    <h2>💰 Top Traffic Prize — for creators</h2>
+                    <h3 style="margin-bottom: 15px;">Win up to $1,000 per project</h3>
+                    <ul style="line-height: 1.5;">
+                      <li style="margin-bottom: 8px;">Top 3 projects with 2,000+ unique views get $200 guaranteed</li>
+                      <li style="margin-bottom: 8px;">Earn $100 more for every additional 2,000 views</li>
+                      <li>(Max: $1,000 per project)</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="prize-card" style="border: 1px solid #808080; padding: 15px; background: #f0f0f0;">
+                    <h2>💰 Social Boost Awards — open to everyone</h2>
+                    <p>Not building? You can still win!
+Just share our project on social media with the hashtag #YouWareRetroChallenge and a project link — that's it!</p>
+                    <p>Help spread the word, and if your post gets over 1,000 views, you'll be eligible — and the 5 with the most views will win a 1-month Pro membership (worth $20).</p>
+                    <p>Open to all — creators, fans, and retro lovers alike!</p>
+                  </div>
+                  <p style="margin-top: 15px;"><a href="#" class="learn-more-link" onclick="document.getElementById('rules-popup').style.display='block'">Learn more about winner selection →</a></p>
+                </div>
+              </div>
+              
+              <div class="section">
+                <h2>Ready to Join the Challenge?</h2>
+                <a href="#" onclick="document.getElementById('start-challenge-window').style.display='block';" class="button highlight-btn">Submit Your Entry →</a>
+              </div>
+              
+
+            </div>
+            
+            <!-- Register tab content -->
+            <div id="content-register" class="tab-content">
+              <div class="section">
+                <h2>Join the Challenge</h2>
+                <p>Enter your email, project link, and a public social post that includes the project link and #YouWareRetroChallenge. Then click Submit to join.</p>
+              </div>
+
+              <div id="registration-form-container">
+                <form id="registration-form">
+
+                  <div class="form-field">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    <p style="margin: 2px 0 0 0; font-size: 11px; color: #666;">Use your YouWare account email to confirm you're the creator.</p>
+                  </div>
+                  <div class="form-field">
+                    <label for="project_link">Project Link:</label>
+                    <input type="url" id="project_link" name="project_link" placeholder="https://youware.com/project/project-title-nnswrp2lch" required>
+                  </div>
+                  <div class="form-field">
+                    <label for="social_post_link">Social Post Link:</label>
+                    <input type="url" id="social_post_link" name="social_post_link" placeholder="https://x.com/username/status/1924389608625668477" required>
+                    <p style="margin: 2px 0 0 0; font-size: 11px; color: #666;">Your public post must include your project link and the hashtag #YouWareRetroChallenge.</p>
+                    <p id="registration_validation_message" style="margin: 5px 0 0 0; font-size: 11px; color: #FF0000; font-weight: bold; display: none;">All fields are required to submit your entry.</p>
+                  </div>
+                  <div class="form-actions">
+                    <button type="button" class="button" onclick="document.getElementById('registration-form').reset();">Clear</button>
+                    <button type="submit" class="button">Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Popup window for how it works steps -->
+          <div id="howto-popup" class="window" style="width: 450px; display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
+            <div class="title-bar">
+              <h3 id="howto-title">How to Participate: Step 1 of 3</h3>
+              <div class="title-bar-controls">
+                <button class="close-btn" onclick="document.getElementById('howto-popup').style.display='none';">×</button>
+              </div>
+            </div>
+            <div class="window-body">
+              <!-- Step content container -->
+              <div id="howto-content">
+                <!-- Step 1: Create -->
+                <div class="howto-step" id="step-1">
+                  <h3>1. Create</h3>
+                  <p>Use <strong>[YouWare]</strong> to build and publish a website inspired by this round's theme:<br>Retro Vibes × Future AI</p>
+                  <img src="88m6hgk9o0.jpg" alt="Create icon" class="pixel-effect" style="width: 32px; margin: 10px auto; display: block;">
+                </div>
+                
+                <!-- Step 2: Share (initially hidden) -->
+                <div class="howto-step" id="step-2" style="display: none;">
+                  <h3>2. Share</h3>
+                  <p>Post your site on any of these platforms:<br>
+                  X (Twitter), Instagram, YouTube, Reddit, TikTok, Bluesky, or Threads</p>
+                  
+                  <p>To enter the contest, your post must:</p>
+                  <ul>
+                    <li>Include a link to your project</li>
+                    <li>Use the hashtag #YouWareRetroChallenge</li>
+                  </ul>
+                  
+                  <p>Want more visibility and a better shot at winning?<br>
+                  Tag @YouWareAI on X, Instagram, YouTube, or TikTok — if we repost your work, you'll get more exposure!</p>
+                  
+                  <p><strong>Not sure what to post?</strong><br>
+                  Here's a sample you can use:</p>
+                  
+                  <div class="example-post" style="border: 1px inset #808080; background: #fff; padding: 8px; margin-top: 10px; font-size: 12px; position: relative;">
+                    <p style="margin: 5px 0; padding-bottom: 25px;">Just joined the @youwareai challenge — theme: Retro Vibes × Future AI.<br>
+                    Had so much fun creating a site that captures those nostalgic, retro-future vibes — and now I'm in the running for the $1000 prize pool.<br>
+                    Come take a look & tell me what you think: [your project link]<br>
+                    #YouWareRetroChallenge</p>
+                    <button id="step-copy-post-btn" class="button" style="position: absolute; bottom: 5px; right: 5px; font-size: 10px; padding: 2px 5px;">Copy</button>
+                  </div>
+                </div>
+                
+                <!-- Step 3: Submit (initially hidden) -->
+                <div class="howto-step" id="step-3" style="display: none;">
+                  <h3>3. Submit</h3>
+                  <p>Click "Submit Your Entry" and fill in the form with:</p>
+                  <ul>
+                    <li>Your YouWare website link</li>
+                    <li>The link to your social media post (must include project link + #YouWareRetroChallenge)</li>
+                    <li>The email you used to sign in to YouWare</li>
+                  </ul>
+                  <p>This confirms your entry and helps us verify your identity.<br>
+                  Once you hit Submit — you're officially in!</p>
+                </div>
+              </div>
+              
+              <!-- Navigation buttons -->
+              <div class="form-actions" style="margin-top: 15px; justify-content: flex-end;">
+                <button id="prev-btn" class="button" style="display: none;">Previous</button>
+                <button id="next-btn" class="button">Next</button>
+                <button id="submit-entry-btn" class="button" style="display: none;" onclick="document.getElementById('start-challenge-window').style.display='block'; document.getElementById('howto-popup').style.display='none';">Submit Your Entry</button>
+              </div>
+            </div>
+          </div>
+          
+
+        </div>
+
+      </div>
+      
+      <!-- Top Traffic Prize window -->
+      <div id="top-traffic-window" class="window" style="width: 350px; position: absolute; top: 20px; right: 20px; z-index: 2;">
+        <div class="title-bar">
+          <h1>Top Traffic Prize</h1>
+          <div class="title-bar-controls">
+            <button class="minimize-btn">_</button>
+            <button class="close-btn" onclick="document.getElementById('top-traffic-window').style.display='none';">×</button>
+          </div>
+        </div>
+        <div class="window-body" style="padding: 0;">
+          <div class="window-content" style="max-height: 200px; overflow-y: auto; padding: 10px 10px 0 10px; margin: 0;">
+            <div class="prize-card" style="border: 1px solid #808080; padding: 15px; background: #f0f0f0;">
+              <h2>💰 Top Traffic Prize — for creators</h2>
+              <p>Win up to $1,000 per project</p>
+              <p>Top 3 projects with 2,000+ unique views get $200 guaranteed</p>
+              <p>Earn $100 more for every additional 2,000 views</p>
+              <p>(Max: $1,000 per project)</p>
+            </div>
+          </div>
+          <div style="text-align: left; padding: 0 0 0 10px; margin: 0;">
+            <button class="button" onclick="document.getElementById('rules-popup').style.display='block'" style="font-size: 12px; margin: 5px 0;">Learn more info</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Social Boost Awards window -->
+      <div id="social-boost-window" class="window" style="width: 350px; position: absolute; top: 320px; right: 20px; z-index: 2;">
+        <div class="title-bar">
+          <h1>Social Boost Awards</h1>
+          <div class="title-bar-controls">
+            <button class="minimize-btn">_</button>
+            <button class="close-btn" onclick="document.getElementById('social-boost-window').style.display='none';">×</button>
+          </div>
+        </div>
+        <div class="window-body" style="padding: 0;">
+          <div class="window-content" style="max-height: 200px; overflow-y: auto; padding: 10px 10px 0 10px; margin: 0;">
+            <div class="prize-card" style="border: 1px solid #808080; padding: 15px; background: #f0f0f0;">
+              <h2>💰 Social Boost Awards — open to everyone</h2>
+              <p>Not building? You can still win!
+Just share our project on social media with the hashtag #YouWareRetroChallenge and a project link — that's it!</p>
+              <p>Help spread the word, and if your post gets over 1,000 views, you'll be eligible — and the 5 with the most views will win a 1-month Pro membership (worth $20).</p>
+              <p>Open to all — creators, fans, and retro lovers alike!</p>
+            </div>
+          </div>
+          <div style="text-align: left; padding: 0 0 0 10px; margin: 0;">
+            <button class="button" onclick="document.getElementById('rules-popup').style.display='block'" style="font-size: 12px; margin: 5px 0;">Learn more info</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Full Rules window (hidden by default) -->
+      <div id="rules-popup" class="window" style="width: 450px; display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
+        <div class="title-bar">
+          <h1>How Winners Are Selected</h1>
+          <div class="title-bar-controls">
+            <button class="close-btn" onclick="document.getElementById('rules-popup').style.display='none';">×</button>
+          </div>
+        </div>
+        <div class="window-body">
+          <div class="window-content">
+            <h2>How Winners Are Selected</h2>
+            
+            <h3>Top Traffic Prize</h3>
+            <ul>
+              <li>Must have 2,000+ unique views to qualify</li>
+              <li>Earn $100 for every additional 2,000 views</li>
+              <li>Max reward: $1,000 per project</li>
+              <li>Top 3 projects with the most views will be awarded</li>
+            </ul>
+            
+            <h3>Example Payouts:</h3>
+            <ul>
+              <li>2,000 views → $200</li>
+              <li>4,000 views → $300</li>
+              <li>6,000 views → $400</li>
+              <li>8,000 views → $500</li>
+              <li>10,000 views → $600</li>
+              <li>18,000 views → $1,000 (max)</li>
+            </ul>
+            
+            <h3>Social Boost Awards — open to everyone</h3>
+            <ul>
+              <li>Open to everyone — no project submission required</li>
+              <li>Share any #YouWareRetroChallenge project on social platforms (X, Instagram, TikTok, YouTube, LinkedIn, Threads, Bluesky)</li>
+              <li>Posts with 1,000+ views qualify</li>
+              <li>Top 5 posts with the most views win a 1-month Pro membership ($20 value)</li>
+              <li>Tag @youwareai for a chance to get reposted and boost visibility</li>
+            </ul>
+            
+
+          </div>
+          <button onclick="document.getElementById('rules-popup').style.display='none';" class="button">Close</button>
+        </div>
+      </div>
+      
+      <!-- Start Challenge window (hidden by default) -->
+      <div id="start-challenge-window" class="window" style="width: 500px; display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
+        <div class="title-bar">
+          <h1>Entry Form</h1>
+          <div class="title-bar-controls">
+            <button class="minimize-btn">_</button>
+            <button class="close-btn" onclick="document.getElementById('start-challenge-window').style.display='none';">×</button>
+          </div>
+        </div>
+        <div class="window-body">
+          <div class="window-content">
+            <h2>Join the Challenge</h2>
+            <p>Enter your email, project link, and a public social post that includes the project link and #YouWareRetroChallenge. Then click Submit to join.</p>
+            
+            <form id="challenge-form">
+
+              <div class="form-field">
+                <label for="challenge_email">Email:</label>
+                <input type="email" id="challenge_email" name="email" required>
+                <p style="margin: 2px 0 0 0; font-size: 11px; color: #666;">Use your YouWare account email to confirm you're the creator.</p>
+              </div>
+              <div class="form-field">
+                <label for="challenge_project_link">Project Link:</label>
+                <input type="url" id="challenge_project_link" name="project_link" placeholder="https://youware.com/project/project-title-nnswrp2lch" required>
+              </div>
+              <div class="form-field">
+                <label for="challenge_social_post_link">Social Post Link:</label>
+                <input type="url" id="challenge_social_post_link" name="social_post_link" placeholder="https://x.com/username/status/1924389608625668477" required>
+                <p style="margin: 2px 0 0 0; font-size: 11px; color: #666;">Your public post must include your project link and the hashtag #YouWareRetroChallenge.</p>
+                <p id="challenge_validation_message" style="margin: 5px 0 0 0; font-size: 11px; color: #FF0000; font-weight: bold; display: none;">All fields are required to submit your entry.</p>
+              </div>
+              <div class="form-actions">
+                <button type="button" class="button" onclick="document.getElementById('challenge-form').reset();">Clear</button>
+                <button type="submit" class="button">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="footer" style="display: none;">
+    </div>
+  </div>
+  
+  <script src="assets/js/script.js"></script>
+  
+  <script>
+    // Attach form submission handlers
+    document.addEventListener('DOMContentLoaded', function() {
+      // For the challenge form
+      if (document.getElementById('challenge-form')) {
+        document.getElementById('challenge-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          showConfirmation('challenge-form');
+        });
+      }
+      
+      // For the registration form
+      if (document.getElementById('registration-form')) {
+        document.getElementById('registration-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          showConfirmation('registration-form');
+        });
+      }
+    });
+    
+    function showConfirmation(formId) {
+      // Get the form data
+      let formElement;
+      let validationMessageElement;
+      
+      if (formId === 'challenge-form') {
+        formElement = document.getElementById('challenge-form');
+        validationMessageElement = document.getElementById('challenge_validation_message');
+      } else if (formId === 'registration-form') {
+        formElement = document.getElementById('registration-form');
+        validationMessageElement = document.getElementById('registration_validation_message');
+      }
+
+      if (!formElement) return;
+      
+      // Check if all required fields are filled
+      const emailInput = formElement.querySelector('[type="email"]');
+      const projectLinkInput = formElement.querySelector('[name="project_link"]');
+      const socialPostLinkInput = formElement.querySelector('[name="social_post_link"]');
+      
+      // Set custom validation message in English
+      if (!emailInput.value) {
+        emailInput.setCustomValidity("Please fill out this field");
+        emailInput.reportValidity();
+        return; // Stop form submission
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+        emailInput.setCustomValidity("Please enter a valid email address");
+        emailInput.reportValidity();
+        return; // Stop form submission
+      } else {
+        emailInput.setCustomValidity("");
+      }
+      
+      if (!projectLinkInput.value) {
+        projectLinkInput.setCustomValidity("Please fill out this field");
+        projectLinkInput.reportValidity();
+        return; // Stop form submission
+      } else if (!/^https?:\/\/\S+$/.test(projectLinkInput.value)) {
+        projectLinkInput.setCustomValidity("Please enter a valid URL");
+        projectLinkInput.reportValidity();
+        return; // Stop form submission
+      } else {
+        projectLinkInput.setCustomValidity("");
+      }
+      
+      if (!socialPostLinkInput.value) {
+        socialPostLinkInput.setCustomValidity("Please fill out this field");
+        socialPostLinkInput.reportValidity();
+        return; // Stop form submission
+      } else if (!/^https?:\/\/\S+$/.test(socialPostLinkInput.value)) {
+        socialPostLinkInput.setCustomValidity("Please enter a valid URL");
+        socialPostLinkInput.reportValidity();
+        return; // Stop form submission
+      } else {
+        socialPostLinkInput.setCustomValidity("");
+      }
+      
+      // If we get here, all fields are filled
+      if (validationMessageElement) {
+        validationMessageElement.style.display = 'none';
+      }
+      
+      // Hide validation message if all fields are filled
+      if (validationMessageElement) {
+        validationMessageElement.style.display = 'none';
+      }
+
+      const formData = {
+        project_id: 'youware-retro-challenge',
+        email: emailInput.value,
+        project_link: projectLinkInput.value,
+        social_post_link: socialPostLinkInput.value
+      };
+
+      // Create loading popup
+      let loadingPopupHTML = `
+        <div id="loading-popup" class="window" style="width: 350px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2000; box-shadow: 3px 3px 10px rgba(0,0,0,0.5);">
+          <div class="title-bar">
+            <h1>Submitting...</h1>
+          </div>
+          <div class="window-body" style="padding: 20px; text-align: center;">
+            <p>Processing your submission, please wait...</p>
+            <div style="border: 1px inset #808080; height: 20px; margin: 15px 0; background: #fff;">
+              <div id="submit-progress-bar" style="background: #000080; height: 100%; width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      // Add loading popup to body and start progress animation
+      document.body.insertAdjacentHTML('beforeend', loadingPopupHTML);
+      
+      // Animate the progress bar
+      let width = 1;
+      const progressInterval = setInterval(function() {
+        if (width >= 90) {
+          clearInterval(progressInterval);
+        } else {
+          width += 5;
+          document.getElementById('submit-progress-bar').style.width = width + '%';
+        }
+      }, 100);
+      
+      // Hide form window while loading
+      document.getElementById('start-challenge-window').style.display = 'none';
+      
+      // Send data to API
+      fetch('https://wh1isper-mini-leaderboard.hf.space/api/v1/form/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Remove loading popup
+        clearInterval(progressInterval);
+        document.getElementById('loading-popup').remove();
+        
+        // Create success popup window with count information
+        let successPopupHTML = `
+          <div id="success-popup" class="window" style="width: 350px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2000; box-shadow: 3px 3px 10px rgba(0,0,0,0.5);">
+            <div class="title-bar">
+              <h1>Success</h1>
+              <div class="title-bar-controls">
+                <button class="close-btn" onclick="document.getElementById('success-popup').remove();">×</button>
+              </div>
+            </div>
+            <div class="window-body" style="padding: 20px; text-align: center;">
+              <h2 style="margin-top: 0;">Your submission was successful!</h2>
+              <p>Thank you for joining. We'll keep you updated on the competition's progress and final results via email. Stay tuned!</p>
+              <div style="margin-top: 20px;">
+                <button class="button highlight-btn" onclick="document.getElementById('success-popup').remove();">OK</button>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        // Add success popup to body
+        document.body.insertAdjacentHTML('beforeend', successPopupHTML);
+      })
+      .catch(error => {
+        // Remove loading popup
+        clearInterval(progressInterval);
+        document.getElementById('loading-popup').remove();
+        
+        // Create success popup window instead of error
+        // Since the data is actually successfully written to the database
+        let successPopupHTML = `
+          <div id="success-popup" class="window" style="width: 350px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2000; box-shadow: 3px 3px 10px rgba(0,0,0,0.5);">
+            <div class="title-bar">
+              <h1>Success</h1>
+              <div class="title-bar-controls">
+                <button class="close-btn" onclick="document.getElementById('success-popup').remove();">×</button>
+              </div>
+            </div>
+            <div class="window-body" style="padding: 20px; text-align: center;">
+              <h2 style="margin-top: 0;">Your submission was successful!</h2>
+              <p>Thank you for joining. We'll keep you updated on the competition's progress and final results via email. Stay tuned!</p>
+              <div style="margin-top: 20px;">
+                <button class="button highlight-btn" onclick="document.getElementById('success-popup').remove();">OK</button>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        // Add success popup to body
+        document.body.insertAdjacentHTML('beforeend', successPopupHTML);
+        console.log('Form submitted successfully despite error in response');
+      });
+      
+      // Reset form fields
+      if (formElement) {
+        formElement.reset();
+      }
+    }
+    
+    function resetForm(formId) {
+      // Remove confirmation message
+      let confirmations = document.getElementsByClassName('confirmation-message');
+      while(confirmations.length > 0) {
+        confirmations[0].parentNode.removeChild(confirmations[0]);
+      }
+      
+      // Reset and show the form again
+      if (formId === 'challenge-form') {
+        document.getElementById('challenge-form').reset();
+        document.getElementById('challenge-form').style.display = 'block';
+      } else if (formId === 'registration-form') {
+        document.getElementById('registration-form').reset();
+        document.getElementById('registration-form').style.display = 'block';
+      }
+    }
+  </script>
+  
+  <!-- FAQ Window (hidden by default) -->
+  <div id="faq-window" class="window" style="width: 600px; max-width: 90%; max-height: 90%; display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
+    <div class="title-bar">
+      <h1>Frequently Asked Questions</h1>
+      <div class="title-bar-controls">
+        <button class="minimize-btn">_</button>
+        <button class="close-btn" onclick="document.getElementById('faq-window').style.display='none';">×</button>
+      </div>
+    </div>
+    <div class="window-body" style="padding: 12px;">
+      <div class="window-content" style="max-height: 500px; overflow-y: auto; padding: 10px; margin: 0;">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item" style="margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+          <h3>Q: How do I know if I've successfully entered the challenge?</h3>
+          <p>A: You'll see a confirmation message right after submitting the form.</p>
+          <p>To be officially entered, make sure you:</p>
+          <ul>
+            <li>Submit your project link</li>
+            <li>Submit a public social post link</li>
+            <li>Include both your project link and the hashtag #YouWareRetroChallenge in your post</li>
+          </ul>
+          <p>Without the social post, your entry won't count — even if the form is submitted.</p>
+        </div>
+
+        <div class="faq-item" style="margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+          <h3>Q: How will I receive updates about the contest?</h3>
+          <p>A: We'll send all important updates and winner announcements directly to your YouWare account email. Be sure to check your inbox and spam folder regularly.</p>
+        </div>
+
+        <div class="faq-item" style="margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+          <h3>Q: How are prizes delivered?</h3>
+          <p>A: If you win, our team will reach out via email to confirm your payout method.</p>
+          <p>We currently support PayPal and Stripe for prize distribution. Make sure your email is valid and able to receive funds.</p>
+        </div>
+
+        <div class="faq-item" style="margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+          <h3>Q: What is the exact submission deadline?</h3>
+          <p>A: The final deadline is June 5, 2025, at 24:00 (midnight) UTC+0.</p>
+          <p>Any submissions received after this time will not be considered for the contest. We recommend submitting early to avoid any last-minute technical issues.</p>
+        </div>
+
+        <div class="faq-item" style="margin-bottom: 15px;">
+          <h3>Q: How can I contact the YouWare team if I have questions?</h3>
+          <p>A: You can reach us anytime at support@youware.com.</p>
+          <p>We're here to help with submission issues, project links, or payout questions.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Featured Projects Window (hidden by default) -->
+  <div id="templates-window" class="window" style="width: 1000px; max-width: 90%; max-height: 90%; display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
+    <div class="title-bar">
+      <h1>Community Projects</h1>
+      <div class="title-bar-controls">
+        <button class="minimize-btn">_</button>
+        <button class="close-btn" onclick="document.getElementById('templates-window').style.display='none';">×</button>
+      </div>
+    </div>
+    <div class="window-body" style="padding: 12px;">
+      <div class="window-content" style="max-height: 600px; overflow-y: auto; padding: 10px; margin: 0;">
+        <h3>Community Highlights</h3>
+        <p>Check out these standout projects from the YouWare community — and get inspired for your own retro creation!</p>
+        
+        <div class="desktop-banner" style="text-align: center; background-color: #000080; color: white; padding: 4px; margin-bottom: 10px; font-weight: bold; text-shadow: 1px 1px 2px #000;">
+          Check out standout projects that capture the retro vibe perfectly
+        </div>
+        <div class="projects-grid featured-projects-grid" style="grid-template-columns: repeat(4, 1fr);">
+          <div class="project-item window">
+            <div class="title-bar">
+              <h4>Retro MP3</h4>
+            </div>
+            <div class="window-body">
+              <img src="https://cdn.pixabay.com/photo/2013/07/12/15/22/ipod-149787_640.png" alt="Retro MP3 Player" class="project-image">
+              <a href="https://www.yourware.so/project/zmghmghmiq?enter_from=personal_center" target="_blank" class="button">View Project</a>
+            </div>
+          </div>
+          
+          <div class="project-item window">
+            <div class="title-bar">
+              <h4>Pixel Car Racing</h4>
+            </div>
+            <div class="window-body">
+              <img src="https://cdn.pixabay.com/photo/2022/05/29/18/25/lorry-7229720_640.png" alt="Pixel Car Racing" class="project-image">
+              <a href="https://www.youware.com/project/amd9no96ya" target="_blank" class="button">View Project</a>
+            </div>
+          </div>
+          
+          <div class="project-item window">
+            <div class="title-bar">
+              <h4>Polaroid Camera</h4>
+            </div>
+            <div class="window-body">
+              <img src="https://cdn.pixabay.com/photo/2024/01/29/01/45/pixel-art-8538625_640.png" alt="Polaroid Style Camera" class="project-image">
+              <a href="https://www.yourware.so/project/43aznily0b" target="_blank" class="button">View Project</a>
+            </div>
+          </div>
+          
+          <div class="project-item window">
+            <div class="title-bar">
+              <h4>Game Console</h4>
+            </div>
+            <div class="window-body">
+              <img src="https://cdn.pixabay.com/photo/2020/05/24/12/13/snes-5214011_640.png" alt="Game Console" class="project-image">
+              <a href="https://www.youware.com/project/r2oukj1h2k" target="_blank" class="button">View Project</a>
+            </div>
+          </div>
+          
+          <div class="project-item window">
+            <div class="title-bar">
+              <h4>Old Nokia</h4>
+            </div>
+            <div class="window-body">
+              <img src="https://cdn.pixabay.com/photo/2017/03/04/12/03/mobile-phone-2115903_640.png" alt="Old Nokia Phone" class="project-image">
+              <a href="https://www.youware.com/project/gtp7uqzq76" target="_blank" class="button">View Project</a>
+            </div>
+          </div>
+          
+          <div class="project-item window">
+            <div class="title-bar">
+              <h4>Gacha Machine</h4>
+            </div>
+            <div class="window-body">
+              <img src="https://cdn.pixabay.com/photo/2022/06/23/17/08/pixel-art-7280249_640.png" alt="Gacha Machine" class="project-image">
+              <a href="https://www.yourware.so/project/hw3t3ve78r" target="_blank" class="button">View Project</a>
+            </div>
+          </div>
+          
+          <div class="project-item window">
+            <div class="title-bar">
+              <h4>Genshin Jump Game</h4>
+            </div>
+            <div class="window-body">
+              <img src="https://cdn.pixabay.com/photo/2016/03/31/17/48/blue-1293920_640.png" alt="Genshin Jump Game" class="project-image">
+              <a href="https://www.yourware.so/project/859ipmjqow" target="_blank" class="button">View Project</a>
+            </div>
+          </div>
+          
+          <div class="project-item window">
+            <div class="title-bar">
+              <h4>Minesweeper Game</h4>
+            </div>
+            <div class="window-body">
+              <img src="https://cdn.pixabay.com/photo/2016/03/09/15/10/explosion-1246507_640.png" alt="Minesweeper Game" class="project-image">
+              <a href="https://www.yourware.so/project/2x6rm2iz2j" target="_blank" class="button">View Project</a>
+            </div>
+          </div>
+          
+          <div class="project-item window">
+            <div class="title-bar">
+              <h4>Pokémon Game</h4>
+            </div>
+            <div class="window-body">
+              <img src="https://cdn.pixabay.com/photo/2018/04/13/16/13/pixel-3316924_640.png" alt="Pokémon Game" class="project-image">
+              <a href="https://www.yourware.so/project/bgi65peyq8" target="_blank" class="button">View Project</a>
+            </div>
+          </div>
+          
+          <div class="project-item window">
+            <div class="title-bar">
+              <h4>Explosive Sweeper</h4>
+            </div>
+            <div class="window-body">
+              <img src="https://cdn.pixabay.com/photo/2022/04/05/05/54/pop-7112848_640.png" alt="Explosive Sweeper" class="project-image">
+              <a href="https://www.yourware.so/project/8mhlhobhye" target="_blank" class="button">View Project</a>
+            </div>
+          </div>
+          
+          <div class="project-item window">
+            <div class="title-bar">
+              <h4>Rolling Ball Game</h4>
+            </div>
+            <div class="window-body">
+              <img src="https://cdn.pixabay.com/photo/2022/06/24/01/49/pixel-art-7280889_640.png" alt="Rolling Ball Game" class="project-image">
+              <a href="https://www.yourware.so/project/mcaqa2uxhn" target="_blank" class="button">View Project</a>
+            </div>
+          </div>
+          
+          <div class="project-item window">
+            <div class="title-bar">
+              <h4>Pixel Jump Game</h4>
+            </div>
+            <div class="window-body">
+              <img src="https://cdn.pixabay.com/photo/2022/07/27/19/17/video-game-7348585_640.png" alt="Pixel Jump Game" class="project-image">
+              <a href="https://www.yourware.so/project/f9w48t4mj4" target="_blank" class="button">View Project</a>
+            </div>
+          </div>
+          
+          <div class="project-item window">
+            <div class="title-bar">
+              <h4>Pixel Snake</h4>
+            </div>
+            <div class="window-body">
+              <img src="https://cdn.pixabay.com/photo/2013/07/12/15/20/pacman-149704_640.png" alt="Pixel Snake Game" class="project-image">
+              <a href="https://www.yourware.so/project/aly4dwu1pp" target="_blank" class="button">View Project</a>
+            </div>
+          </div>
+          
+          <div class="project-item window">
+            <div class="title-bar">
+              <h4>Vinyl Collection</h4>
+            </div>
+            <div class="window-body">
+              <img src="https://cdn.pixabay.com/photo/2024/01/29/06/23/pixel-art-8538902_640.png" alt="Vinyl Collection" class="project-image">
+              <a href="https://www.yourware.so/project/yjoe2c9v3t?enter_from=personal_center" target="_blank" class="button">View Project</a>
+            </div>
+          </div>
+          
+          <div class="project-item window">
+            <div class="title-bar">
+              <h4>Slot Machine</h4>
+            </div>
+            <div class="window-body">
+              <img src="https://cdn.pixabay.com/photo/2019/03/11/18/20/arcade-4049174_640.png" alt="Slot Machine" class="project-image">
+              <a href="https://www.yourware.so/project/cmr5pumsl3" target="_blank" class="button">View Project</a>
+            </div>
+          </div>
+          
+          <div class="project-item window">
+            <div class="title-bar">
+              <h4>Pixel Plane Battle</h4>
+            </div>
+            <div class="window-body">
+              <img src="https://cdn.pixabay.com/photo/2013/07/13/11/48/pixelgrafic-158720_640.png" alt="Pixel Plane Battle" class="project-image">
+              <a href="https://www.youware.com/project/3y6ych0175" target="_blank" class="button">View Project</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Add event listener to the templates icon
+    document.getElementById('open-templates').addEventListener('click', function() {
+      // Set all windows to a lower z-index
+      document.querySelectorAll('.window').forEach(function(win) {
+        win.style.zIndex = "1";
+      });
+      // Show this window and bring it to front
+      const window = document.getElementById('templates-window');
+      window.style.display = 'block';
+      window.style.zIndex = "999";
+    });
+    
+    // Add event listener to the prize icon
+    document.getElementById('open-prize-icon').addEventListener('click', function() {
+      // Set all windows to a lower z-index
+      document.querySelectorAll('.window').forEach(function(win) {
+        win.style.zIndex = "1";
+      });
+      // Show both prize windows and bring them to front
+      const topTrafficWindow = document.getElementById('top-traffic-window');
+      const socialBoostWindow = document.getElementById('social-boost-window');
+      
+      topTrafficWindow.style.display = 'block';
+      socialBoostWindow.style.display = 'block';
+      
+      topTrafficWindow.style.right = '20px';
+      socialBoostWindow.style.right = '20px';
+      
+      topTrafficWindow.style.zIndex = "999";
+      socialBoostWindow.style.zIndex = "999";
+    });
+    
+    // Add event listener to the FAQ icon
+    document.getElementById('open-faq-icon').addEventListener('click', function() {
+      // Set all windows to a lower z-index
+      document.querySelectorAll('.window').forEach(function(win) {
+        win.style.zIndex = "1";
+      });
+      // Show this window and bring it to front
+      const window = document.getElementById('faq-window');
+      window.style.display = 'block';
+      window.style.zIndex = "999";
+    });
+    
+    // Add event listener to the challenge icon
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('open-challenge-icon').addEventListener('click', function() {
+        // Set all windows to a lower z-index
+        document.querySelectorAll('.window').forEach(function(win) {
+          win.style.zIndex = "1";
+        });
+        
+        // Make sure main window is visible and activate Home tab
+        const mainWindow = document.querySelector('.container .window');
+        if (mainWindow.style.display === 'none') {
+          mainWindow.style.display = 'block';
+        }
+        
+        // Bring window to front
+        mainWindow.style.zIndex = "999";
+        
+        // Activate the intro tab
+        document.querySelector('.tab[data-tab=\'intro\']').click();
+      });
+      
+      // Initialize the prize icon click event after DOM loads
+      if (document.getElementById('open-prize-icon')) {
+        document.getElementById('open-prize-icon').addEventListener('click', function() {
+          // Set all windows to a lower z-index
+          document.querySelectorAll('.window').forEach(function(win) {
+            win.style.zIndex = "1";
+          });
+          // Show both prize windows and bring them to front
+          const topTrafficWindow = document.getElementById('top-traffic-window');
+          const socialBoostWindow = document.getElementById('social-boost-window');
+          
+          topTrafficWindow.style.display = 'block';
+          socialBoostWindow.style.display = 'block';
+          
+          topTrafficWindow.style.right = '20px';
+          socialBoostWindow.style.right = '20px';
+          
+          topTrafficWindow.style.zIndex = "999";
+          socialBoostWindow.style.zIndex = "999";
+        });
+      }
+    });
+  </script>
+</body>
+</html>

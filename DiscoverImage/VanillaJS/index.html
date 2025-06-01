@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+
+<html>
+<head><meta charset="utf-8"/>
+<meta charset="utf-8"/>
+<meta content="IE=edge,chrome=IE8" http-equiv="X-UA-Compatible"/>
+<meta content="Discover Your Image - Upload and reveal any image through interactive exploration, a creative way to gradually unveil pictures with your cursor. | Vibe coding in action: AI-generated website deployed via Yourware." name="description"/>
+<meta content="Image Discovery Interactive Reveal Upload D3 Canvas SVG Image Explorer Interactive Art" name="keywords"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="notranslate" name="google"/>
+<!-- Open Graph meta tags -->
+<meta content="Discover Your Image | Interactive Image Explorer" property="og:title"/>
+<meta content="Upload and reveal any image through interactive exploration, a creative way to gradually unveil pictures with your cursor." property="og:description"/>
+<meta content="OG-image.png" property="og:image"/>
+<meta content="" property="og:url"/>
+<meta content="website" property="og:type"/>
+<title>Discover Your Image | Interactive Image Explorer</title>
+<link href="favicon_new.png" rel="icon" type="image/png"/>
+<link href="favicon_new.png" rel="shortcut icon" type="image/png"/>
+<!-- Fonts for the share cards -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Playfair+Display:ital,wght@0,400;0,500;1,400&amp;display=swap" rel="stylesheet"/>
+<script type="text/javascript">var version = '1.9.4';</script>
+<script src="polyfill/polyfill.js?1.9.4" type="text/javascript"></script>
+<script src="polyfill/Blob.js?1.9.4" type="text/javascript"></script>
+<script src="polyfill/FileSaver.js?1.9.4" type="text/javascript"></script>
+<!--[if gte IE 9]><!-->
+<script src="d3.min.js?1.9.4" type="text/javascript"></script>
+<script src="koala.js?1.9.4" type="text/javascript"></script>
+<script type="text/javascript">
+      // 全局函数用于修复分享按钮
+      window.fixShareButtons = function() {
+        // 对按钮进行额外修复
+        var buttonsToFix = [
+          'download-image', 'share-twitter', 'share-facebook', 
+          'share-instagram', 'try-again', 'shuffle-button'
+        ];
+        
+        buttonsToFix.forEach(function(id) {
+          var button = document.getElementById(id);
+          if (!button) return;
+          
+          // 首先移除所有现有的touchend监听器，防止重复添加
+          if (button._touchEndHandlerAdded) {
+            return; // 已经添加过触摸处理了，不再重复添加
+          }
+          
+          button.style.touchAction = 'manipulation';
+          button.style.cursor = 'pointer';
+          
+          // 使用标准click事件，而不是添加自定义touchend
+          // 标记该按钮已经处理过，避免重复添加
+          button._touchEndHandlerAdded = true;
+          
+          console.log('Button fixed (once): ' + id);
+        });
+      };
+      
+      // 添加移动触控优化脚本
+      document.addEventListener('DOMContentLoaded', function() {
+        // 在文档加载完成后执行
+        // 防止移动端触摸事件的默认行为，但仅限于dots区域
+        function preventDefaultTouch(element) {
+          if (!element) return;
+          
+          element.addEventListener('touchstart', function(e) {
+            // 仅阻止dots容器上的默认行为
+            if (e.target && (
+                e.target.id === 'dots' || 
+                e.target.id === 'dots-container' || 
+                e.target.tagName === 'svg' || 
+                e.target.tagName === 'circle')) {
+              e.preventDefault();
+            }
+          }, { passive: false });
+          
+          element.addEventListener('touchmove', function(e) {
+            // 仅阻止dots容器上的默认行为
+            if (e.target && (
+                e.target.id === 'dots' || 
+                e.target.id === 'dots-container' || 
+                e.target.tagName === 'svg' || 
+                e.target.tagName === 'circle')) {
+              e.preventDefault();
+            }
+          }, { passive: false });
+        }
+        
+        // 在SVG创建后对dots容器应用触摸优化
+        function applyTouchOptimization() {
+          var dotsContainer = document.getElementById('dots-container');
+          var dots = document.getElementById('dots');
+          
+          if (dotsContainer) {
+            dotsContainer.style.touchAction = 'none';
+            preventDefaultTouch(dotsContainer);
+          }
+          
+          if (dots) {
+            dots.style.touchAction = 'none';
+            preventDefaultTouch(dots);
+          }
+          
+          // 确保按钮可以正常点击
+          var buttonsToFix = [
+            'download-image', 'share-twitter', 'share-facebook', 
+            'share-instagram', 'try-again', 'shuffle-button'
+          ];
+          
+          buttonsToFix.forEach(function(id) {
+            var button = document.getElementById(id);
+            if (button) {
+              button.style.touchAction = 'manipulation';
+              button.style.cursor = 'pointer';
+              
+              // 确保触摸事件能够穿透到按钮
+              button.addEventListener('touchstart', function(e) {
+                e.stopPropagation(); // 阻止冒泡而不是阻止默认行为
+              }, {passive: true});
+              
+              button.addEventListener('touchend', function(e) {
+                e.stopPropagation(); // 阻止冒泡而不是阻止默认行为
+                // 如果没有移动太多，则模拟点击
+                this.click();
+              }, {passive: true});
+            }
+          });
+          
+          // 监控SVG元素的创建
+          var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+              if (mutation.addedNodes && mutation.addedNodes.length) {
+                var svg = dots.querySelector('svg');
+                if (svg) {
+                  svg.style.touchAction = 'none';
+                  preventDefaultTouch(svg);
+                  console.log('Touch optimization applied to SVG');
+                }
+              }
+            });
+          });
+          
+          if (dots) {
+            observer.observe(dots, { childList: true });
+          }
+        }
+        
+        // 调用优化函数
+        setTimeout(applyTouchOptimization, 500);
+      });
+    </script>
+<!--<![endif]-->
+<link href="koala.css?1.9.4" rel="stylesheet" type="text/css"/>
+<style>
+      /* 强制覆盖移动端dots容器的触摸行为 */
+      #dots-container, #dots, #dots svg, #dots circle {
+        touch-action: none !important;
+        -ms-touch-action: none !important;
+        -webkit-touch-callout: none !important;
+        -webkit-user-select: none !important;
+        -khtml-user-select: none !important;
+        -moz-user-select: none !important;
+        -ms-user-select: none !important;
+        user-select: none !important;
+      }
+      
+      /* 确保移动端按钮可点击 */
+      #download-image, #share-twitter, #share-facebook, #share-instagram, #try-again, #shuffle-button {
+        cursor: pointer !important;
+        touch-action: manipulation !important;
+        -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
+      }
+    </style>
+<script type="text/javascript">
+      // Store the background options globally for reuse
+      window.backgroundOptions = [
+        'img/background-img1.png',
+        'img/background-img2.png',
+        'img/background-img3.png',
+        'img/background-img4.png'
+      ];
+      
+      // Define quotes globally for immediate access
+      window.quotes = [
+        "Reveal beauty one circle at a time.",
+        "In every exploration lies a discovery.",
+        "Through patience, the image emerges.",
+        "Uncover the magic beneath the surface.",
+        "Moments of discovery, captured in circles.",
+        "Beneath the layers, truth unfolds.",
+        "Gently revealing what was always there."
+      ];
+      
+      // Initialize the processUploadedFile function globally for drag and drop operations
+      window.processUploadedFile = function() {};
+      
+      // 保持分享卡片的布局不受媒体查询影响
+      window.mobileShareCardSupport = function() {
+        // 在移动设备上，保持下载卡片的尺寸和布局
+        window.originalCardWidth = 1800;
+        window.originalCardHeight = 1000;
+        window.originalBubbleSize = 720;
+        window.originalBubbleX = 65;
+        
+        // 确保媒体查询不会影响分享卡片生成的布局尺寸
+        if (window.matchMedia("(max-width: 1000px)").matches) {
+          console.log("Mobile device detected - ensuring card layout is preserved");
+          
+          // 移动端SVG尺寸调整
+          window.adjustMobileSvgSize = function() {
+            // 等待SVG元素创建完成
+            setTimeout(function() {
+              var dotsContainer = document.getElementById('dots-container');
+              var svg = dotsContainer ? dotsContainer.querySelector('svg') : null;
+              
+              if (svg) {
+                // 确保SVG尺寸与容器匹配
+                svg.setAttribute('width', '400');
+                svg.setAttribute('height', '400');
+                svg.setAttribute('viewBox', '0 0 512 512');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '400px';
+                console.log("Mobile SVG size adjusted");
+              }
+            }, 500); // 给SVG创建一些时间
+          };
+          
+          // 监听dots-container的显示变化
+          var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+              if (mutation.target.style.display === 'block') {
+                window.adjustMobileSvgSize();
+              }
+            });
+          });
+          
+          // 开始监听
+          var dotsContainer = document.getElementById('dots-container');
+          if (dotsContainer) {
+            observer.observe(dotsContainer, { attributes: true, attributeFilter: ['style'] });
+          }
+        }
+      };
+      
+      // Initialize card and set up the interactions when page is loaded
+      window.onload = function() {
+        // 确保一开始不显示dots-container
+        d3.select('#dots-container').style('display', 'none');
+        
+        // 调用移动端分享卡片支持
+        window.mobileShareCardSupport();
+        // Initialize the drag and drop functionality for card upload area
+        function setupCardUploadDragAndDrop() {
+          var uploadArea = document.getElementById('card-upload-area');
+          if (!uploadArea) return;
+          
+          uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+          });
+          
+          uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+          });
+          
+          uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+          });
+          
+          // Prevent default behavior for drag and drop on document
+          document.body.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+          });
+          
+          document.body.addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+          });
+        }
+        // Make sure card container has background image
+        var cardContainer = document.getElementById('card-container');
+        if (cardContainer && (!cardContainer.style.backgroundImage || cardContainer.style.backgroundImage === '')) {
+          var randomIndex = Math.floor(Math.random() * window.backgroundOptions.length);
+          var bgImage = window.backgroundOptions[randomIndex];
+          cardContainer.style.backgroundImage = 'url(' + bgImage + ')';
+          console.log("Manually set background image to: " + bgImage);
+        }
+        
+        // Show card container by default instead of upload container
+        d3.select('#card-container').style('display', 'block');
+        // Make sure quote container is visible
+        d3.select('#quote-container').style('display', 'block');
+        
+        // Set random quote
+        var randomQuote = window.quotes[Math.floor(Math.random() * window.quotes.length)];
+        d3.select('#random-quote')
+          .html('"' + randomQuote + '"')
+          .style('font-family', '"Playfair Display", Georgia, serif')
+          .style('font-size', '32px')
+          .style('font-style', 'italic')
+          .style('line-height', '1.4')
+          .style('color', '#1A202C')
+          .style('text-shadow', '0 1px 2px rgba(255, 255, 255, 0.7)');
+          
+        // Setup drag and drop for the card upload area
+        setTimeout(setupCardUploadDragAndDrop, 100);
+        
+        // Global processing function for accessibility outside onload
+        window.processUploadedFile = processUploadedFile;
+      };
+    </script>
+</head>
+<body>
+<div id="center">
+<div id="cont">
+<noscript>
+          Your browser does not support JavaScript or it is disabled.<br/>
+          JavaScript is needed to view this site.
+        </noscript>
+<div id="card-container" style="display: none; position: relative; width: 100%; height: 100%; background-image: url('img/background-img1.png'); background-size: cover; background-position: center;">
+<div id="shuffle-button" style="position: absolute; top: 15px; right: 15px; width: 34px; height: 34px; background-color: rgba(255, 255, 255, 0.8); border-radius: 50%; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); z-index: 10; transition: all 0.2s ease; -webkit-tap-highlight-color: transparent; touch-action: manipulation;">
+<div style="width: 20px; height: 20px; background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27%3E%3Cpath fill=%27%234682b4%27 d=%27M14.73 19q-.212 0-.355-.144t-.144-.357t.144-.356t.356-.143h2.6l-3.168-3.167q-.146-.147-.153-.348t.16-.366q.164-.165.356-.165t.357.165L18 17.242V14.79q0-.213.144-.357t.357-.143t.356.143t.143.357v3.403q0 .344-.232.576t-.576.232zm-9.584-.146q-.16-.16-.16-.354t.16-.354L17.292 6h-2.561q-.213 0-.356-.144t-.144-.357t.144-.356T14.73 5h3.461q.344 0 .576.232t.232.576v3.404q0 .212-.144.356t-.357.144t-.356-.144T18 9.212V6.708L5.854 18.854q-.14.14-.344.15t-.364-.15m-.005-13.02Q5 5.695 5.01 5.492t.146-.345t.341-.14t.351.14l3.893 3.906q.14.14.143.332q.003.191-.143.34q-.134.138-.342.138q-.207 0-.347-.14z%27/%3E%3C/svg%3E'); background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
+</div>
+<div id="dots-container" style="position: absolute; left: 30px; top: 50%; transform: translateY(-50%); display: none; overflow: hidden; touch-action: none;">
+<div id="dots" style="touch-action: none;"></div>
+</div>
+<div id="card-upload-area" style="position: absolute; left: 30px; top: 50%; transform: translateY(-50%); width: 45%; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 16px; padding: 20px;">
+<div style="text-align: center; margin-bottom: 20px;">
+<div style="font-family: 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: 500; margin-bottom: 12px; color: #2D3748;">Discover Your Image</div>
+<div style="font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.6; margin-bottom: 20px; color: #4A5568;">Upload a photo and reveal it gradually</div>
+</div>
+<div style="display: flex; align-items: center; justify-content: center; cursor: pointer; width: 100%; position: relative; padding: 20px;">
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;">
+<div style="margin-bottom: 16px;">
+<svg fill="none" height="54" viewbox="0 0 24 24" width="54" xmlns="http://www.w3.org/2000/svg">
+<rect fill="rgba(255, 255, 255, 0.7)" height="18" rx="4" stroke="#4682b4" stroke-width="1.5" width="18" x="3" y="3"></rect>
+<circle cx="8.5" cy="8.5" fill="#4682b4" r="1.5"></circle>
+<path d="M3 17L8 12L10 14L15 9L21 15V17C21 19.2091 19.2091 21 17 21H7C4.79086 21 3 19.2091 3 17Z" fill="#4682b4" fill-opacity="0.6"></path>
+<path d="M12 16V11M12 11L9 14M12 11L15 14" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+</div>
+<div style="font-family: 'Inter', sans-serif; font-weight: 500; color: #4682b4; margin-bottom: 8px; padding: 7px 14px; border-radius: 8px; background-color: rgba(70, 130, 180, 0.1);">Choose an image</div>
+</div>
+<input accept="image/*" id="card-image-upload" style="opacity: 0; position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer;" title="" type="file"/>
+</div>
+</div>
+<div id="quote-container" style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); width: 42%; text-align: left;">
+<div id="random-quote"></div>
+</div>
+<div id="footer-text" style="position: absolute; bottom: 18px; width: 100%; text-align: center; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 13px; color: #4A5568;">
+            Interactive Image Explorer built by <span style="display: inline-block; width: 16px; height: 16px; border-radius: 50%; background-image: url('img/20250320-105901.jpeg'); background-size: cover; vertical-align: middle; margin: 0 4px;"></span> Niki
+          </div>
+</div>
+<div id="sharing-buttons" style="display: none">
+<div class="sharing-container">
+<button class="share-button" id="download-image" style="position: relative; z-index: 999; touch-action: manipulation;">
+<svg fill="none" height="20" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M7 10L12 15L17 10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M12 15V3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Download</span>
+</button>
+<button class="share-button" id="share-twitter" style="position: relative; z-index: 999; touch-action: manipulation;">
+<svg fill="none" height="20" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M23 3.01006C22.0424 3.68553 20.9821 4.20217 19.86 4.54006C19.2577 3.84757 18.4573 3.35675 17.567 3.13398C16.6767 2.91122 15.7395 2.96725 14.8821 3.29451C14.0247 3.62177 13.2884 4.20446 12.773 4.96377C12.2575 5.72309 11.9877 6.62239 12 7.54006V8.54006C10.2426 8.58562 8.50127 8.19587 6.93101 7.4055C5.36074 6.61513 4.01032 5.44869 3 4.01006C3 4.01006 -1 13.0101 8 17.0101C5.94053 18.408 3.48716 19.109 1 19.0101C10 24.0101 21 19.0101 21 7.51006C20.9991 7.23151 20.9723 6.95365 20.92 6.68006C21.9406 5.67355 22.6608 4.40277 23 3.01006Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Twitter</span>
+</button>
+<button class="share-button" id="share-facebook" style="position: relative; z-index: 999; touch-action: manipulation;">
+<svg fill="none" height="20" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M18 2H15C13.6739 2 12.4021 2.52678 11.4645 3.46447C10.5268 4.40215 10 5.67392 10 7V10H7V14H10V22H14V14H17L18 10H14V7C14 6.73478 14.1054 6.48043 14.2929 6.29289C14.4804 6.10536 14.7348 6 15 6H18V2Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Facebook</span>
+</button>
+<button class="share-button" id="share-instagram" style="position: relative; z-index: 999; touch-action: manipulation;">
+<svg fill="none" height="20" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 2H7C4.23858 2 2 4.23858 2 7V17C2 19.7614 4.23858 22 7 22H17C19.7614 22 22 19.7614 22 17V7C22 4.23858 19.7614 2 17 2Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M16 11.37C16.1234 12.2022 15.9813 13.0522 15.5938 13.799C15.2063 14.5458 14.5932 15.1514 13.8416 15.5297C13.0901 15.9079 12.2385 16.0396 11.4078 15.9059C10.5771 15.7723 9.80977 15.3801 9.21485 14.7852C8.61993 14.1902 8.22774 13.4229 8.09408 12.5922C7.96042 11.7615 8.09208 10.9099 8.47034 10.1584C8.8486 9.40685 9.4542 8.79374 10.201 8.40624C10.9478 8.01874 11.7978 7.87659 12.63 8C13.4789 8.12588 14.2649 8.52146 14.8717 9.1283C15.4785 9.73515 15.8741 10.5211 16 11.37Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M17.5 6.5H17.51" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Instagram</span>
+</button>
+</div>
+</div>
+<div id="next" style="display: none">
+<div class="complete-title">Awesome!</div>
+<div class="complete-subtitle">You've revealed the image. Want to try another one?</div>
+<button id="try-again" style="position: relative; z-index: 999; touch-action: manipulation;">Try Another Image</button>
+</div>
+</div>
+</div>
+<div id="footer">
+<div class="copyright">
+        Based on <a href="https://github.com/vogievetsky/KoalasToTheMax">KoalasToTheMax</a> by Vadim Ogievetsky © 2012
+        <span class="separator">|</span>
+        Recreated with custom functionality by <a href="https://www.yourware.so/profile/R4231xOUOwO9YsE7hVfi1CXMgCl2">Niki</a>
+<span class="separator">|</span>
+        Powered by <a href="http://d3js.org/">D3</a>
+</div>
+</div>
+<script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-17409200-2']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+<script type="text/javascript">
+
+    var _fastrack_account = 'FT-1000001';
+
+    (function(w,h) {
+      if (typeof _fastrack_account !== 'string') return;
+      var acc = _fastrack_account;
+      try {
+        var session = 'S' + Math.random().toFixed(8).substring(2);
+        var num = 0;
+        var now = new Date();
+        var initTime = +now;
+        var tzm = String(now).match(/\((\w+)\)/);
+        var sx = (window.pageXOffset !== undefined) ? window.pageXOffset : (document.documentElement || document.body.parentNode || document.body).scrollLeft;
+        var sy = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+        w.fastrack = function(opt) {
+          var a = {
+            A: acc,
+            S: session,
+            N: num++,
+            P: document.location.href,
+            L: +new Date() - initTime,
+            F: w.document.referrer || 'Direct',
+            C: screen.width + 'x' + screen.height,
+            R: sx + 'x' + sy,
+            O: now.getTimezoneOffset(),
+            Z: (tzm && tzm.length === 2) ? tzm[1] : 'N/A'
+          }
+
+          if (opt) {
+            var s;
+            for (var j = 1; j <= 6; j++) {
+              s = 'D0' + j;
+              if (opt[s]) { a['D0' + j] = opt['D0' + j]; }
+              s = 'M0' + j;
+              if (opt[s]) { a['M0' + j] = opt['M0' + j]; }
+            }
+          }
+
+          if ('innerWidth' in window) {
+            a.W = w.innerWidth + 'x' + w.innerHeight;
+          } else {
+            var e = w.document.documentElement || w.document.body;
+            a.W = w.clientWidth + 'x' + w.clientHeight;
+          }
+          var params = [];
+          for (var k in a) params.push(encodeURIComponent(k) + "=" + encodeURIComponent(String(a[k])));
+          var i = new Image();
+          i.src = h + '?' + params.join('&');
+          return true;
+        };
+      }catch(e){}
+    })(window,"https://rt.metamarkets.com/i1/m.gif");
+
+    </script>
+<script type="text/javascript">
+      window.shownFile = 'none';
+      window.userUploadedImage = false;
+      window.sharingButtonsShown = false;
+
+      (function() {
+        var now = +new Date();
+        window.gaTrack = function(type, subtype) {
+          var time = Math.round((+new Date() - now) / 1000);
+          function doTrack() {
+            if (!window._gaq) return;
+            _gaq.push(['_trackEvent', String(type), String(subtype), window.location.href, time]);
+          }
+          if (window._gaq) {
+            doTrack()
+          } else {
+            setTimeout(doTrack, 1);
+          }
+        }
+      })();
+
+      function track(type, subtype) {
+        /*
+        fastrack({
+          D01: version,
+          D02: type,
+          D03: subtype,
+          D04: shownFile,
+          M01: 3 // tmp
+        });
+        */
+        gaTrack(type + '-' + version, subtype);
+      }
+    </script>
+<!--[if lt IE 9]>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+
+    <style>
+      .chromeFrameInstallDefaultStyle {
+        width: 800px;
+        height: 600px;
+        border: 1px solid #cccccc;
+      }
+    </style>
+
+    <div id="prompt">
+    </div>
+
+    <script>
+      window.inOldIE = true;
+      track('OldIE', '1');
+
+      // The conditional ensures that this code will only execute in IE,
+      // Therefore we can use the IE-specific attachEvent without worry
+      window.attachEvent("onload", function() {
+        CFInstall.check({
+          mode: "inline", // the default
+          node: "prompt",
+          oninstall: function() {
+            track('InstalledGCF', 'OneLessRawIE');
+          }
+        });
+      });
+    </script>
+    <![endif]-->
+<!--[if gte IE 9]><!-->
+<script type="text/javascript">
+      // Code left intentionally unminimized for your reading pleasure.
+
+      (function() {
+        window.shownFile = 'none';
+
+        // If an error happens I want to know about it!
+        window.onerror = function(msg, url, ln) {
+          msg = msg.toString();
+          // In Chrome and Firefox an error on a script form a foreign domain will cause this, see link bellow:
+          // http://stackoverflow.com/questions/5913978/cryptic-script-error-reported-in-javascript-in-chrome-and-firefox
+          if (msg === 'Script error.' && url === '' && ln === 0) return;
+          track('OnError', "'" + msg + "' in '" + url + "' @ " + ln + " /u:'" + window.navigator.userAgent + "'");
+          // Track only one error per page load
+          window.onerror = function() {};
+        };
+
+        // First, make sure we can run.
+        if (!koala.supportsCanvas()) {
+          track('NoCanvas', window.navigator.userAgent);
+          alert("Sorry, KoalsToTheMax needs HTML5 Canvas support which your browser does not have. Supported browsers include Chrome, Safari, Firefox, Opera, and Internet Explorer 9, 10");
+          return;
+        }
+
+        if (!koala.supportsSVG()) {
+          track('NoSVG', window.navigator.userAgent);
+          alert("Sorry, KoalsToTheMax needs SVG support which your browser does not have. Supported browsers include Chrome, Safari, Firefox, Opera, and Internet Explorer 9, 10");
+          return;
+        }
+
+        // This is strange, track it if it happens.
+        if (!window.d3) {
+          track('NoD3', window.navigator.userAgent);
+          alert("Some how D3 was not loaded so the site can not start. This is bad... We are investigating. Try refreshing the page and see if that helps.");
+          return;
+        }
+
+        // Try you must. If there is an error report it to me.
+        try {
+          // btoa and atob do not handle utf-8 as I have discovered the hard way so they need to babied
+          // See: https://developer.mozilla.org/en-US/docs/DOM/window.btoa#Unicode_Strings
+          function utf8_to_b64(str) {
+            return window.btoa(unescape(encodeURIComponent(str)));
+          }
+
+          function b64_to_utf8(str) {
+            return decodeURIComponent(escape(window.atob(str)));
+          }
+
+          // Function for event handling (used for both URL and uploaded images)
+          function onEvent(what, value) {
+            track(what, value);
+
+            // Show sharing buttons when the image is 10% revealed (PercentClear at 10%)
+            if (what === 'PercentClear' && value >= 10 && !window.sharingButtonsShown) {
+              window.sharingButtonsShown = true;
+              d3.select('#sharing-buttons')
+                .style('display', null);
+              
+              // 在移动端优化dots的触摸事件和分享按钮
+              if (window.matchMedia("(max-width: 1000px)").matches) {
+                var dotsContainer = document.getElementById('dots-container');
+                var dots = document.getElementById('dots');
+                var svg = dots ? dots.querySelector('svg') : null;
+                
+                if (dotsContainer) dotsContainer.style.touchAction = 'none';
+                if (dots) dots.style.touchAction = 'none';
+                if (svg) svg.style.touchAction = 'none';
+                
+                console.log('Touch behavior reapplied to dots elements');
+                
+                // 调用全局函数，确保分享按钮可点击
+                if (typeof window.fixShareButtons === 'function') {
+                  setTimeout(window.fixShareButtons, 100);
+                }
+              }
+              
+              // Setup sharing functionality
+              setupSharingButtons();
+              
+              // 为新显示的按钮添加触摸事件处理
+              setTimeout(function() {
+                if (typeof window.fixShareButtons === 'function') {
+                  window.fixShareButtons();
+                }
+              }, 500);
+            }
+
+            if (what === 'LayerClear' && value == 0) {
+              d3.select('#next')
+                .style('display', null);
+              
+              // Add event listener for the "Try Again" button
+              function handleTryAgain() {
+                // 防止重复触发
+                if (window._tryAgainInProgress) return;
+                window._tryAgainInProgress = true;
+                
+                // Hide the next section
+                d3.select('#next').style('display', 'none');
+                // Hide dots container
+                d3.select('#dots-container').style('display', 'none');
+                // Hide shuffle button
+                d3.select('#shuffle-button').style('display', 'none');
+                // Show upload area again
+                d3.select('#card-upload-area').style('display', 'flex');
+                // Reset sharing buttons
+                window.sharingButtonsShown = false;
+                d3.select('#sharing-buttons').style('display', 'none');
+                
+                // 重置锁定状态
+                setTimeout(function() {
+                  window._tryAgainInProgress = false;
+                }, 500);
+              }
+              
+              d3.select('#try-again')
+                .on('click', handleTryAgain);
+            }
+          }
+          
+          // Function to setup sharing buttons
+          function setupSharingButtons() {
+            // Get current URL for sharing
+            var currentUrl = window.location.href.split('?')[0]; // Remove any existing parameters
+            
+            // Prepare share text
+            var shareTitle = "Check out this interactive image I discovered!";
+            var shareText = "I unveiled this image using an interactive explorer. Try it yourself!";
+            
+            // Quote array moved to window.onload
+            
+            // Function to capture the current canvas with a beautiful card design
+            function captureCanvas() {
+              return new Promise(function(resolve) {
+                var svgElement = document.querySelector('#dots svg');
+                
+                // Create a high-resolution canvas for the download share card (not the display card)
+                var canvas = document.createElement('canvas');
+                var ctx = canvas.getContext('2d');
+                
+                // Set canvas dimensions to match the reference image size (1800×1000 pixels)
+                canvas.width = 1800;
+                canvas.height = 1000;
+                
+                // Get the current quote displayed on the webpage
+                var quote = d3.select('#random-quote').text().replace(/"/g, '').replace(/^"/, '').replace(/"$/, '');
+                if (!quote) {
+                  quote = window.quotes[Math.floor(Math.random() * window.quotes.length)];
+                }
+                console.log("Using current quote for card:", quote);
+                
+                // Convert SVG to image
+                var svgData = new XMLSerializer().serializeToString(svgElement);
+                var bubbleImg = new Image();
+                var avatarImg = new Image();
+                var backgroundImg = new Image();
+                
+                // Extract current background image from card container
+                var currentBgStyle = d3.select('#card-container').style('background-image');
+                var currentBgUrl = currentBgStyle.replace(/url\((["']?)(.*?)\1\)/, '$2');
+                
+                // If extraction failed, use the first background image as default
+                if (!currentBgUrl || currentBgUrl === currentBgStyle) {
+                  currentBgUrl = 'img/background-img1.png';
+                }
+                
+                console.log("Using background for card:", currentBgUrl);
+                
+                // Load all three images
+                Promise.all([
+                  new Promise(function(resolve) {
+                    bubbleImg.onload = resolve;
+                    bubbleImg.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+                  }),
+                  new Promise(function(resolve) {
+                    avatarImg.onload = resolve;
+                    avatarImg.src = 'img/20250320-105901.jpeg';
+                  }),
+                  new Promise(function(resolve) {
+                    backgroundImg.onload = resolve;
+                    backgroundImg.src = currentBgUrl;
+                  })
+                ]).then(function() {
+                  // Draw the card directly on the canvas (no background)
+                  var cardX = 0;
+                  var cardY = 0;
+                  var cardWidth = 1800;
+                  var cardHeight = 1000;
+                  
+                  // Draw the background image to fill the entire canvas
+                  ctx.drawImage(backgroundImg, 0, 0, cardWidth, cardHeight);
+                  
+                  // Add a subtle shadow for contrast with the background
+                  ctx.shadowColor = 'rgba(0, 0, 0, 0.15)';
+                  ctx.shadowBlur = 40;
+                  ctx.shadowOffsetX = 0;
+                  ctx.shadowOffsetY = 10;
+                  
+                  // Save state for the frosted glass overlay
+                  ctx.save();
+                  
+                  // Draw semi-transparent overlay for better text contrast
+                  ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+                  ctx.fillRect(cardX, cardY, cardWidth, cardHeight);
+                  ctx.restore();
+                  
+                  // Reset shadow
+                  ctx.shadowColor = 'transparent';
+                  ctx.shadowBlur = 0;
+                  ctx.shadowOffsetX = 0;
+                  ctx.shadowOffsetY = 0;
+                  
+                  // Save state for the border
+                  ctx.save();
+                  
+                  // Draw subtle border
+                  ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+                  ctx.lineWidth = 2;
+                  ctx.strokeRect(cardX, cardY, cardWidth, cardHeight);
+                  ctx.restore();
+                  
+                  // Draw bubbles image - match the layout in interactive-image-card (4).png
+                  var bubbleSize = 720; // Bubble size for shared card
+                  var bubbleX = cardX + 65; // Left margin
+                  var bubbleY = cardY + (cardHeight - bubbleSize) / 2;
+                  
+                  // Draw bubble image with rounded corners
+                  ctx.save();
+                  roundedRect(ctx, bubbleX, bubbleY, bubbleSize, bubbleSize, 16); // 2x corner radius
+                  ctx.clip();
+                  ctx.drawImage(bubbleImg, bubbleX, bubbleY, bubbleSize, bubbleSize);
+                  ctx.restore();
+                  
+                  // Draw quote with layout matching the reference image
+                  var quoteX = bubbleX + bubbleSize + 150; // Margin from bubble
+                  var quoteY = bubbleY + 200; // Position quote vertically centered
+                  var quoteWidth = cardWidth - bubbleSize - 240; // Width with padding
+                  
+                  // Elegant quote text with styling matching the reference image
+                  ctx.textAlign = 'left';
+                  ctx.fillStyle = '#1A202C'; // Darker text for better contrast
+                  ctx.font = 'italic 500 72px "Playfair Display", Georgia, serif'; // Larger font size
+                  wrapText(ctx, '"' + quote + '"', quoteX, quoteY, quoteWidth, 100); // Increased line height
+                  
+                  // Draw centered footer to match reference image
+                  var footerY = cardY + cardHeight - 60; // Margin from bottom
+                  
+                  // Footer full text with avatar placeholder
+                  var footerText = 'Interactive Image Explorer built by Niki';
+                  
+                  // Set footer text style matching reference image
+                  ctx.textAlign = 'center';
+                  ctx.fillStyle = '#4A5568'; // Dark gray for better contrast
+                  ctx.font = 'italic 400 24px "Playfair Display", Georgia, serif'; // Match reference size
+                  
+                  // Measure text to determine avatar position
+                  var fullTextWidth = ctx.measureText(footerText).width;
+                  var textBeforeAvatar = 'Interactive Image Explorer built by ';
+                  var textBeforeWidth = ctx.measureText(textBeforeAvatar).width;
+                  
+                  // Center point of the card
+                  var centerX = cardX + (cardWidth / 2);
+                  
+                  // Calculate start position to ensure center alignment with avatar - match reference image
+                  var avatarSize = 24; // Size to match reference image
+                  var textStartX = centerX - (fullTextWidth / 2);
+                  
+                  // Position where avatar should go
+                  var avatarX = textStartX + textBeforeWidth;
+                  var avatarY = footerY - 20; // Offset for alignment with text
+                  
+                  // Draw first part of text
+                  ctx.textAlign = 'left';
+                  ctx.fillText(textBeforeAvatar, textStartX, footerY);
+                  
+                  // Draw avatar with proper aspect ratio
+                  ctx.save();
+                  ctx.beginPath();
+                  ctx.arc(avatarX + avatarSize/2, avatarY + avatarSize/2, avatarSize/2, 0, Math.PI * 2);
+                  ctx.closePath();
+                  ctx.clip();
+                  
+                  // Calculate aspect ratio to avoid stretching
+                  var imgAspect = avatarImg.width / avatarImg.height;
+                  var drawWidth, drawHeight, offsetX = 0, offsetY = 0;
+                  
+                  if (imgAspect >= 1) {
+                    // Image is wider than tall, or square
+                    drawHeight = avatarSize;
+                    drawWidth = avatarSize * imgAspect;
+                    offsetX = (avatarSize - drawWidth) / 2;
+                  } else {
+                    // Image is taller than wide
+                    drawWidth = avatarSize;
+                    drawHeight = avatarSize / imgAspect;
+                    offsetY = (avatarSize - drawHeight) / 2;
+                  }
+                  
+                  ctx.drawImage(
+                    avatarImg, 
+                    avatarX + offsetX, 
+                    avatarY + offsetY, 
+                    drawWidth, 
+                    drawHeight
+                  );
+                  ctx.restore();
+                  
+                  // Draw the name after the avatar
+                  ctx.fillText('Niki', avatarX + avatarSize + 10, footerY); // Spacing to match reference
+                  
+                  // Return the final image data URL with higher quality
+                  resolve(canvas.toDataURL('image/png', 1.0)); // Use max quality
+                });
+              });
+            }
+            
+            // Helper function to draw rounded rectangles
+            function roundedRect(ctx, x, y, width, height, radius) {
+              ctx.save();
+              ctx.beginPath();
+              ctx.moveTo(x + radius, y);
+              ctx.lineTo(x + width - radius, y);
+              ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+              ctx.lineTo(x + width, y + height - radius);
+              ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+              ctx.lineTo(x + radius, y + height);
+              ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+              ctx.lineTo(x, y + radius);
+              ctx.quadraticCurveTo(x, y, x + radius, y);
+              ctx.closePath();
+            }
+            
+            // Helper function to wrap text
+            function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+              var words = text.split(' ');
+              var line = '';
+              var lines = [];
+              
+              for(var n = 0; n < words.length; n++) {
+                var testLine = line + words[n] + ' ';
+                var metrics = ctx.measureText(testLine);
+                var testWidth = metrics.width;
+                
+                if (testWidth > maxWidth && n > 0) {
+                  lines.push(line);
+                  line = words[n] + ' ';
+                } else {
+                  line = testLine;
+                }
+              }
+              
+              lines.push(line);
+              
+              for(var i = 0; i < lines.length; i++) {
+                ctx.fillText(lines[i], x, y + (i * lineHeight));
+              }
+            }
+            
+            // Download image button
+            function handleDownload() {
+              // 防止重复触发
+              if (window._downloadInProgress) return;
+              window._downloadInProgress = true;
+              
+              captureCanvas().then(function(dataUrl) {
+                try {
+                  console.log("Download initiated");
+                  var link = document.createElement('a');
+                  link.download = 'interactive-image-card.png';
+                  link.href = dataUrl;
+                  document.body.appendChild(link);
+                  
+                  // Use setTimeout to ensure the browser has time to process
+                  setTimeout(function() {
+                    link.click();
+                    // Remove the link after a delay
+                    setTimeout(function() {
+                      document.body.removeChild(link);
+                      // 重置标志，允许再次下载
+                      window._downloadInProgress = false;
+                    }, 100);
+                  }, 50);
+                  
+                  track('Download', 'Image');
+                } catch(e) {
+                  console.error("Download error:", e);
+                  alert("Unable to download image. Please try again.");
+                  window._downloadInProgress = false;
+                }
+              }).catch(function(error) {
+                console.error("Download failed:", error);
+                window._downloadInProgress = false;
+              });
+            }
+            
+            d3.select('#download-image')
+              .on('click', handleDownload);
+            
+            // Twitter share button
+            function handleTwitterShare() {
+              // 防止重复触发
+              if (window._twitterShareInProgress) return;
+              window._twitterShareInProgress = true;
+              
+              captureCanvas().then(function(dataUrl) {
+                // For Twitter we'll open the share intent URL
+                // Note: Twitter doesn't accept direct image data in the URL
+                var twitterUrl = 'https://twitter.com/intent/tweet?text=' + 
+                  encodeURIComponent(shareText) + 
+                  '&url=' + encodeURIComponent(currentUrl);
+                
+                window.open(twitterUrl, '_blank');
+                track('Share', 'Twitter');
+                
+                // 设置延时防止重复触发
+                setTimeout(function() {
+                  window._twitterShareInProgress = false;
+                }, 1000);
+              }).catch(function() {
+                window._twitterShareInProgress = false;
+              });
+            }
+            
+            d3.select('#share-twitter')
+              .on('click', handleTwitterShare);
+            
+            // Facebook share button
+            function handleFacebookShare() {
+              // 防止重复触发
+              if (window._facebookShareInProgress) return;
+              window._facebookShareInProgress = true;
+              
+              // Facebook share dialog
+              var facebookUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + 
+                encodeURIComponent(currentUrl) +
+                '&quote=' + encodeURIComponent(shareText);
+              
+              window.open(facebookUrl, '_blank');
+              track('Share', 'Facebook');
+              
+              // 设置延时防止重复触发
+              setTimeout(function() {
+                window._facebookShareInProgress = false;
+              }, 1000);
+            }
+            
+            d3.select('#share-facebook')
+              .on('click', handleFacebookShare);
+            
+            // Instagram (open instructions for sharing as Instagram doesn't have a direct web API)
+            function handleInstagramShare() {
+              // 防止重复触发
+              if (window._instagramShareInProgress) return;
+              window._instagramShareInProgress = true;
+              
+              captureCanvas().then(function(dataUrl) {
+                // For Instagram, we need to download the image first then instruct the user
+                var link = document.createElement('a');
+                link.download = 'instagram-share.png';
+                link.href = dataUrl;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                alert('Image downloaded! To share on Instagram:\n1. Open Instagram app\n2. Create a new post\n3. Select the downloaded image\n4. Add the caption: ' + shareText + ' ' + currentUrl);
+                
+                track('Share', 'Instagram');
+                
+                // 设置延时防止重复触发
+                setTimeout(function() {
+                  window._instagramShareInProgress = false;
+                }, 1000);
+              }).catch(function() {
+                window._instagramShareInProgress = false;
+              });
+            }
+            
+            d3.select('#share-instagram')
+              .on('click', handleInstagramShare);
+          }
+          
+          // Function to process an image file
+          function processImageFile(file) {
+            var img = new Image();
+            img.onload = function() {
+              var colorData;
+              try {
+                colorData = koala.loadImage(this);
+              } catch (e) {
+                colorData = null;
+                track('BadLoad', "Msg: '" + e.message + "' file: '" + file + "'");
+                alert("Sorry, KoalsToTheMax could not load the image '" + file + "'");
+                setTimeout(function() {
+                  window.location.href = location.protocol + '//' + location.host + location.pathname;
+                }, 750);
+              }
+              if (colorData) {
+                koala.makeCircles("#dots", colorData, onEvent);
+                track('GoodLoad', 'Yay');
+              }
+            };
+            img.src = file;
+          }
+
+          // Handle the custom images 'API'
+          // Supported URLs are:
+          // 1. DOMAIN
+          //   The just the page domain / loads one of the default files
+          //
+          // 2. DOMAIN?BASE64==
+          //   Where BASE64== is a UTF-8 base64 encoded string of one of the following things:
+          //   a. An image URL
+          //      Example: http://i.imgur.com/cz1Jb.jpg
+          //      Use that URL image instead of the default one.
+          //
+          //   b. A JSON string representing an array of URLs
+          //      Example: ["http://i.imgur.com/cz1Jb.jpg","http://i.imgur.com/Q5IqH.jpg"]
+          //      Pick one of the images at random and use that instead of the default one.
+          //
+          //   c. A JSON string representing an object with the keys 'images', 'background' and 'hideNote'
+          //      Example: {"background":"#000","images":["http://i.imgur.com/cz1Jb.jpg","http://i.imgur.com/Q5IqH.jpg"]}
+          //      images (required): Pick one of the images at random and use that instead of the default one.
+          //      background (optional): Use the value of background as the page background.
+          //      hideNote (optional): Hide the mention on the bottom.
+          //
+          // 3. DOMAIN?image_url
+          //   Where image URL is an actual image URL that will get re-encoded into base64 (2)
+          //   Example: http://i.imgur.com/cz1Jb.jpg
+          //
+          // Note: where DOMAIN is usually http://koalastothemax.com
+          function goToHidden(location, string) {
+            location.href = '//' + location.host + location.pathname + '?' + utf8_to_b64(string);
+          }
+
+          function basicLoad(location) {
+            var possible = ['koalas', 'koalas1', 'koalas2', 'koalas3'];
+            var file = 'img/' + possible[Math.floor(Math.random() * possible.length)] + '.jpg'
+            return {
+              file: file,
+              shownFile: location.protocol + '//' + location.host + location.pathname + file
+            };
+          }
+
+          function parseUrl(location) {
+            var href = location.href;
+            var idx, param, file;
+
+            idx = href.indexOf('?');
+            if (idx === -1 || idx === href.length - 1) {
+              return basicLoad(location); // Case 1
+            }
+
+            param = href.substr(idx + 1);
+            if (!/^[a-z0-9+\/]+=*$/i.test(param)) {
+              // Does not look base64
+              goToHidden(location, param);
+              return null;
+            }
+
+            // Case 2
+            try {
+              param = b64_to_utf8(param);
+            } catch (e) {
+              return basicLoad(location); // Invalid base64, do a basic load
+            }
+
+            try {
+              param = JSON.parse(param);
+            } catch (e) {
+              // Case 2a
+              return {
+                file: param,
+                shownFile: param
+              };
+            }
+
+            // At this point param is a JS object
+            if (Array.isArray(param) && param.length) {
+              // Case 2b
+              file = param[Math.floor(Math.random() * param.length)];
+              return {
+                file: file,
+                shownFile: file
+              };
+            }
+
+            if (Array.isArray(param.images) && param.images.length) {
+              // Case 2c
+              file = param.images[Math.floor(Math.random() * param.images.length)];
+              return {
+                file: file,
+                shownFile: file,
+                background: param.background,
+                hideNote: param.hideNote
+              };
+            }
+
+            // Fall though
+            return basicLoad(location);
+          }
+
+          // Check for URL parameters first
+          var urlHasParams = location.href.indexOf('?') !== -1;
+          
+          if (urlHasParams) {
+            // Process URL parameters as before
+            var parse = parseUrl(location);
+            if (!parse) return;
+            var file = parse.file;
+            window.shownFile = parse.shownFile;
+  
+            if (parse.background) {
+              d3.select(document.body)
+                .style('background', parse.background);
+            }
+            if (parse.hideNote) {
+              d3.select('#footer')
+                .style('display', 'none');
+            }
+  
+            if (/^https?:/.test(file)) {
+              file = "image-server.php?url=" + file;
+            }
+            
+            // Hide card upload area if URL parameter is present
+            d3.select('#card-upload-area').style('display', 'none');
+            // Show dots container for URL parameter images
+            if (window.matchMedia("(max-width: 1000px)").matches) {
+              d3.select('#dots-container')
+                .style('display', 'flex')
+                .style('opacity', 0)
+                .transition()
+                .duration(300)
+                .style('opacity', 1);
+            } else {
+              d3.select('#dots-container').style('display', 'block');
+            }
+            // Show shuffle button
+            d3.select('#shuffle-button').style('display', 'flex');
+            
+            // 确保URL参数加载模式下SVG尺寸正确
+            setTimeout(function() {
+              if (window.matchMedia("(max-width: 1000px)").matches && window.adjustMobileSvgSize) {
+                window.adjustMobileSvgSize();
+              }
+            }, 1000);
+            
+            // Continue with image loading
+            processImageFile(file);
+          } else {
+            // Make sure card-upload-area is visible if no URL parameters
+            d3.select('#card-upload-area').style('display', 'flex');
+          }
+        } catch (e) {
+          track('Problemo', String(e.message));
+        }
+        
+        // Function to handle the image file processing
+        function processUploadedFile(file) {
+          var reader = new FileReader();
+          
+          // Hide the card upload area when a file is selected
+          d3.select('#card-upload-area').style('display', 'none');
+          
+          // Set up card container and make sure it's visible
+          var cardContainer = d3.select('#card-container')
+            .style('display', 'block');
+          
+          // Get the current background image - don't change it
+          var currentBgStyle = cardContainer.style('background-image');
+          console.log("Keeping current background: " + currentBgStyle);
+          
+          // Initialize the shuffle function - simplified version to ensure it works
+          function shuffleCardContent(e) {
+            // 阻止事件冒泡和默认行为，确保点击有效
+            if (e) {
+              e.preventDefault();
+              e.stopPropagation();
+            }
+            
+            // Simply pick a random background image from our options
+            var randomIndex = Math.floor(Math.random() * window.backgroundOptions.length);
+            var newRandomBg = window.backgroundOptions[randomIndex];
+            
+            // Pick a random quote
+            var randomQuoteIndex = Math.floor(Math.random() * window.quotes.length);
+            var newRandomQuote = window.quotes[randomQuoteIndex];
+            
+            console.log("Shuffling to new background: " + newRandomBg);
+            
+            // Apply background change with simple transition
+            var cardContainer = d3.select('#card-container');
+            cardContainer.style('background-image', 'url(' + newRandomBg + ')');
+            
+            // Change quote text
+            d3.select('#random-quote').html('"' + newRandomQuote + '"');
+            
+            // 返回false确保不触发其他事件
+            return false;
+          }
+          
+          // Add functionality to the shuffle button (if not already set)
+          d3.select('#shuffle-button')
+            .on('click', function() {
+              // 防止重复触发
+              if (window._shuffleInProgress) return;
+              window._shuffleInProgress = true;
+              
+              shuffleCardContent();
+              
+              // 重置锁定状态
+              setTimeout(function() {
+                window._shuffleInProgress = false;
+              }, 500);
+            });
+          
+          reader.onload = function(e) {
+            var img = new Image();
+            img.onload = function() {
+              try {
+                var colorData = koala.loadImage(this);
+                window.userUploadedImage = true;
+                window.shownFile = 'user-uploaded-image';
+                
+                // Now show the dots container - always use flex in mobile
+                if (window.matchMedia("(max-width: 1000px)").matches) {
+                  d3.select('#dots-container')
+                    .style('display', 'flex')
+                    .style('opacity', 0)
+                    .transition()
+                    .duration(300)
+                    .style('opacity', 1);
+                } else {
+                  d3.select('#dots-container').style('display', 'block');
+                }
+                // Show shuffle button
+                d3.select('#shuffle-button').style('display', 'flex');
+                
+                // 移动端SVG尺寸调整 - 为确保SVG尺寸正确
+                if (window.matchMedia("(max-width: 1000px)").matches && window.adjustMobileSvgSize) {
+                  // 延迟调整以确保dots容器已经显示
+                  setTimeout(function() {
+                    window.adjustMobileSvgSize();
+                  }, 100);
+                }
+                
+                koala.makeCircles("#dots", colorData, onEvent);
+                track('Upload', 'UserImage');
+              } catch (e) {
+                console.error("Image processing error:", e);
+                alert("Sorry, there was an issue processing your image. Please try another one.");
+                // Re-display the card upload area when there's an error
+                d3.select('#card-upload-area').style('display', 'flex');
+                d3.select('#dots-container').style('display', 'none');
+              }
+            };
+            img.src = e.target.result;
+          };
+          
+          reader.readAsDataURL(file);
+        }
+        
+        // Add event listener to the card image upload input
+        d3.select('#card-image-upload')
+          .on('change', function() {
+            var fileInput = this;
+            if (fileInput.files && fileInput.files[0]) {
+              processUploadedFile(fileInput.files[0]);
+            }
+          });
+
+        // SVG download functionality now on the "Try Again" button
+        var saveNumber = 0;
+        d3.select('#try-again').on('dblclick', function() {
+          saveNumber++;
+          track('SaveSVG', saveNumber);
+          svgData = d3.select('#dots').html();
+          if (svgData.indexOf('<svg') !== -1) {
+            prefix = [
+              '<?xml version="1.0" encoding="utf-8"?>',
+              '<!-- Generator: KoalasToTheMax.com -->',
+              '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">'
+            ];
+            saveAs(new Blob(
+              [svgData.replace('<svg', prefix.join(' ') + '<svg')],
+              {type: "text/plain;charset=utf-8"}
+            ), "KoalasToTheMax.svg");
+          } else {
+            track('SaveSVG', 'Fail');
+          }
+        });
+
+      })();
+    </script>
+<!--<![endif]-->
+</body>
+</html>
