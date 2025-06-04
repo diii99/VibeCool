@@ -1,0 +1,1 @@
+var o=Object.freeze(["stripecdn.com"]);function n(r){let{hostname:e}=new URL(r);return o.some(t=>e===t||e.endsWith(`.${t}`))}function i(r){try{return import(r)}catch(e){return Promise.reject(e)}}export{i as a};

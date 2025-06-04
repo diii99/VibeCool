@@ -1,0 +1,677 @@
+/* Windows 11 Inspired Styles */
+:root {
+    --font-family-system: "Segoe UI Variable", "Segoe UI", SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --accent-color-default: #0078d4;
+    --accent-color-light: #79c6ff;
+    --base-grey: #f3f3f3; /* Light theme base */
+    --base-grey-dark: #202020; /* Dark theme base */
+    --base-grey-medium: #e5e5e5;
+    --base-white: #ffffff;
+    --text-primary: #000000;
+    --text-secondary: #606060;
+    --text-primary-dark: #ffffff;
+    --text-secondary-dark: #cccccc;
+
+    --mica-background: rgba(243, 243, 243, 0.85); /* Light Mica */
+    --mica-background-dark: rgba(32, 32, 32, 0.85); /* Dark Mica */
+    --acrylic-background: rgba(255, 255, 255, 0.7); /* Light Acrylic */
+    --acrylic-background-dark: rgba(44, 44, 44, 0.8); /* Dark Acrylic */
+    --acrylic-blur-radius: 30px;
+
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+
+    /* Elevations/Shadows */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.18), 0 4px 12px rgba(0,0,0,0.12);
+    
+    /* Default Win11 wallpapers */
+    --win11-bg-default: linear-gradient(135deg, #0078d4 0%, #1ba1e2 50%, #00bcf2 100%);
+    --win11-bg-bloom: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"><defs><radialGradient id="g" cx="50%" cy="50%"><stop offset="0%" stop-color="%23ff6b6b"/><stop offset="50%" stop-color="%234ecdc4"/><stop offset="100%" stop-color="%2345b7d1"/></radialGradient></defs><rect width="100%" height="100%" fill="url(%23g)"/></svg>');
+}
+
+body {
+    font-family: var(--font-family-system);
+    background: var(--win11-bg-default);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Desktop environment */
+#win11-desktop {
+    width: 100vw;
+    height: 100vh;
+    background: var(--win11-bg-default);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s ease;
+}
+
+/* Add some beautiful default backgrounds */
+#win11-desktop.bg-bloom {
+    background: radial-gradient(circle at 30% 70%, #ff6b6b 0%, #4ecdc4 50%, #45b7d1 100%);
+}
+
+#win11-desktop.bg-abstract {
+    background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+}
+
+#win11-desktop.bg-sunset {
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+}
+
+/* General utilities */
+.rounded-sm { border-radius: var(--border-radius-sm); }
+.rounded-md { border-radius: var(--border-radius-md); }
+.rounded-lg { border-radius: var(--border-radius-lg); }
+
+.mica-effect {
+    background-color: var(--mica-background);
+    backdrop-filter: blur(var(--acrylic-blur-radius)); /* Mica uses blur too */
+}
+
+.acrylic-effect {
+    background-color: var(--acrylic-background);
+    backdrop-filter: blur(var(--acrylic-blur-radius));
+}
+
+/* More styles will be added here for taskbar, windows, controls, etc. */
+
+/* Taskbar */
+.taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 48px; 
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.1);
+    z-index: 15000;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Taskbar sections for better layout */
+.taskbar-left {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.taskbar-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Closer spacing between start and search */
+    flex: 1;
+}
+
+.taskbar-right {
+    display: flex;
+    align-items: center;
+    gap: 4px; /* Closer spacing between volume and time */
+    flex: 1;
+    justify-content: flex-end;
+}
+
+body.dark-theme .taskbar {
+    background: rgba(44, 44, 44, 0.85);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.taskbar-item {
+    padding: 4px;
+    margin: 0 4px;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 32px;
+}
+
+.taskbar-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+body.dark-theme .taskbar-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.taskbar-item.active {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-theme .taskbar-item.active {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.taskbar-item img {
+    height: 24px;
+    width: 24px;
+    object-fit: contain;
+}
+
+.start-button-win11 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.taskbar-divider {
+    width: 1px;
+    height: 20px;
+    background-color: rgba(0,0,0,0.1);
+    margin: 0 8px;
+}
+
+body.dark-theme .taskbar-divider {
+    background-color: rgba(255,255,255,0.15);
+}
+
+.clock-win11 {
+    padding: 8px 12px;
+    font-size: 12px;
+    text-align: right;
+    min-width: 70px; /* Ensure some space for time */
+}
+
+/* App Windows */
+.app-window {
+    position: absolute; /* For draggable windows later */
+    background-color: var(--acrylic-background); /* Acrylic effect for window background */
+    backdrop-filter: blur(var(--acrylic-blur-radius));
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    /* Default size and position, can be overridden */
+    width: 600px;
+    min-height: 200px;
+    display: none; /* Hidden by default, shown by JS */
+    flex-direction: column; /* Organize title bar and body */
+    overflow: hidden; /* Important for rounded corners on children */
+    /* position: relative; For resize handle positioning */
+}
+
+body.dark-theme .app-window {
+    background-color: var(--acrylic-background-dark);
+}
+
+.app-window-title-bar {
+    background-color: rgba(0,0,0,0.05); /* Slightly darker/lighter tint for title */
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move; /* For dragging */
+    border-top-left-radius: var(--border-radius-lg);
+    border-top-right-radius: var(--border-radius-lg);
+    border-bottom: 1px solid rgba(0,0,0,0.08); /* Subtle separator line */
+}
+
+body.dark-theme .app-window-title-bar {
+    background-color: rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.08); /* Subtle separator line for dark theme */
+}
+
+.app-window-title-bar h1 {
+    font-size: 13px;
+    margin: 0;
+    font-weight: 600; /* Segoe UI Semibold */
+    color: var(--text-primary);
+}
+
+body.dark-theme .app-window-title-bar h1 {
+    color: var(--text-primary-dark);
+}
+
+.app-window-controls button {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 16px; /* Larger, modern controls */
+    padding: 4px 8px;
+    margin-left: 4px;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    line-height: 1;
+}
+
+body.dark-theme .app-window-controls button {
+    color: var(--text-primary-dark);
+}
+
+.app-window-controls button:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+
+body.dark-theme .app-window-controls button:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.app-window-controls .close-btn:hover {
+    background-color: #e81123; /* Standard Windows close button hover color */
+    color: white;
+}
+
+body.dark-theme .app-window-controls .close-btn:hover {
+    background-color: #e81123;
+    color: white;
+}
+
+
+.app-window-body {
+    padding: 16px;
+    flex-grow: 1; /* Body takes remaining space */
+    overflow-y: auto; /* Scroll if content overflows */
+    /* Ensure text is readable on acrylic */
+    color: var(--text-primary); 
+}
+
+/* Custom Scrollbars for WebKit browsers */
+.app-window-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.app-window-body::-webkit-scrollbar-track {
+    background: transparent; /* Or a very light grey like var(--base-grey) */
+}
+
+.app-window-body::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.2); /* Subtle scrollbar thumb */
+    border-radius: var(--border-radius-sm);
+}
+
+body.dark-theme .app-window-body::-webkit-scrollbar-thumb {
+    background-color: rgba(255,255,255,0.2);
+}
+
+body.dark-theme .app-window-body {
+ color: var(--text-primary-dark);
+}
+
+
+/* Specific styling for loading screen to center it */
+#loading-screen.app-window {
+    display: flex; /* Use flex to show it initially */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    /* Mica effect for loading screen often looks good */
+    background-color: var(--mica-background);
+}
+body.dark-theme #loading-screen.app-window {
+ background-color: var(--mica-background-dark);
+}
+
+/* Dark theme support (can be toggled via a class on body or html) */
+body.dark-theme {
+    background-color: var(--base-grey-dark);
+    color: var(--text-primary-dark);
+}
+
+body.dark-theme .mica-effect {
+    background-color: var(--mica-background-dark);
+}
+
+body.dark-theme .acrylic-effect {
+    background-color: var(--acrylic-background-dark);
+}
+
+body.dark-theme #win11-desktop {
+    /* Optionally, a different wallpaper for dark theme */
+    /* background-image: url('../placeholder-wallpaper-dark.jpg'); */
+}
+
+/* Desktop Icons */
+.desktop-icon-win11 {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90px;
+    padding: 8px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: var(--border-radius-md);
+    transition: background-color 0.2s ease;
+}
+
+.desktop-icon-win11:hover {
+    background-color: rgba(255,255,255,0.2); /* Light hover for light theme */
+}
+
+body.dark-theme .desktop-icon-win11:hover {
+    background-color: rgba(255,255,255,0.1); /* Different hover for dark theme if needed */
+}
+
+.desktop-icon-win11 img {
+    width: 48px; /* Larger icons */
+    height: 48px;
+    margin-bottom: 8px;
+    /* Add styles for modern icon appearance if using actual icon files */
+}
+
+.desktop-icon-win11 p {
+    color: var(--text-primary); /* Ensure this uses the theme variable */
+    font-size: 12px;
+    text-align: center;
+    margin-top: 5px;
+    word-wrap: break-word;
+    max-width: 70px; /* Prevent text from becoming too wide */
+    line-height: 1.3;
+}
+
+body.dark-theme .desktop-icon-win11 p {
+    color: var(--text-primary-dark);
+}
+
+/* Common Controls - Basic Styling */
+.win11-button {
+    background-color: rgba(255, 255, 255, 0.5); /* Light, slightly transparent */
+    border: 1px solid rgba(0,0,0,0.1);
+    color: var(--text-primary);
+    padding: 8px 16px;
+    border-radius: var(--border-radius-md);
+    font-family: var(--font-family-system);
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    min-width: 100px;
+    text-align: center;
+}
+
+.win11-button:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0,0,0,0.2);
+}
+
+.win11-button:active {
+    background-color: rgba(255, 255, 255, 0.4);
+    border-color: rgba(0,0,0,0.3);
+}
+
+.win11-button.accent-button {
+    background-color: var(--accent-color-default);
+    color: white;
+    border: 1px solid var(--accent-color-default);
+}
+
+.win11-button.accent-button:hover {
+    background-color: var(--accent-color-light);
+    border-color: var(--accent-color-light);
+}
+
+body.dark-theme .win11-button {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--text-primary-dark);
+}
+
+body.dark-theme .win11-button:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255,255,255,0.3);
+}
+
+body.dark-theme .win11-button:active {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255,255,255,0.4);
+}
+
+body.dark-theme .win11-button.accent-button {
+    background-color: var(--accent-color-default);
+    color: white; /* Text on accent remains white */
+    border: 1px solid var(--accent-color-default);
+}
+
+body.dark-theme .win11-button.accent-button:hover {
+    background-color: var(--accent-color-light);
+    border-color: var(--accent-color-light);
+}
+
+/* Input Fields */
+.win11-input, .win11-textarea, .win11-select {
+    background-color: #ffffff;
+    border: 1px solid #8A8A8A; /* Standard border */
+    color: var(--text-primary);
+    padding: 8px 10px;
+    border-radius: var(--border-radius-md);
+    font-family: var(--font-family-system);
+    font-size: 14px;
+    width: calc(100% - 22px); /* Adjust for padding and border */
+    margin-bottom: 10px;
+}
+
+.win11-input:focus, .win11-textarea:focus, .win11-select:focus {
+    border-color: var(--accent-color-default);
+    outline: 2px solid var(--accent-color-light); /* Focus ring */
+    outline-offset: -1px;
+}
+
+body.dark-theme .win11-input, 
+body.dark-theme .win11-textarea, 
+body.dark-theme .win11-select {
+    background-color: rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: var(--text-primary-dark);
+}
+
+body.dark-theme .win11-input:focus, 
+body.dark-theme .win11-textarea:focus, 
+body.dark-theme .win11-select:focus {
+    border-color: var(--accent-color-default);
+}
+
+/* Tabs (Basic Restyle) */
+.win11-tabs {
+    display: flex;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+body.dark-theme .win11-tabs {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.win11-tabs .tab {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px; /* Overlap border */
+    color: var(--text-secondary);
+    font-size: 14px;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.win11-tabs .tab:hover {
+    color: var(--text-primary);
+}
+
+.win11-tabs .tab.active {
+    color: var(--accent-color-default);
+    border-bottom-color: var(--accent-color-default);
+    font-weight: 600;
+}
+
+body.dark-theme .win11-tabs .tab {
+    color: var(--text-secondary-dark);
+}
+
+body.dark-theme .win11-tabs .tab:hover {
+    color: var(--text-primary-dark);
+}
+
+body.dark-theme .win11-tabs .tab.active {
+    color: var(--accent-color-light);
+    border-bottom-color: var(--accent-color-light);
+}
+
+/* Tab Content Visibility */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active,
+.tab-content[style*="display: block"] {
+    display: block !important;
+}
+
+/* Performance optimization during drag */
+.app-window.dragging .app-window-body {
+    pointer-events: none;
+}
+
+.app-window.dragging .projects-grid,
+.app-window.dragging .timeline,
+.app-window.dragging .faq-item,
+.app-window.dragging .project-item {
+    visibility: hidden;
+}
+
+/* Ensure smooth transitions for complex windows */
+.app-window-body {
+    transition: visibility 0.1s ease;
+}
+
+/* Styles for active taskbar items (requires JS to add .active class) */
+.taskbar-item.active {
+    background-color: rgba(0,0,0,0.1);
+    /* You can add a bottom border or other indicators here */
+    /* e.g., box-shadow: inset 0 -2px 0 var(--accent-color-default); */
+}
+
+body.dark-theme .taskbar-item.active {
+    background-color: rgba(255,255,255,0.15);
+    /* e.g., box-shadow: inset 0 -2px 0 var(--accent-color-light); */
+}
+
+/* Enhanced window controls */
+.app-window-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.app-window-controls button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.app-window-controls button:hover {
+    background: rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+}
+
+.app-window-controls .close-btn:hover {
+    background: #e74c3c;
+    color: white;
+}
+
+body.dark-theme .app-window-controls button {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary-dark);
+}
+
+body.dark-theme .app-window-controls button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Enhanced resize handle styling */
+.app-window::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 16px;
+    height: 16px;
+    background: linear-gradient(-45deg, transparent 30%, rgba(0,0,0,0.2) 30%, rgba(0,0,0,0.2) 50%, transparent 50%);
+    cursor: nwse-resize;
+    z-index: 1000;
+    border-bottom-right-radius: var(--border-radius-lg);
+}
+
+/* Browser Tabs in Title Bar Styling */
+.browser-tab-bar {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+.browser-tab-bar::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+.browser-tab, .browser-new-tab-btn {
+    transition: all 0.2s ease;
+    user-select: none;
+    outline: none;
+    font-family: var(--font-family-system);
+}
+
+.browser-tab:hover, .browser-new-tab-btn:hover {
+    background: rgba(255,255,255,0.25) !important;
+    transform: translateY(-1px);
+}
+
+.browser-tab.active {
+    background: rgba(255,255,255,0.3) !important;
+    border-color: rgba(255,255,255,0.4) !important;
+}
+
+body.dark-theme .browser-tab,
+body.dark-theme .browser-new-tab-btn {
+    background: rgba(255,255,255,0.05) !important;
+    border-color: rgba(255,255,255,0.1) !important;
+    color: var(--text-primary-dark) !important;
+}
+
+body.dark-theme .browser-tab:hover,
+body.dark-theme .browser-new-tab-btn:hover {
+    background: rgba(255,255,255,0.15) !important;
+}
+
+body.dark-theme .browser-tab.active {
+    background: rgba(255,255,255,0.2) !important;
+    border-color: rgba(255,255,255,0.3) !important;
+}
+
+/* Browser Quick Launch Icon Styling */
+.quick-access-item > div:first-child { /* Targets the colored circle */
+    display: flex !important; /* Override inline style if necessary */
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important; /* Ensure it's circular */
+    width: 60px !important; /* Consistent size */
+    height: 60px !important; /* Consistent size */
+    font-size: 28px; /* Adjust icon/letter size if needed */
+}

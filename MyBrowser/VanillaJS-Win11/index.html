@@ -1,0 +1,2432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>YouWare Challenge 🎉 - Win11 Edition</title>
+  <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
+  <link rel="stylesheet" href="assets/css/win11-style.css">
+</head>
+<body>
+  <div id="win11-desktop">
+    <!-- Loading screen -->
+    <div id="loading-screen" class="app-window" style="/* width will be set by CSS, display:flex is in CSS now */">
+      <div class="app-window-title-bar">
+        <h1>YouWare Loading...</h1>
+        <!-- No controls for loading screen typically -->
+      </div>
+      <div class="app-window-body">
+        <p>Loading system resources, please wait...</p>
+        <div style="border: 1px solid var(--text-secondary); height: 20px; margin: 10px 0; background: var(--base-grey-dark); border-radius: var(--border-radius-sm); overflow: hidden;">
+          <div id="progress-bar" style="background: var(--accent-color-default); height: 100%; width: 0%;"></div>
+        </div>
+        <p id="progress-text">Loading... 0%</p>
+      </div>
+    </div>
+    
+    <div id="main-content" style="display: none;">
+      <!-- New Taskbar -->
+      <div class="taskbar">
+        <div class="taskbar-left">
+          <!-- Left section for future icons -->
+        </div>
+        
+        <div class="taskbar-center">
+          <div class="taskbar-item start-button-win11"  title="Start">
+          <span>🪟</span> <!-- Placeholder Start Icon -->
+        </div>
+        <div class="taskbar-item" id="taskbar-search" title="Search">
+          <span>🔍</span> <!-- Placeholder Search Icon -->
+        </div>
+        <!-- Active app icons will be dynamically added here -->
+          <div id="minimized-apps-container" style="display: flex; align-items: center; height: 100%; margin-left: 16px;">
+          <!-- Minimized app icons will go here -->
+          </div>
+        </div>
+
+        <div class="taskbar-right">
+          <!-- System tray icons can go here -->
+          <div class="taskbar-item" id="taskbar-tray-sound" title="Volume">
+            <span>🔊</span>
+          </div>
+          <div class="clock-win11" id="clock" title="Clock">00:00</div>
+        </div>
+      </div>
+      
+      <!-- Desktop icons -->
+      <div style="padding: 10px 20px; display: flex; align-items: flex-start; position: absolute; top: 20px; left: 20px; flex-wrap: wrap;">
+        <div class="desktop-icon-win11" id="open-challenge-icon" title="YouWare Challenge">
+          <img src="p1nvfxjlt5.jpg" alt="Challenge">
+          <p>YouWare Challenge</p>
+        </div>
+        <div class="desktop-icon-win11" id="open-prize-icon" title="Prize Center">
+          <img src="theypcs8wt.jpg" alt="Prize Center">
+          <p>Prize Center</p>
+        </div>
+        <div class="desktop-icon-win11" id="open-faq-icon" title="Frequently Asked Questions (FAQ)">
+          <img src="x0id8ab3fc.png" alt="FAQ">
+          <p>FAQ</p>
+        </div>
+        <div class="desktop-icon-win11" id="open-notepad-icon" title="Notepad Application">
+          <img src="notepad.png" alt="Notepad">
+          <p>Notepad</p>
+        </div>
+        <div class="desktop-icon-win11" id="open-calculator-icon" title="Calculator Application">
+          <img src="calculator.png" alt="Calculator">
+          <p>Calculator</p>
+        </div>
+        <div class="desktop-icon-win11" id="bg-switcher-icon" title="Background Switcher">
+          <img src="bg-switcher.png" alt="BG Switcher">
+          <p>BG Switcher</p>
+        </div>
+        <div class="desktop-icon-win11" id="open-browser-icon" title="Web Browser">
+          <img src="chrome.jpg" alt="Browser">
+          <p>Browser</p>
+        </div>
+      </div>
+      
+      <!-- Placeholder Panels for Taskbar items -->
+      <div id="start-menu-panel" class="app-window" style="width: 350px; height: 500px; bottom: 58px; /* above taskbar */ left: 10px; display: none; z-index: 1005; flex-direction: column;">
+        <div class="app-window-title-bar">
+          <h1>Start</h1> <!-- Changed from Start Menu -->
+          <div class="app-window-controls">
+            <button class="minimize-btn">−</button>
+            <button class="close-btn" onclick="let panel_smp_c = this.closest('.app-window'); if(panel_smp_c) { panel_smp_c.style.display='none'; const startButton = document.querySelector('.start-button-win11'); if(startButton) startButton.classList.remove('active'); if(panel_smp_c.id && typeof removeTaskbarIcon === 'function') removeTaskbarIcon(panel_smp_c.id); }">✕</button>
+          </div>
+        </div>
+        <div class="app-window-body" style="padding: 10px; display: flex; flex-direction: column;">
+          <div class="start-menu-search-bar" style="margin-bottom: 10px;">
+            <input type="text" placeholder="Search apps, settings, and documents" style="width: 100%; padding: 8px; box-sizing: border-box;" title="Search">
+          </div>
+          <div class="start-menu-section" style="margin-bottom:10px; padding-bottom:5px; border-bottom: 1px solid var(--base-grey-medium);">
+            <h2 style="font-size: 1em; margin: 0 0 5px 0;">Pinned</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+              <div class="start-menu-item" title="YouWare Challenge"><img src="p1nvfxjlt5.jpg" alt="Challenge" style="width:32px; height:32px;"><p style="font-size:0.8em; margin-top:3px;">Challenge</p></div>
+              <div class="start-menu-item" title="Notepad"><img src="./notepad.png" alt="Notepad" style="width:32px; height:32px;"><p style="font-size:0.8em; margin-top:3px;">Notepad</p></div>
+            </div>
+          </div>
+          <div class="start-menu-section" style="flex-grow:1; overflow-y:auto;">
+            <h2 style="font-size: 1em; margin: 0 0 5px 0;">Recommended</h2>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              <li class="start-menu-list-item" title="Frequently Asked Questions">FAQ Document</li>
+              <li class="start-menu-list-item" title="Prize Center Information">Prize Details</li>
+              <!-- Add more items here -->
+            </ul>
+          </div>
+          <div class="start-menu-user-area" style="padding-top:10px; margin-top:10px; border-top: 1px solid var(--base-grey-medium); display:flex; align-items:center;">
+            <img src="assets/icons/user-placeholder.png" alt="User" style="width:32px; height:32px; border-radius:50%; margin-right:10px;" title="User Account">
+            <span title="User Account Name">User Name</span>
+            <!-- Power button etc. could go here -->
+          </div>
+        </div>
+      </div>
+
+      <div id="search-panel" class="app-window" style="width: 450px; height: auto; bottom: 58px; left: 50%; transform: translateX(-50%); display: none; z-index: 1005; flex-direction: column;">
+        <div class="app-window-title-bar">
+          <h1>Search</h1>
+          <div class="app-window-controls">
+            <button class="minimize-btn">−</button>
+            <button class="close-btn" onclick="let panel_sp_c = this.closest('.app-window'); if(panel_sp_c) { panel_sp_c.style.display='none'; const searchTaskbarButton = document.getElementById('taskbar-search'); if(searchTaskbarButton) searchTaskbarButton.classList.remove('active'); if(panel_sp_c.id && typeof removeTaskbarIcon === 'function') removeTaskbarIcon(panel_sp_c.id); }">✕</button>
+          </div>
+        </div>
+        <div class="app-window-body">
+          <input type="text" placeholder="Type here to search" style="width: 90%; padding: 8px; margin-bottom: 10px;">
+          <p>Search Results Placeholder</p>
+        </div>
+      </div>
+      
+      <!-- Main Application Window (Previously .container .window) -->
+      <div id="youware-challenge-app" class="app-window" style="width: 80vw; height: 75vh; top: 50px; left: 10vw; display: flex; /* Make it visible for now */">
+        <div class="app-window-title-bar">
+          <h1>YouWare Challenge: Create bold. Share wide. Win big — all with YouWare. &nbsp;🎉</h1>
+          <div class="app-window-controls">
+            <button class="minimize-btn" onclick="minimizeWindow(this.closest('.app-window'))">−</button>
+            <button class="maximize-restore-btn">🗖</button>
+            <button class="close-btn" onclick="let panel_yca_c = this.closest('.app-window'); if(panel_yca_c) { panel_yca_c.style.display='none'; if(panel_yca_c.id && typeof removeTaskbarIcon === 'function') removeTaskbarIcon(panel_yca_c.id); }">✕</button>
+          </div>
+        </div>
+        <div class="app-window-body">
+          <!-- Existing content from .window-body goes here -->
+          
+          
+          <div class="desktop-banner" style="text-align: center; background-color: var(--accent-color-default); color: white; padding: 8px; margin-bottom: 15px; font-weight: bold; border-radius: var(--border-radius-sm); text-shadow: 1px 1px 2px #000;">
+            YouWare Challenge: We set the theme. You make the move. Build a website the internet isn't ready for.
+          </div>
+          
+          
+          <div class="win11-tabs">
+            <div class="tab active" data-tab="intro">Overview</div>
+            <div class="tab" data-tab="themes">Theme</div>
+            <div class="tab" data-tab="prizes">Prize</div>
+            <div class="tab" data-tab="register">Submit</div>
+          </div>
+          
+          <div class="window-content" style="background-color: transparent; border: none; padding:0; margin-top: 10px;">
+            <!-- Tab content will remain here, ensure it inherits text color -->
+            <!-- Intro tab content -->
+            <div id="content-intro" class="tab-content" style="display: block;">
+              <div class="section">
+                <h2>Challenge Overview</h2>
+                <p>Welcome to the YouWare Challenge</p>
+                <p>A creative web design competition celebrating the nostalgic charm of retro tech.</p>
+                <p>Reimagine the digital past — old games, classic gadgets, iconic visuals — and bring it to life with the power of AI. Whether you grew up with it or just love the retro aesthetic, this is your playground.</p>
+                <p>Build a site with YouWare inspired by:
+                <br>Retro Vibes × Future AI</p>
+                <p>Submit your entry by June 5, 2025 for a chance to win up to $1000.
+                <br>Top entries will also be featured and invited to future drops.</p>
+              </div>
+              
+              <div class="section">
+                <h2>How to Join</h2>
+                <div style="padding: 0 10px;">
+                  <h3>1. Create</h3>
+                  <p>Use [YouWare] to build and publish a website inspired by this round's theme:
+                  <br>Retro Vibes × Future AI</p>
+                  
+                  <h3>2. Share</h3>
+                  <p>Post your site on any of these platforms:
+                  <br>X (Twitter), Instagram, YouTube, Reddit, TikTok, Bluesky, or Threads</p>
+                  
+                  <p>To enter the contest, your post must:</p>
+                  <ul>
+                    <li>Include a link to your project</li>
+                    <li>Use the hashtag #YouWareChallenge</li>
+                  </ul>
+                  
+                  <p>Want more visibility and a better shot at winning?
+                  <br>Tag @YouWareAI on X, Instagram, YouTube, or TikTok — if we repost your work, you'll get more exposure!</p>
+                  
+                  <p><strong>Not sure what to post?</strong>
+                  <br>Here's a sample you can use:</p>
+                  
+                  <div class="example-post" style="border: 1px inset #808080; background: #fff; padding: 8px; margin: 10px 0; font-size: 12px; position: relative;">
+                    <p style="margin: 5px 0;">Just joined the @youwareai challenge — theme: Retro Vibes × Future AI.
+                    <br>Had so much fun creating a site that captures those nostalgic, retro-future vibes — and now I'm in the running for the $1000 prize pool.
+                    <br>Come take a look & tell me what you think: [your project link]
+                    <br>#YouWareChallenge</p>
+                    <button id="copy-post-btn" class="button" style="position: absolute; bottom: 5px; right: 5px; font-size: 10px; padding: 2px 5px;">Copy</button>
+                  </div>
+                  
+                  <h3>3. Submit</h3>
+                  <p>Click "Participate" and fill in the form with:</p>
+                  <ul>
+                    <li>Your YouWare website link</li>
+                    <li>The link to your social media post (must include project link + #YouWareChallenge)</li>
+                    <li>The email you used to sign in to YouWare</li>
+                  </ul>
+                  
+                  <p>This confirms your entry and helps us verify your identity.
+                  <br>Once you hit Submit — you're officially in!</p>
+                </div>
+              </div>
+              
+              <div class="section">
+                <h2>Timeline</h2>
+                <div class="timeline" style="margin: 20px 0 30px 0;">
+                  <div class="timeline-item">
+                    <div class="timeline-date">May 21, 2025</div>
+                    <div class="timeline-content">Competition Begins</div>
+                  </div>
+                  <div class="timeline-item">
+                    <div class="timeline-date">June 5, 2025</div>
+                    <div class="timeline-content">Submission Deadline</div>
+                  </div>
+                  <div class="timeline-item">
+                    <div class="timeline-date">June 9, 2025</div>
+                    <div class="timeline-content">Winners Announced</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="section">
+                <h2>Ready to Join?</h2>
+                <div style="display: flex; justify-content: center; gap: 20px;">
+                  <button onclick="document.getElementById('start-challenge-window').style.display='flex';" class="win11-button accent-button">Submit Your Entry →</button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Themes tab content -->
+            <div id="content-themes" class="tab-content" style="display: none;">
+              <div class="section">
+                <h2>Current Theme: Retro Vibes × Future AI</h2>
+                <p>Remember those messy desktops, pixel games, sticker-covered consoles, loading bars, and glitchy UIs?</p>
+
+                <p>Now imagine what happens when all that nostalgic charm collides with the creative power of AI.
+                <br>We're building our way back to the digital summers we never forgot — and remixing them into something new.</p>
+
+                <div class="theme-divider">---</div>
+                
+                <h3>What to Make</h3>
+                <p>Pick a memory. Any retro moment.
+                <br>Turn it into a custom website using YouWare.</p>
+                
+                <p>It could be:</p>
+                <ul>
+                  <li>A game you loved</li>
+                  <li>A gadget you miss</li>
+                  <li>A classic screen or device</li>
+                  <li>Or anything that feels old-school to you</li>
+                </ul>
+                <p>No wrong answers — if it feels retro to you, it's fair game.</p>
+
+                <div class="theme-divider">---</div>
+                
+                <h3>How It Should Look</h3>
+                <p>Style it your way, with any aesthetic that captures the retro spirit. Some ideas:</p>
+                <ul>
+                  <li>Pixel art or low-res visuals</li>
+                  <li>Neon colors, scanlines, or glitch effects</li>
+                  <li>Vintage UI elements, classic fonts, CRT textures</li>
+                  <li>Or any visual style you associate with the past</li>
+                </ul>
+                <p>Make it nostalgic. Make it weird. Make it yours.</p>
+                
+                <div class="theme-divider">---</div>
+                
+                <h3>Let's Bring the Retro Spirit Online</h3>
+                <p>Build your world. Share your vibe.
+                <br>The internet's not ready for your remix.</p>
+                
+                <div class="projects-section fixed-window" style="margin-bottom: 40px; padding-bottom: 20px;">
+                  <h3 class="title-bar">Project Showcase</h3>
+                  <div class="projects-grid">
+                    <!-- Row 1 -->
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Retro MP3</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2013/07/12/15/22/ipod-149787_640.png" alt="Retro MP3 Player" class="project-image">
+                        <a href="https://www.yourware.so/project/zmghmghmiq?enter_from=personal_center" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Pixel Car Racing</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2022/05/29/18/25/lorry-7229720_640.png" alt="Pixel Car Racing" class="project-image">
+                        <a href="https://www.youware.com/project/amd9no96ya" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Polaroid Style Camera</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2024/01/29/01/45/pixel-art-8538625_640.png" alt="Polaroid Style Camera" class="project-image">
+                        <a href="https://www.yourware.so/project/43aznily0b" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Handheld Game Console</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2020/05/24/12/13/snes-5214011_640.png" alt="Game Console" class="project-image">
+                        <a href="https://www.youware.com/project/r2oukj1h2k" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Old Nokia</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2017/03/04/12/03/mobile-phone-2115903_640.png" alt="Old Nokia Phone" class="project-image">
+                        <a href="https://www.youware.com/project/gtp7uqzq76" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <!-- Row 2 -->
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Gacha Machine</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2022/06/23/17/08/pixel-art-7280249_640.png" alt="Gacha Machine" class="project-image">
+                        <a href="https://www.yourware.so/project/hw3t3ve78r" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Genshin Jump Game</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2016/03/31/17/48/blue-1293920_640.png" alt="Genshin Jump Game" class="project-image">
+                        <a href="https://www.yourware.so/project/859ipmjqow" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Minesweeper Game</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2016/03/09/15/10/explosion-1246507_640.png" alt="Minesweeper Game" class="project-image">
+                        <a href="https://www.yourware.so/project/2x6rm2iz2j" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Vinyl Collection</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2024/01/29/06/23/pixel-art-8538902_640.png" alt="Vinyl Collection" class="project-image">
+                        <a href="https://www.yourware.so/project/yjoe2c9v3t?enter_from=personal_center" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Explosive Sweeper</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2022/04/05/05/54/pop-7112848_640.png" alt="Explosive Sweeper" class="project-image">
+                        <a href="https://www.yourware.so/project/8mhlhobhye" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <!-- Row 3 -->
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Rolling Ball Game</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2022/06/24/01/49/pixel-art-7280889_640.png" alt="Rolling Ball Game" class="project-image">
+                        <a href="https://www.yourware.so/project/mcaqa2uxhn" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Pixel Jump Game</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2022/07/27/19/17/video-game-7348585_640.png" alt="Pixel Jump Game" class="project-image">
+                        <a href="https://www.yourware.so/project/f9w48t4mj4" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Pixel Snake</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2013/07/12/15/20/pacman-149704_640.png" alt="Pixel Snake Game" class="project-image">
+                        <a href="https://www.yourware.so/project/aly4dwu1pp" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Pokémon Game</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2018/04/13/16/13/pixel-3316924_640.png" alt="Pokémon Game" class="project-image">
+                        <a href="https://www.yourware.so/project/bgi65peyq8" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                    
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Slot Machine</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2019/03/11/18/20/arcade-4049174_640.png" alt="Slot Machine" class="project-image">
+                        <a href="https://www.yourware.so/project/cmr5pumsl3" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+
+                    <div class="project-item window">
+                      <div class="title-bar">
+                        <h4>Pixel Plane Battle</h4>
+                      </div>
+                      <div class="window-body">
+                        <img src="https://cdn.pixabay.com/photo/2013/07/13/11/48/pixelgrafic-158720_640.png" alt="Pixel Plane Battle" class="project-image">
+                        <a href="https://www.youware.com/project/3y6ych0175" target="_blank" class="button">View Project</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div style="margin: 30px 0; display: flex; justify-content: center;">
+                  <a href="#" onclick="document.getElementById('start-challenge-window').style.display='block';" class="button highlight-btn">Submit Your Entry →</a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Prizes tab content -->
+            <div id="content-prizes" class="tab-content" style="display: none;">
+              <div class="section">
+                <h2>Welcome to the YouWare Challenge &nbsp;🎉</h2>
+                <p style="font-size: 16px; font-weight: bold; margin: 10px 0;">Create a web project. Get views. Win up to $1,000.</p>
+                <div style="margin-top: 20px;">
+                  <div class="prize-card" style="border: 1px solid #808080; padding: 15px; margin-bottom: 20px; background: #f0f0f0;">
+                    <h2>💰 Top Traffic Prize — for creators</h2>
+                    <h3 style="margin-bottom: 15px;">Win up to $1,000 per project</h3>
+                    <ul style="line-height: 1.5;">
+                      <li style="margin-bottom: 8px;">Top 3 projects with 2,000+ unique views get $200 guaranteed</li>
+                      <li style="margin-bottom: 8px;">Earn $100 more for every additional 2,000 views</li>
+                      <li>(Max: $1,000 per project)</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="prize-card" style="border: 1px solid #808080; padding: 15px; background: #f0f0f0;">
+                    <h2>💰 Social Boost Awards — open to everyone</h2>
+                    <p>Not building? You can still win!
+                    Just share our project on social media with the hashtag #YouWareChallenge and a project link — that's it!</p>
+                    <p>Help spread the word, and if your post gets over 1,000 views, you'll be eligible — and the 5 with the most views will win a 1-month Pro membership (worth $20).</p>
+                    <p>Open to all — creators, fans, and retro lovers alike!</p>
+                  </div>
+                  <p style="margin-top: 15px;"><a href="#" class="learn-more-link" onclick="document.getElementById('rules-popup').style.display='block'">Learn more about winner selection →</a></p>
+                </div>
+              </div>
+              
+              <div class="section">
+                <h2>Ready to Join the Challenge?</h2>
+                <a href="#" onclick="document.getElementById('start-challenge-window').style.display='block';" class="button highlight-btn">Submit Your Entry →</a>
+              </div>
+              
+
+            </div>
+            
+            <!-- Register tab content -->
+            <div id="content-register" class="tab-content" style="display: none;">
+              <div class="section">
+                <h2>Join the Challenge</h2>
+                <p>Enter your email, project link, and a public social post that includes the project link and #YouWareChallenge. Then click Submit to join.</p>
+              </div>
+
+              <div id="registration-form-container">
+                <form id="registration-form">
+
+                  <div class="form-field">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    <p style="margin: 2px 0 0 0; font-size: 11px; color: #666;">Use your YouWare account email to confirm you're the creator.</p>
+                  </div>
+                  <div class="form-field">
+                    <label for="project_link">Project Link:</label>
+                    <input type="url" id="project_link" name="project_link" placeholder="https://youware.com/project/project-title-nnswrp2lch" required>
+                  </div>
+                  <div class="form-field">
+                    <label for="social_post_link">Social Post Link:</label>
+                    <input type="url" id="social_post_link" name="social_post_link" placeholder="https://x.com/username/status/1924389608625668477" required>
+                    <p style="margin: 2px 0 0 0; font-size: 11px; color: #666;">Your public post must include your project link and the hashtag #YouWareChallenge.</p>
+                    <p id="registration_validation_message" style="margin: 5px 0 0 0; font-size: 11px; color: #FF0000; font-weight: bold; display: none;">All fields are required to submit your entry.</p>
+                  </div>
+                  <div class="form-actions">
+                    <button type="button" class="button" onclick="document.getElementById('registration-form').reset();">Clear</button>
+                    <button type="submit" class="button">Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Popup window for how it works steps -->
+          <div id="howto-popup" class="app-window" style="width: 550px; /* display: none; by default */ top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1001; max-height: 80vh;">
+            <div class="app-window-title-bar">
+              <h1>How to Join the YouWare Challenge</h1>
+              <div class="app-window-controls">
+                <button class="minimize-btn" onclick="minimizeWindow(this.closest('.app-window'))">−</button>
+                <button class="maximize-restore-btn">🗖</button>
+                <button class="close-btn" onclick="let panel_htp_c = this.closest('.app-window'); if(panel_htp_c) { panel_htp_c.style.display='none'; if(panel_htp_c.id && typeof removeTaskbarIcon === 'function') removeTaskbarIcon(panel_htp_c.id); }">✕</button>
+              </div>
+            </div>
+            <div class="app-window-body" style="max-height: calc(80vh - 40px); /* 40px for title bar */ overflow-y: auto;">
+              <p>Ready to dive into the Retro Vibes × Future AI theme? Here's your quick guide:</p>
+              
+              <div class="howto-windows-container">
+                <div class="howto-window">
+                  <div class="title-bar"><h3>1. Create 🎨</h3></div>
+                  <div class="window-body">
+                    <p>Use <a href="https://youware.ai" target="_blank">YouWare</a> to build and publish a website inspired by this round's theme: Retro Vibes × Future AI.</p>
+                    <p>Think old games, classic gadgets, iconic visuals – anything that sparks that nostalgic feeling, enhanced with a modern AI twist if you like!</p>
+                  </div>
+                </div>
+                
+                <div class="howto-window">
+                  <div class="title-bar"><h3>2. Share 🌐</h3></div>
+                  <div class="window-body">
+                    <p>Post your site on any of these platforms:</p>
+                    <p>X (Twitter), Instagram, YouTube, Reddit, TikTok, Bluesky, or Threads.</p>
+                    <p><strong>Your post MUST include:</strong></p>
+                    <ul>
+                      <li>A direct link to your YouWare project.</li>
+                      <li>The hashtag: <code>#YouWareChallenge</code></li>
+                    </ul>
+                    <p><em>Pro-Tip: Tag @YouWareAI for a chance to be featured!</em></p>
+                  </div>
+                </div>
+                
+                <div class="howto-window">
+                  <div class="title-bar"><h3>3. Submit ✅</h3></div>
+                  <div class="window-body">
+                    <p>Click the "Submit Your Entry" button on the main challenge page (or <a href="#" onclick="document.getElementById('start-challenge-window').style.display='block'; document.getElementById('howto-popup').style.display='none'; return false;">click here</a>).</p>
+                    <p>Fill in the form with:</p>
+                    <ul>
+                      <li>Your YouWare website link.</li>
+                      <li>The link to your social media post.</li>
+                      <li>The email you used for YouWare.</li>
+                    </ul>
+                    <p>Once submitted, you're officially in the running! Check the main page for timelines and prize details.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div style="text-align: center; margin-top: 20px;">
+                <button class="button highlight-btn" onclick="document.getElementById('howto-popup').style.display='none'; document.getElementById('start-challenge-window').style.display='block';">Got it, Let's Submit!</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- "Submit Entry" window -->
+          <div id="start-challenge-window" class="app-window" style="width: 450px; /* display:none; by default */ top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1002;">
+            <div class="app-window-title-bar">
+              <h1>🚀 Submit Your YouWare Challenge Entry</h1>
+              <div class="app-window-controls">
+                <button class="minimize-btn" onclick="minimizeWindow(this.closest('.app-window'))">−</button>
+                <button class="maximize-restore-btn">🗖</button>
+                <button class="close-btn" onclick="document.getElementById('start-challenge-window').style.display='none'; removeTaskbarIcon('start-challenge-window');">✕</button>
+              </div>
+            </div>
+            <div class="app-window-body">
+              <p>Fill out the form below to officially submit your project to the YouWare Challenge. Good luck!</p>
+              
+              <form id="challenge-form">
+                <div class="form-field">
+                  <label for="project-link">🔗 Link to Your YouWare Project:</label>
+                  <input type="url" id="project-link" name="project-link" placeholder="e.g., https://youware.ai/project/your-awesome-site" required>
+                </div>
+                
+                <div class="form-field">
+                  <label for="social-post-link">🔗 Link to Your Social Media Post:</label>
+                  <input type="url" id="social-post-link" name="social-post-link" placeholder="e.g., https://x.com/yourusername/status/123" required>
+                  <small>Make sure your post includes your project link and #YouWareChallenge.</small>
+                </div>
+                
+                <div class="form-field">
+                  <label for="email">✉️ Your YouWare Email:</label>
+                  <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                  <small>The email you used to sign up for YouWare.</small>
+                </div>
+                
+                <div class="form-field">
+                  <input type="checkbox" id="terms-agree" name="terms-agree" required>
+                  <label for="terms-agree" style="display: inline; font-size: 12px;">I agree to the <a href="https://staging2.youware.com/legal/terms-of-service" target="_blank">Terms of Service</a> and <a href="https://staging2.youware.com/legal/privacy-policy" target="_blank">Privacy Policy</a>.</label>
+                </div>
+                
+                <div class="form-actions">
+                  <button type="button" class="button" onclick="document.getElementById('start-challenge-window').style.display='none';">Cancel</button>
+                  <button type="submit" class="button highlight-btn">Submit Entry</button>
+                </div>
+              </form>
+              <p id="form-message" style="margin-top:10px; text-align:center;"></p>
+            </div>
+          </div>
+          
+          <!-- Generic Modal Structure -->
+          <div id="generic-modal" class="app-window" style="display:none; width: 500px; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1005;">
+            <div class="app-window-title-bar">
+              <h1 id="generic-modal-title">Modal Title</h1>
+              <div class="app-window-controls">
+                <button class="minimize-btn" onclick="minimizeWindow(this.closest('.app-window'))">−</button>
+                <button class="maximize-restore-btn">🗖</button>
+                <button class="close-btn" onclick="closeModal('generic-modal'); removeTaskbarIcon('generic-modal');">✕</button>
+              </div>
+            </div>
+            <div id="generic-modal-body" class="app-window-body" style="max-height: 70vh; overflow-y: auto;">
+              <!-- Content will be injected here -->
+            </div>
+          </div>
+          
+        </div> <!-- End of main-content -->
+      </div> <!-- End of youware-challenge-app -->
+
+      <div class="footer" style="display: none;">
+      </div>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+    <script>
+      // Attach form submission handlers
+      document.addEventListener('DOMContentLoaded', function() {
+        // For the challenge form
+        if (document.getElementById('challenge-form')) {
+          document.getElementById('challenge-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showConfirmation('challenge-form');
+          });
+        }
+        
+        // For the registration form
+        if (document.getElementById('registration-form')) {
+          document.getElementById('registration-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showConfirmation('registration-form');
+          });
+        }
+      });
+      
+      function showConfirmation(formId) {
+        // Get the form data
+        let formElement;
+        let validationMessageElement;
+        
+        if (formId === 'challenge-form') {
+          formElement = document.getElementById('challenge-form');
+          validationMessageElement = document.getElementById('challenge_validation_message');
+        } else if (formId === 'registration-form') {
+          formElement = document.getElementById('registration-form');
+          validationMessageElement = document.getElementById('registration_validation_message');
+        }
+
+        if (!formElement) return;
+        
+        // Check if all required fields are filled
+        const emailInput = formElement.querySelector('[type="email"]');
+        const projectLinkInput = formElement.querySelector('[name="project-link"]');
+        const socialPostLinkInput = formElement.querySelector('[name="social-post-link"]');
+        
+        // Set custom validation message in English
+        if (!emailInput.value) {
+          emailInput.setCustomValidity("Please fill out this field");
+          emailInput.reportValidity();
+          return; // Stop form submission
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+          emailInput.setCustomValidity("Please enter a valid email address");
+          emailInput.reportValidity();
+          return; // Stop form submission
+        } else {
+          emailInput.setCustomValidity("");
+        }
+        
+        if (!projectLinkInput.value) {
+          projectLinkInput.setCustomValidity("Please fill out this field");
+          projectLinkInput.reportValidity();
+          return; // Stop form submission
+        } else if (!/^https?:\/\/\S+$/.test(projectLinkInput.value)) {
+          projectLinkInput.setCustomValidity("Please enter a valid URL");
+          projectLinkInput.reportValidity();
+          return; // Stop form submission
+        } else {
+          projectLinkInput.setCustomValidity("");
+        }
+        
+        if (!socialPostLinkInput.value) {
+          socialPostLinkInput.setCustomValidity("Please fill out this field");
+          socialPostLinkInput.reportValidity();
+          return; // Stop form submission
+        } else if (!/^https?:\/\/\S+$/.test(socialPostLinkInput.value)) {
+          socialPostLinkInput.setCustomValidity("Please enter a valid URL");
+          socialPostLinkInput.reportValidity();
+          return; // Stop form submission
+        } else {
+          socialPostLinkInput.setCustomValidity("");
+        }
+        
+        // If we get here, all fields are filled
+        if (validationMessageElement) {
+          validationMessageElement.style.display = 'none';
+        }
+        
+        // Hide validation message if all fields are filled
+        if (validationMessageElement) {
+          validationMessageElement.style.display = 'none';
+        }
+
+        const formData = {
+          project_id: 'youware-challenge',
+          email: emailInput.value,
+          project_link: projectLinkInput.value,
+          social_post_link: socialPostLinkInput.value
+        };
+
+        // Create loading popup
+        let loadingPopupHTML = `
+          <div id="loading-popup" class="window" style="width: 350px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2000; box-shadow: 3px 3px 10px rgba(0,0,0,0.5);">
+            <div class="title-bar">
+              <h1>Submitting...</h1>
+            </div>
+            <div class="window-body" style="padding: 20px; text-align: center;">
+              <p>Processing your submission, please wait...</p>
+              <div style="border: 1px inset #808080; height: 20px; margin: 15px 0; background: #fff;">
+                <div id="submit-progress-bar" style="background: #000080; height: 100%; width: 0%;"></div>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        // Add loading popup to body and start progress animation
+        document.body.insertAdjacentHTML('beforeend', loadingPopupHTML);
+        
+        // Animate the progress bar
+        let width = 1;
+        const progressInterval = setInterval(function() {
+          if (width >= 90) {
+            clearInterval(progressInterval);
+          } else {
+            width += 5;
+            document.getElementById('submit-progress-bar').style.width = width + '%';
+          }
+        }, 100);
+        
+        // Hide form window while loading
+        document.getElementById('start-challenge-window').style.display = 'none';
+        
+        // Send data to API
+        fetch('https://wh1isper-mini-leaderboard.hf.space/api/v1/form/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+          // Remove loading popup
+          clearInterval(progressInterval);
+          document.getElementById('loading-popup').remove();
+          
+          // Create success popup window with count information
+          let successPopupHTML = `
+            <div id="success-popup" class="window" style="width: 350px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2000; box-shadow: 3px 3px 10px rgba(0,0,0,0.5);">
+              <div class="title-bar">
+                <h1>Success</h1>
+                <div class="title-bar-controls">
+                  <button class="close-btn" onclick="document.getElementById('success-popup').remove();">×</button>
+                </div>
+              </div>
+              <div class="window-body" style="padding: 20px; text-align: center;">
+                <h2 style="margin-top: 0;">Your submission was successful!</h2>
+                <p>Thank you for joining. We'll keep you updated on the competition's progress and final results via email. Stay tuned!</p>
+                <div style="margin-top: 20px;">
+                  <button class="button highlight-btn" onclick="document.getElementById('success-popup').remove();">OK</button>
+                </div>
+              </div>
+            </div>
+          `;
+          
+          // Add success popup to body
+          document.body.insertAdjacentHTML('beforeend', successPopupHTML);
+        })
+        .catch(error => {
+          // Remove loading popup
+          clearInterval(progressInterval);
+          document.getElementById('loading-popup').remove();
+          
+          // Create success popup window instead of error
+          // Since the data is actually successfully written to the database
+          let successPopupHTML = `
+            <div id="success-popup" class="window" style="width: 350px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2000; box-shadow: 3px 3px 10px rgba(0,0,0,0.5);">
+              <div class="title-bar">
+                <h1>Success</h1>
+                <div class="title-bar-controls">
+                  <button class="close-btn" onclick="document.getElementById('success-popup').remove();">×</button>
+                </div>
+              </div>
+              <div class="window-body" style="padding: 20px; text-align: center;">
+                <h2 style="margin-top: 0;">Your submission was successful!</h2>
+                <p>Thank you for joining. We'll keep you updated on the competition's progress and final results via email. Stay tuned!</p>
+                <div style="margin-top: 20px;">
+                  <button class="button highlight-btn" onclick="document.getElementById('success-popup').remove();">OK</button>
+                </div>
+              </div>
+            </div>
+          `;
+          
+          // Add success popup to body
+          document.body.insertAdjacentHTML('beforeend', successPopupHTML);
+          console.log('Form submitted successfully despite error in response');
+        });
+        
+        // Reset form fields
+        if (formElement) {
+          formElement.reset();
+        }
+      }
+      
+      function resetForm(formId) {
+        // Remove confirmation message
+        let confirmations = document.getElementsByClassName('confirmation-message');
+        while(confirmations.length > 0) {
+          confirmations[0].parentNode.removeChild(confirmations[0]);
+        }
+        
+        // Reset and show the form again
+        if (formId === 'challenge-form') {
+          document.getElementById('challenge-form').reset();
+          document.getElementById('challenge-form').style.display = 'block';
+        } else if (formId === 'registration-form') {
+          document.getElementById('registration-form').reset();
+          document.getElementById('registration-form').style.display = 'block';
+        }
+      }
+    </script>
+    
+    <!-- New Merged Prize Center Window -->
+    <div id="prize-center-window" class="app-window" style="width: 420px; display: none; position: fixed; top: 100px; right: 30px; z-index: 1002; flex-direction: column;">
+      <div class="app-window-title-bar">
+        <h1>🏆 Prize Center</h1>
+        <div class="app-window-controls">
+          <button class="minimize-btn" onclick="let panel_pcw_c = this.closest('.app-window'); if(panel_pcw_c) { minimizeWindow(panel_pcw_c); }">−</button>
+          <button class="maximize-restore-btn">🗖</button>
+          <button class="close-btn" onclick="let panel_pcw_c1 = this.closest('.app-window'); if(panel_pcw_c1) { panel_pcw_c1.style.display='none'; if(panel_pcw_c1.id && typeof removeTaskbarIcon === 'function') removeTaskbarIcon(panel_pcw_c1.id); }">✕</button>
+        </div>
+      </div>
+      <div class="app-window-body" style="padding: 0;">
+        <div class="window-content" style="max-height: 400px; overflow-y: auto; padding: 0; margin: 0; background-color: var(--base-grey-light); border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);">
+          
+          <div class="prize-section" style="padding: 15px; border-bottom: 1px solid var(--base-grey-medium);">
+            <div class="prize-card" style="border: 1px solid var(--base-grey-medium); padding: 15px; background: var(--base-white); border-radius: var(--border-radius-md); box-shadow: var(--shadow-sm);">
+              <h2>💰 Top Traffic Prize — for creators</h2>
+              <p style="margin-bottom: 5px;">Win up to $1,000 per project</p>
+              <p style="margin-bottom: 5px;">Top 3 projects with 2,000+ unique views get $200 guaranteed</p>
+              <p style="margin-bottom: 5px;">Earn $100 more for every additional 2,000 views</p>
+              <p>(Max: $1,000 per project)</p>
+            </div>
+          </div>
+
+          <div class="prize-section" style="padding: 15px;">
+            <div class="prize-card" style="border: 1px solid var(--base-grey-medium); padding: 15px; background: var(--base-white); border-radius: var(--border-radius-md); box-shadow: var(--shadow-sm);">
+              <h2>💰 Social Boost Awards — open to everyone</h2>
+              <p style="margin-bottom: 5px;">Not building? You can still win!</p>
+              <p style="margin-bottom: 5px;">Just share our project on social media with the hashtag #YouWareChallenge and a project link — that's it!</p>
+              <p style="margin-bottom: 5px;">Help spread the word, and if your post gets over 1,000 views, you'll be eligible — and the 5 with the most views will win a 1-month Pro membership (worth $20).</p>
+              <p>Open to all — creators, fans, and retro lovers alike!</p>
+            </div>
+          </div>
+
+        </div>
+        <div style="text-align: left; padding: 10px 15px; background-color: var(--base-grey-light); border-top: 1px solid var(--base-grey-medium); border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);">
+          <button class="win11-button" onclick="openModal('rules-modal-content', 'How Winners Are Selected');" style="font-size: 12px;">Learn more info</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- FAQ Window (hidden by default) -->
+    <div id="faq-window" class="app-window" style="width: 600px; max-width:80%; display: none; position: fixed; top: 120px; left: 50%; transform: translateX(-50%); z-index: 1001; flex-direction: column; max-height: 70vh;">
+        <div class="app-window-title-bar">
+          <h1>Frequently Asked Questions (FAQ)</h1>
+          <div class="app-window-controls">
+            <button class="minimize-btn" onclick="let panel_fw_c = this.closest('.app-window'); if(panel_fw_c) { minimizeWindow(panel_fw_c); }">−</button>
+            <button class="maximize-restore-btn">🗖</button>
+            <button class="close-btn" onclick="let panel_fw_c1 = this.closest('.app-window'); if(panel_fw_c1) { panel_fw_c1.style.display='none'; if(panel_fw_c1.id && typeof removeTaskbarIcon === 'function') removeTaskbarIcon(panel_fw_c1.id); }">✕</button>
+          </div>
+        </div>
+        <div class="window-body" style="padding: 12px;">
+          <div class="window-content" style="max-height: 500px; overflow-y: auto; padding: 10px; margin: 0;">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item" style="margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+              <h3>Q: How do I know if I've successfully entered the challenge?</h3>
+              <p>A: You'll see a confirmation message right after submitting the form.</p>
+              <p>To be officially entered, make sure you:</p>
+              <ul>
+                <li>Submit your project link</li>
+                <li>Submit a public social post link</li>
+                <li>Include both your project link and the hashtag #YouWareChallenge in your post</li>
+              </ul>
+              <p>Without the social post, your entry won't count — even if the form is submitted.</p>
+            </div>
+
+            <div class="faq-item" style="margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+              <h3>Q: How will I receive updates about the contest?</h3>
+              <p>A: We'll send all important updates and winner announcements directly to your YouWare account email. Be sure to check your inbox and spam folder regularly.</p>
+            </div>
+
+            <div class="faq-item" style="margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+              <h3>Q: How are prizes delivered?</h3>
+              <p>A: If you win, our team will reach out via email to confirm your payout method.</p>
+              <p>We currently support PayPal and Stripe for prize distribution. Make sure your email is valid and able to receive funds.</p>
+            </div>
+
+            <div class="faq-item" style="margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+              <h3>Q: What is the exact submission deadline?</h3>
+              <p>A: The final deadline is June 5, 2025, at 24:00 (midnight) UTC+0.</p>
+              <p>Any submissions received after this time will not be considered for the contest. We recommend submitting early to avoid any last-minute technical issues.</p>
+            </div>
+
+            <div class="faq-item" style="margin-bottom: 15px;">
+              <h3>Q: How can I contact the YouWare team if I have questions?</h3>
+              <p>A: You can reach us anytime at support@youware.com.</p>
+              <p>We're here to help with submission issues, project links, or payout questions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- New Notepad App Window -->
+    <div id="notepad-window" class="app-window" style="width: 45vw; height: 50vh; top: 150px; left: 150px; display: none; z-index: 1001; flex-direction: column;">
+      <div class="app-window-title-bar">
+        <img src="./notepad.png" alt="Notepad" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;"><h1>Notepad</h1>
+        <div class="app-window-controls">
+          <button class="minimize-btn" onclick="let panel_npw_c = this.closest('.app-window'); if(panel_npw_c) { minimizeWindow(panel_npw_c); }">−</button>
+          <button class="maximize-restore-btn">🗖</button> <!-- Maximize Icon -->
+          <button class="close-btn" onclick="let panel_npw_c1 = this.closest('.app-window'); if(panel_npw_c1) { panel_npw_c1.style.display='none'; if(panel_npw_c1.id && typeof removeTaskbarIcon === 'function') removeTaskbarIcon(panel_npw_c1.id); }">✕</button>
+        </div>
+      </div>
+      <div class="app-window-body" style="padding: 0;">
+        <textarea style="width: 100%; height: 100%; border: none; resize: none; box-sizing: border-box; font-family: Consolas, monospace; font-size: 14px; padding: 5px;"></textarea>
+      </div>
+    </div>
+
+    <!-- New Calculator App Window -->
+    <div id="calculator-window" class="app-window" style="width: 45w; height: 40vh; top: 200px; left: 250px; display: none; z-index: 1001; flex-direction: column;">
+      <div class="app-window-title-bar">
+        <img src="./calculator.png" alt="Calculator" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;"><h1>Calculator</h1>
+        <div class="app-window-controls">
+          <button class="minimize-btn" onclick="let panel_cw_c = this.closest('.app-window'); if(panel_cw_c) { minimizeWindow(panel_cw_c); }">−</button>
+          <button class="maximize-restore-btn">🗖</button>
+          <button class="close-btn" onclick="let panel_cw_c1 = this.closest('.app-window'); if(panel_cw_c1) { panel_cw_c1.style.display='none'; if(panel_cw_c1.id && typeof removeTaskbarIcon === 'function') removeTaskbarIcon(panel_cw_c1.id); }">✕</button>
+        </div>
+      </div>
+      <div class="app-window-body" style="padding: 10px;">
+        <input type="text" id="calculator-display" readonly style="width: calc(100% - 10px); text-align: right; font-size: 20px; padding: 5px; margin-bottom: 10px; box-sizing: border-box;">
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px;">
+          <button id="calc-btn-7" class="win11-button">7</button><button id="calc-btn-8" class="win11-button">8</button><button id="calc-btn-9" class="win11-button">9</button><button id="calc-btn-divide" class="win11-button">/</button>
+          <button id="calc-btn-4" class="win11-button">4</button><button id="calc-btn-5" class="win11-button">5</button><button id="calc-btn-6" class="win11-button">6</button><button id="calc-btn-multiply" class="win11-button">*</button>
+          <button id="calc-btn-1" class="win11-button">1</button><button id="calc-btn-2" class="win11-button">2</button><button id="calc-btn-3" class="win11-button">3</button><button id="calc-btn-subtract" class="win11-button">-</button>
+          <button id="calc-btn-0" class="win11-button">0</button><button id="calc-btn-dot" class="win11-button">.</button><button id="calc-btn-clear" class="win11-button">C</button><button id="calc-btn-add" class="win11-button">+</button>
+          <button id="calc-btn-equals" class="win11-button accent-button" style="grid-column: span 4;">=</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- New System Tray Panels -->
+    <div id="volume-panel" class="app-window" style="width: 280px; height: auto; bottom: 58px; /* above taskbar */ right: 40px; /* adjust based on other tray items */ display: none; z-index: 1006; flex-direction: column;">
+      <div class="app-window-title-bar">
+        <h1>Volume Mixer</h1>
+        <div class="app-window-controls">
+          <button class="close-btn" onclick="document.getElementById('volume-panel').style.display='none'; document.getElementById('taskbar-tray-sound').classList.remove('active'); removeTaskbarIcon('volume-panel');">✕</button>
+        </div>
+      </div>
+      <div class="app-window-body">
+        <label for="volume-slider">Master Volume:</label>
+        <input type="range" id="volume-slider" name="volume" min="0" max="100" value="75" style="width:100%;">
+        <p>Application Volumes Placeholder</p>
+      </div>
+    </div>
+
+    <!-- New Browser App Window -->
+    <div id="browser-window" class="app-window" style="width: 80vw; height: 80vh; top: 100px; left: 100px; display: none; z-index: 1001; flex-direction: column;">
+      <div class="app-window-title-bar" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
+          <img src="./chrome.jpg" alt="Browser" style="width: 16px; height: 16px; vertical-align: middle;">
+          <h1>Browser</h1>
+        </div>
+        <div class="browser-tab-bar" style="display: flex; background: transparent; border: none; padding: 0; flex-shrink: 1; align-items: center; gap: 2px; flex-grow: 1; margin-left: 10px; margin-right: 10px; min-width: 0; max-width: calc(100% - 200px); overflow-x: auto;">
+          <!-- Browser tabs will be dynamically added here -->
+        </div>
+        <div class="app-window-controls" style="flex-shrink: 0;">
+          <button class="minimize-btn" onclick="let panel_bw_c = this.closest('.app-window'); if(panel_bw_c) { minimizeWindow(panel_bw_c); }">−</button>
+          <button class="maximize-restore-btn">🗖</button>
+          <button class="close-btn" onclick="let panel_bw_c1 = this.closest('.app-window'); if(panel_bw_c1) { panel_bw_c1.style.display='none'; if(panel_bw_c1.id && typeof removeTaskbarIcon === 'function') removeTaskbarIcon(panel_bw_c1.id); }">✕</button>
+        </div>
+      </div>
+      <div class="app-window-body" style="padding: 0; display: flex; flex-direction: column; overflow: hidden;">
+        <!-- Persistent URL/Search Bar -->
+        <div class="browser-address-bar" style="display: flex; align-items: center; padding: 8px; background-color: var(--base-grey-light); border-bottom: 1px solid var(--base-grey-medium); flex-shrink: 0;">
+          <button onclick="document.getElementById('browser-iframe-' + document.querySelector('.browser-tab.active').dataset.tabId)?.contentWindow.history.back()" style="background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 4px 8px; font-size: 18px;" title="Back">←</button>
+          <button onclick="document.getElementById('browser-iframe-' + document.querySelector('.browser-tab.active').dataset.tabId)?.contentWindow.history.forward()" style="background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 4px 8px; font-size: 18px;" title="Forward">→</button>
+          <button onclick="document.getElementById('browser-iframe-' + document.querySelector('.browser-tab.active').dataset.tabId)?.contentWindow.location.reload()" style="background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 4px 8px; font-size: 16px;" title="Reload">↻</button>
+          <input type="text" id="browser-url-input" placeholder="Search Google or type a URL" style="flex-grow: 1; padding: 8px 12px; border: 1px solid var(--base-grey-medium); border-radius: var(--border-radius-sm); font-size: 14px; outline: none; margin: 0 5px;">
+          <button id="browser-go-btn" style="margin-left: 8px; padding: 8px 12px; border: none; background-color: var(--accent-color-default); color: white; border-radius: var(--border-radius-sm); cursor: pointer; font-size: 14px;">Go</button>
+        </div>
+         
+        <!-- Persistent Bookmarks Bar -->
+        <div class="browser-bookmarks-bar" style="display: flex; align-items: center; padding: 6px 8px; background-color: var(--base-grey); border-bottom: 1px solid var(--base-grey-medium); flex-shrink: 0; gap: 10px; flex-wrap: wrap;">
+          <a href="#" onclick="loadWebsiteInBrowser('https://www.youware.com/', 'YouWare'); return false;" style="color: var(--accent-color-default); text-decoration: none; font-size: 13px; padding: 4px 8px; border-radius: var(--border-radius-sm);">YouWare</a>
+          <a href="#" onclick="loadWebsiteInBrowser('https://win11.blueedge.me', 'Win11React'); return false;" style="color: var(--accent-color-default); text-decoration: none; font-size: 13px; padding: 4px 8px; border-radius: var(--border-radius-sm);">Win11React</a>
+          <a href="#" onclick="loadWebsiteInBrowser('https://magic-image-orpin.vercel.app/', 'MagicImage'); return false;" style="color: var(--accent-color-default); text-decoration: none; font-size: 13px; padding: 4px 8px; border-radius: var(--border-radius-sm);">MagicImage</a>
+          <a href="#" onclick="loadWebsiteInBrowser('https://gallery-3d-animation.vercel.app', '3dAnimation'); return false;" style="color: var(--accent-color-default); text-decoration: none; font-size: 13px; padding: 4px 8px; border-radius: var(--border-radius-sm);">3dAnimation</a>
+          <a href="#" onclick="loadWebsiteInBrowser('https://press.stripe.com/', '3dBooks'); return false;" style="color: var(--accent-color-default); text-decoration: none; font-size: 13px; padding: 4px 8px; border-radius: var(--border-radius-sm);">3dBooks</a>
+        </div>
+        <div class="browser-content-area" style="flex-grow: 1; background-color: white; overflow: auto; position: relative;">
+          <!-- Default Start Page (initially visible) -->
+          <div class="browser-tab-content browser-start-page" data-tab-content-id="start-page" style="display: block; padding: 0; height: 100%; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
+            <div style="text-align: center; padding: 60px 20px 40px 20px;">
+              <h1 style="font-size: 48px; margin: 0 0 40px 0; color: #333; font-weight: 300;">YouWare</h1>
+              <div style="max-width: 600px; margin: 0 auto 60px auto; position: relative;">
+                <input type="text" id="new-tab-search-input" placeholder="Search Google or type a URL" style="width: 100%; padding: 15px 50px 15px 20px; border: 2px solid #ddd; border-radius: 25px; font-size: 16px; box-sizing: border-box; outline: none; transition: border-color 0.3s ease;">
+                <div style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #666;">🔍</div>
+              </div>
+              <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-bottom: 40px;">
+                <div class="quick-access-item" onclick="loadWebsiteInBrowser('https://www.youware.com/', 'YouWare', 'start-page')" style="text-align: center; cursor: pointer; padding: 20px; border-radius: 15px; transition: transform 0.2s ease, box-shadow 0.2s ease; background: rgba(255,255,255,0.7);" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                  <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, #667eea 0%, #764ba2 100%); margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; font-weight: bold;">Y</div>
+                  <div style="font-size: 14px; color: #333;">YouWare</div>
+                </div>
+                <div class="quick-access-item" onclick="loadWebsiteInBrowser('https://win11.blueedge.me', 'Win11React', 'start-page')" style="text-align: center; cursor: pointer; padding: 20px; border-radius: 15px; transition: transform 0.2s ease, box-shadow 0.2s ease; background: rgba(255,255,255,0.7);" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                  <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, #0078d4 0%, #1ba1e2 100%); margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;">🪟</div>
+                  <div style="font-size: 14px; color: #333;">Win11React</div>
+                </div>
+                <div class="quick-access-item" onclick="loadWebsiteInBrowser('https://magic-image-orpin.vercel.app/', 'MagicImage', 'start-page')" style="text-align: center; cursor: pointer; padding: 20px; border-radius: 15px; transition: transform 0.2s ease, box-shadow 0.2s ease; background: rgba(255,255,255,0.7);" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                  <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, #ff6b6b 0%, #4ecdc4 100%); margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px;">🎨</div>
+                  <div style="font-size: 14px; color: #333;">MagicImage</div>
+                </div>
+                <div class="quick-access-item" onclick="loadWebsiteInBrowser('https://gallery-3d-animation.vercel.app', '3dAnimation', 'start-page')" style="text-align: center; cursor: pointer; padding: 20px; border-radius: 15px; transition: transform 0.2s ease, box-shadow 0.2s ease; background: rgba(255,255,255,0.7);" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                  <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, #a8edea 0%, #fed6e3 100%); margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; color: #333; font-size: 20px;">🎬</div>
+                  <div style="font-size: 14px; color: #333;">3dAnimation</div>
+                </div>
+                <div class="quick-access-item" onclick="loadWebsiteInBrowser('https://press.stripe.com/', '3dBooks', 'start-page')" style="text-align: center; cursor: pointer; padding: 20px; border-radius: 15px; transition: transform 0.2s ease, box-shadow 0.2s ease; background: rgba(255,255,255,0.7);" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                  <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, #ffecd2 0%, #fcb69f 100%); margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; color: #333; font-size: 20px;">📚</div>
+                  <div style="font-size: 14px; color: #333;">3dBooks</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Tab content will be dynamically added or shown/hidden here -->
+        </div>
+                </div>
+              </div>
+              
+    <!-- Hidden template for the browser start page -->
+    <template id="browser-start-page-template">
+        <div style="text-align: center; padding: 60px 20px 40px 20px;">
+            <h1 style="font-size: 48px; margin: 0 0 40px 0; color: #333; font-weight: 300;">YouWare</h1>
+            <div style="max-width: 600px; margin: 0 auto 60px auto; position: relative;">
+                <!-- ID will be made unique by JS: new-tab-search-input -->
+                <input type="text" id="new-tab-search-input" placeholder="Search Google or type a URL" style="width: 100%; padding: 15px 50px 15px 20px; border: 2px solid #ddd; border-radius: 25px; font-size: 16px; box-sizing: border-box; outline: none; transition: border-color 0.3s ease;">
+                <div style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #666;">🔍</div>
+                </div>
+            <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-bottom: 40px;">
+                <!-- Onclicks will be updated by JS to pass correct tab ID -->
+                <div class="quick-access-item" onclick="loadWebsiteInBrowser('https://www.youware.com/', 'YouWare')" style="text-align: center; cursor: pointer; padding: 20px; border-radius: 15px; transition: transform 0.2s ease, box-shadow 0.2s ease; background: rgba(255,255,255,0.7);" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                    <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, #667eea 0%, #764ba2 100%); margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; font-weight: bold;">Y</div>
+                    <div style="font-size: 14px; color: #333;">YouWare</div>
+              </div>
+                <div class="quick-access-item" onclick="loadWebsiteInBrowser('https://win11.blueedge.me', 'Win11React')" style="text-align: center; cursor: pointer; padding: 20px; border-radius: 15px; transition: transform 0.2s ease, box-shadow 0.2s ease; background: rgba(255,255,255,0.7);" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                    <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, #0078d4 0%, #1ba1e2 100%); margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;">🪟</div>
+                    <div style="font-size: 14px; color: #333;">Win11React</div>
+            </div>
+                <div class="quick-access-item" onclick="loadWebsiteInBrowser('https://magic-image-orpin.vercel.app/', 'MagicImage')" style="text-align: center; cursor: pointer; padding: 20px; border-radius: 15px; transition: transform 0.2s ease, box-shadow 0.2s ease; background: rgba(255,255,255,0.7);" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                    <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, #ff6b6b 0%, #4ecdc4 100%); margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px;">🎨</div>
+                    <div style="font-size: 14px; color: #333;">MagicImage</div>
+          </div>
+                <div class="quick-access-item" onclick="loadWebsiteInBrowser('https://gallery-3d-animation.vercel.app', '3dAnimation')" style="text-align: center; cursor: pointer; padding: 20px; border-radius: 15px; transition: transform 0.2s ease, box-shadow 0.2s ease; background: rgba(255,255,255,0.7);" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                    <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, #a8edea 0%, #fed6e3 100%); margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; color: #333; font-size: 20px;">🎬</div>
+                    <div style="font-size: 14px; color: #333;">3dAnimation</div>
+          </div>
+                <div class="quick-access-item" onclick="loadWebsiteInBrowser('https://press.stripe.com/', '3dBooks')" style="text-align: center; cursor: pointer; padding: 20px; border-radius: 15px; transition: transform 0.2s ease, box-shadow 0.2s ease; background: rgba(255,255,255,0.7);" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                    <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, #ffecd2 0%, #fcb69f 100%); margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; color: #333; font-size: 20px;">📚</div>
+                    <div style="font-size: 14px; color: #333;">3dBooks</div>
+        </div>
+      </div>
+    </div>
+    </template>
+
+    <!-- Background Switcher Window -->
+    <div id="bg-switcher-window" class="app-window" style="width: 50vw; height: 50vh; top: 200px; left: 300px; display: none; z-index: 1001; flex-direction: column;">
+      <div class="app-window-title-bar">
+        <img src="bg-switcher.png" alt="BG Switcher" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;"><h1>Background Switcher</h1>
+        <div class="app-window-controls">
+          <button class="minimize-btn" onclick="let panel_bsw_c = this.closest('.app-window'); if(panel_bsw_c) { minimizeWindow(panel_bsw_c); }">−</button>
+          <button class="maximize-restore-btn">🗖</button>
+          <button class="close-btn" onclick="let panel_bsw_c1 = this.closest('.app-window'); if(panel_bsw_c1) { panel_bsw_c1.style.display='none'; if(panel_bsw_c1.id && typeof removeTaskbarIcon === 'function') removeTaskbarIcon(panel_bsw_c1.id); }">✕</button>
+        </div>
+      </div>
+      <div class="app-window-body" style="padding: 30px; text-align: center;">
+        <h3 style="margin: 0 0 30px 0; color: var(--text-primary);">Choose Background</h3>
+        <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+          <!-- Default Win11 Blue (First) -->
+          <div class="bg-color-option" onclick="window.changeBackground('linear-gradient(135deg, #0078d4 0%, #1ba1e2 50%, #00bcf2 100%)')" style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #0078d4 0%, #1ba1e2 50%, #00bcf2 100%); cursor: pointer; border: 3px solid var(--base-white); box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.2)'" title="Default Blue"></div>
+          
+          <!-- Pure Red -->
+          <div class="bg-color-option" onclick="window.changeBackground('#ff4757')" style="width: 60px; height: 60px; border-radius: 50%; background: #ff4757; cursor: pointer; border: 3px solid var(--base-white); box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.2)'" title="Pure Red"></div>
+          
+          <!-- Pure Green -->
+          <div class="bg-color-option" onclick="window.changeBackground('#2ed573')" style="width: 60px; height: 60px; border-radius: 50%; background: #2ed573; cursor: pointer; border: 3px solid var(--base-white); box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.2)'" title="Pure Green"></div>
+          
+          <!-- Pure Purple -->
+          <div class="bg-color-option" onclick="window.changeBackground('#a55eea')" style="width: 60px; height: 60px; border-radius: 50%; background: #a55eea; cursor: pointer; border: 3px solid var(--base-white); box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.2)'" title="Pure Purple"></div>
+          
+          <!-- Pure Orange -->
+          <div class="bg-color-option" onclick="window.changeBackground('#ffa726')" style="width: 60px; height: 60px; border-radius: 50%; background: #ffa726; cursor: pointer; border: 3px solid var(--base-white); box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.2)'" title="Pure Orange"></div>
+
+          <!-- New Colors Start -->
+          <div class="bg-color-option" onclick="window.changeBackground('#1abc9c')" style="width: 60px; height: 60px; border-radius: 50%; background: #1abc9c; cursor: pointer; border: 3px solid var(--base-white); box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.2)'" title="Teal"></div>
+          <div class="bg-color-option" onclick="window.changeBackground('#34495e')" style="width: 60px; height: 60px; border-radius: 50%; background: #34495e; cursor: pointer; border: 3px solid var(--base-white); box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.2)'" title="Slate Gray"></div>
+          <div class="bg-color-option" onclick="window.changeBackground('#e74c3c')" style="width: 60px; height: 60px; border-radius: 50%; background: #e74c3c; cursor: pointer; border: 3px solid var(--base-white); box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.2)'" title="Coral Red"></div>
+          <div class="bg-color-option" onclick="window.changeBackground('#f1c40f')" style="width: 60px; height: 60px; border-radius: 50%; background: #f1c40f; cursor: pointer; border: 3px solid var(--base-white); box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.2)'" title="Gold"></div>
+          <div class="bg-color-option" onclick="window.changeBackground('#9b59b6')" style="width: 60px; height: 60px; border-radius: 50%; background: #9b59b6; cursor: pointer; border: 3px solid var(--base-white); box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.2)'" title="Lavender"></div>
+          <div class="bg-color-option" onclick="window.changeBackground('#2ecc71')" style="width: 60px; height: 60px; border-radius: 50%; background: #2ecc71; cursor: pointer; border: 3px solid var(--base-white); box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.2)'" title="Mint Green"></div>
+          <div class="bg-color-option" onclick="window.changeBackground('#e67e22')" style="width: 60px; height: 60px; border-radius: 50%; background: #e67e22; cursor: pointer; border: 3px solid var(--base-white); box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.2)'" title="Peach"></div>
+          <div class="bg-color-option" onclick="window.changeBackground('#3498db')" style="width: 60px; height: 60px; border-radius: 50%; background: #3498db; cursor: pointer; border: 3px solid var(--base-white); box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.2)'" title="Sky Blue"></div>
+          <div class="bg-color-option" onclick="window.changeBackground('linear-gradient(to right, #ff7e5f, #feb47b)')" style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(to right, #ff7e5f, #feb47b); cursor: pointer; border: 3px solid var(--base-white); box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.2)'" title="Sunset Gradient"></div>
+          <div class="bg-color-option" onclick="window.changeBackground('url(./3mvqvubgqu.jpg)')" style="width: 60px; height: 60px; border-radius: 50%; background-image: url(./3mvqvubgqu.jpg); background-size: cover; background-position: center; cursor: pointer; border: 3px solid var(--base-white); box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.2)'" title="Image Background 1"></div>
+          <!-- New Colors End -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Function to change background - Moved to global scope
+    window.changeBackground = function(backgroundValue) { 
+      const desktop = document.getElementById('win11-desktop');
+      if (desktop) {
+        if (backgroundValue.startsWith('#') || backgroundValue.startsWith('rgb') || backgroundValue.startsWith('linear-gradient') || backgroundValue.startsWith('radial-gradient')) {
+          desktop.style.backgroundImage = 'none'; 
+          desktop.style.background = backgroundValue; 
+        } else if (backgroundValue.startsWith('url(')) { 
+          desktop.style.background = 'none'; 
+          desktop.style.backgroundImage = backgroundValue;
+          desktop.style.backgroundSize = 'cover';
+          desktop.style.backgroundPosition = 'center';
+        }
+        // console.log("Desktop background changed to:", backgroundValue); // Optional: for debugging
+      } else {
+        // console.error("Desktop element #win11-desktop not found."); // Optional: for debugging
+      }
+    };
+
+    // New script block for Win11 features - Draggability and Z-index management
+    document.addEventListener('DOMContentLoaded', function() {
+      let highestZ = 1000; // Initial highest z-index
+
+      function bringToFront(element) {
+        if (element) {
+          highestZ++;
+          element.style.zIndex = highestZ;
+        }
+      }
+
+      function getMaxZIndex() {
+        let maxZ = 1000;
+        document.querySelectorAll('.app-window').forEach(el => {
+          const z = parseInt(el.style.zIndex) || 0;
+          if (z > maxZ) maxZ = z;
+        });
+        return maxZ;
+      }
+
+      // Object to track open windows and prevent multiple instances - SINGLE DECLARATION
+      const openWindows = new Set();
+
+      // Make all elements with class 'app-window' draggable by their title bar
+      function makeElementDraggable(elmnt) {
+        let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        const titleBar = elmnt.querySelector('.app-window-title-bar');
+        
+        // Add resize handle with better functionality
+        const resizeHandle = document.createElement('div');
+        resizeHandle.className = 'resize-handle';
+        resizeHandle.style.width = '16px';
+        resizeHandle.style.height = '16px';
+        resizeHandle.style.position = 'absolute';
+        resizeHandle.style.right = '0px';
+        resizeHandle.style.bottom = '0px';
+        resizeHandle.style.cursor = 'nwse-resize';
+        resizeHandle.style.zIndex = '1001';
+        resizeHandle.style.background = 'var(--base-gray)';
+        resizeHandle.style.borderBottomRightRadius = 'var(--border-radius-lg)';
+        elmnt.appendChild(resizeHandle);
+
+        let isResizing = false;
+        let originalMouseX, originalMouseY, originalWidth, originalHeight;
+
+        resizeHandle.onmousedown = function(e) {
+          e = e || window.event;
+          e.preventDefault();
+          e.stopPropagation();
+
+          isResizing = true;
+          originalMouseX = e.clientX;
+          originalMouseY = e.clientY;
+          originalWidth = elmnt.offsetWidth;
+          originalHeight = elmnt.offsetHeight;
+
+          document.onmousemove = doResize;
+          document.onmouseup = stopResize;
+          
+          bringToFront(elmnt);
+        };
+
+        function doResize(e) {
+          if (!isResizing) return;
+          e = e || window.event;
+          const newWidth = originalWidth + (e.clientX - originalMouseX);
+          const newHeight = originalHeight + (e.clientY - originalMouseY);
+          
+          elmnt.style.width = Math.max(250, newWidth) + 'px';
+          elmnt.style.height = Math.max(200, newHeight) + 'px';
+        }
+
+        function stopResize() {
+          isResizing = false;
+          document.onmousemove = null;
+          document.onmouseup = null;
+        }
+        
+        // Function to call when an app window is clicked (not just dragged)
+        function onWindowClick() {
+          bringToFront(elmnt);
+        }
+
+        elmnt.addEventListener('mousedown', onWindowClick);
+
+        if (titleBar) {
+          titleBar.onmousedown = dragMouseDown;
+        }
+
+        function dragMouseDown(e) {
+          e = e || window.event;
+          
+          // Bring to front on drag start
+          bringToFront(elmnt);
+
+          // get the mouse cursor position at startup:
+          pos3 = e.clientX;
+          pos4 = e.clientY;
+          document.onmouseup = closeDragElement;
+          // call a function whenever the cursor moves:
+          document.onmousemove = elementDrag;
+
+          // If the window was centered with transform, remove it and set explicit top/left
+          if (elmnt.style.transform && elmnt.style.transform.includes('translate')) {
+            const rect = elmnt.getBoundingClientRect();
+            elmnt.style.transform = 'none';
+            elmnt.style.left = rect.left + 'px';
+            elmnt.style.top = rect.top + 'px';
+          }
+        }
+
+        function elementDrag(e) {
+          e = e || window.event;
+          // calculate the new cursor position:
+          pos1 = pos3 - e.clientX;
+          pos2 = pos4 - e.clientY;
+          pos3 = e.clientX;
+          pos4 = e.clientY;
+          // set the element's new position:
+          elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+          elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        }
+
+        function closeDragElement() {
+          // stop moving when mouse button is released:
+          document.onmouseup = null;
+          document.onmousemove = null;
+        }
+      }
+
+      // Apply to all app windows
+      document.querySelectorAll('.app-window').forEach(win => {
+        makeElementDraggable(win);
+      });
+
+      // Refined showAndBringToFront for single instance enforcement
+      function showAndBringToFront(element, isBeingRestored = false) {
+        if (!element) return;
+        
+        // If window is already open and visible, just bring to front
+        if (element.id && openWindows.has(element.id) && element.style.display !== 'none' && !isBeingRestored) {
+            bringToFront(element);
+          return;
+        }
+        
+        // If window is in openWindows set but hidden (minimized), restore it
+        if (element.id && openWindows.has(element.id) && element.style.display === 'none' && !isBeingRestored) {
+            const minimizedButton = minimizedAppsContainer.querySelector(`button[data-window-id="${element.id}"].minimized-app-btn`);
+            if (minimizedButton) { // Check if there's a minimized button to click for restore
+               restoreWindow(element.id, minimizedButton); // This will call showAndBringToFront with isBeingRestored = true
+            } else { // Should not happen if logic is correct, but as a fallback:
+                element.style.display = 'flex'; // Make sure it's visible
+                bringToFront(element);
+                addTaskbarIcon(element); // Ensure taskbar icon is correct
+            }
+            return; // Handled
+        }
+        
+        // Proceed to show the window (either new or being restored from a minimized state)
+        if (element.id) { // Ensure it has an ID to be tracked
+            openWindows.add(element.id); 
+        }
+        element.style.display = 'flex';
+        bringToFront(element); 
+
+        // Centering logic for new windows or non-maximized windows without explicit positions
+        // Avoid recentering if it's being restored or already has a position
+        if (!isBeingRestored && !element.dataset.isMaximized && !(element.style.top && element.style.left && element.style.top !== 'auto' && element.style.left !== 'auto')) {
+            const windowWidth = element.offsetWidth || (element.id === 'prize-center-window' ? 420 : 600);
+            const windowHeight = element.offsetHeight || (element.id === 'prize-center-window' ? 400 : 400);
+            element.style.left = Math.max(0, (window.innerWidth - windowWidth) / 2) + 'px';
+            element.style.top = Math.max(0, (window.innerHeight - windowHeight) / 2) + 'px';
+          element.style.transform = 'none';
+        }
+        
+        // Taskbar icon management
+        const minimizedButton = minimizedAppsContainer.querySelector(`button[data-window-id="${element.id}"].minimized-app-btn`);
+        if (minimizedButton) { 
+            minimizedAppsContainer.removeChild(minimizedButton);
+        }
+        addTaskbarIcon(element);
+      }
+
+      // Enhanced removeTaskbarIcon to also remove from openWindows
+      function removeTaskbarIcon(windowId) {
+        const existingButton = minimizedAppsContainer.querySelector(`button[data-window-id="${windowId}"]`);
+        if (existingButton) {
+          minimizedAppsContainer.removeChild(existingButton);
+        }
+        openWindows.delete(windowId);
+      }
+
+      // Refined restoreWindow
+      function restoreWindow(windowId, taskbarButtonElement) { // taskbarButtonElement is the minimized button
+        const windowElement = document.getElementById(windowId);
+        if (windowElement) {
+          showAndBringToFront(windowElement, true); // Pass true for isBeingRestored
+        }
+      }
+
+      // Enhanced minimizeWindow
+      function minimizeWindow(windowEl) {
+        if (!windowEl || !windowEl.id) return;
+        
+        // Remove any existing "open" taskbar icon for this window first
+        const existingOpenAppButton = minimizedAppsContainer.querySelector(`button[data-window-id="${windowEl.id}"].open-app-btn`);
+        if (existingOpenAppButton) {
+            minimizedAppsContainer.removeChild(existingOpenAppButton);
+        }
+
+        // Prevent minimizing if already minimized (already has a minimized-app-btn)
+        if (minimizedAppsContainer.querySelector(`button[data-window-id="${windowEl.id}"].minimized-app-btn`)) {
+          return; 
+        }
+
+        windowEl.style.display = 'none';
+        
+        const taskbarButton = document.createElement('button');
+        taskbarButton.className = 'taskbar-item minimized-app-btn';
+        taskbarButton.setAttribute('data-window-id', windowEl.id);
+        
+        // Try to get a title and icon
+        let windowTitle = 'App';
+        let iconPath = '';
+        const titleElement = windowEl.querySelector('.app-window-title-bar h1');
+        if (titleElement && titleElement.textContent) {
+          windowTitle = titleElement.textContent.substring(0, 15) + (titleElement.textContent.length > 15 ? '...' : '');
+        } else if (windowEl.id) {
+          windowTitle = windowEl.id.replace('-window', '').replace('-', ' ');
+          windowTitle = windowTitle.charAt(0).toUpperCase() + windowTitle.slice(1);
+        }
+        
+        // Get appropriate icon based on window type
+        if (windowEl.id === 'notepad-window') {
+          iconPath = 'notepad.png';
+        } else if (windowEl.id === 'calculator-window') {
+          iconPath = 'calculator.png';
+        } else if (windowEl.id === 'browser-window') {
+          iconPath = 'chrome.jpg';
+        } else if (windowEl.id === 'prize-center-window') {
+          iconPath = 'theypcs8wt.jpg';
+        } else if (windowEl.id === 'faq-window') {
+          iconPath = 'x0id8ab3fc.png';
+        } else if (windowEl.id === 'youware-challenge-app') {
+          iconPath = 'p1nvfxjlt5.jpg';
+        } else if (windowEl.id === 'bg-switcher-window') {
+          iconPath = 'bg-switcher.png';
+        }
+        
+        // Create icon element
+        if (iconPath) {
+          const iconImg = document.createElement('img');
+          iconImg.src = iconPath;
+          iconImg.style.width = '24px';
+          iconImg.style.height = '24px';
+          iconImg.style.objectFit = 'contain';
+          iconImg.alt = windowTitle;
+          taskbarButton.appendChild(iconImg);
+        } else {
+          taskbarButton.innerHTML = '🗔';
+        }
+        
+        taskbarButton.title = windowTitle;
+        taskbarButton.style.marginLeft = '2px';
+        taskbarButton.style.marginRight = '2px';
+        taskbarButton.style.padding = '8px 12px';
+        taskbarButton.style.maxWidth = '48px';
+        taskbarButton.style.overflow = 'hidden';
+        taskbarButton.style.textAlign = 'center';
+
+        taskbarButton.onclick = function() {
+          restoreWindow(windowEl.id, taskbarButton);
+        };
+        
+        minimizedAppsContainer.appendChild(taskbarButton);
+      }
+
+      // Function to add taskbar icon when window is opened (not just minimized)
+      function addTaskbarIcon(windowEl) {
+        if (!windowEl || !windowEl.id) return;
+        
+        // Check if an "open-app-btn" icon already exists, remove it to prevent duplicates before adding a new one.
+        // This also helps if a window is shown again without being formally minimized/restored.
+        const existingOpenButton = minimizedAppsContainer.querySelector(`button[data-window-id="${windowEl.id}"].open-app-btn`);
+        if (existingOpenButton) {
+          minimizedAppsContainer.removeChild(existingOpenButton);
+        }
+        // Also remove any "minimized-app-btn" for this window ID, as it's now being opened/shown.
+        const existingMinimizedButton = minimizedAppsContainer.querySelector(`button[data-window-id="${windowEl.id}"].minimized-app-btn`);
+        if (existingMinimizedButton) {
+            minimizedAppsContainer.removeChild(existingMinimizedButton);
+        }
+
+        const taskbarButton = document.createElement('button');
+        taskbarButton.className = 'taskbar-item open-app-btn';
+        taskbarButton.setAttribute('data-window-id', windowEl.id);
+        
+        // Try to get a title and icon
+        let windowTitle = 'App';
+        let iconPath = '';
+        const titleElement = windowEl.querySelector('.app-window-title-bar h1');
+        if (titleElement && titleElement.textContent) {
+          windowTitle = titleElement.textContent.substring(0, 15) + (titleElement.textContent.length > 15 ? '...' : '');
+        } else if (windowEl.id) {
+          windowTitle = windowEl.id.replace('-window', '').replace('-', ' ');
+          windowTitle = windowTitle.charAt(0).toUpperCase() + windowTitle.slice(1);
+        }
+        
+        // Get appropriate icon based on window type
+        if (windowEl.id === 'notepad-window') {
+          iconPath = 'notepad.png';
+        } else if (windowEl.id === 'calculator-window') {
+          iconPath = 'calculator.png';
+        } else if (windowEl.id === 'browser-window') {
+          iconPath = 'chrome.jpg';
+        } else if (windowEl.id === 'prize-center-window') {
+          iconPath = 'theypcs8wt.jpg';
+        } else if (windowEl.id === 'faq-window') {
+          iconPath = 'x0id8ab3fc.png';
+        } else if (windowEl.id === 'youware-challenge-app') {
+          iconPath = 'p1nvfxjlt5.jpg';
+        } else if (windowEl.id === 'bg-switcher-window') {
+          iconPath = 'bg-switcher.png';
+        }
+        
+        // Create icon element
+        if (iconPath) {
+          const iconImg = document.createElement('img');
+          iconImg.src = iconPath;
+          iconImg.style.width = '24px';
+          iconImg.style.height = '24px';
+          iconImg.style.objectFit = 'contain';
+          iconImg.alt = windowTitle;
+          taskbarButton.appendChild(iconImg);
+        } else {
+          taskbarButton.innerHTML = '🗔';
+        }
+        
+        taskbarButton.title = windowTitle;
+        taskbarButton.style.marginLeft = '2px';
+        taskbarButton.style.marginRight = '2px';
+        taskbarButton.style.padding = '8px 12px';
+        taskbarButton.style.maxWidth = '48px';
+        taskbarButton.style.overflow = 'hidden';
+        taskbarButton.style.textAlign = 'center';
+
+        taskbarButton.onclick = function() {
+          if (windowEl.style.display === 'none') {
+            restoreWindow(windowEl.id, taskbarButton);
+          } else {
+            // If window is visible, bring to front
+            windowEl.style.zIndex = getMaxZIndex() + 1;
+          }
+        };
+        
+        minimizedAppsContainer.appendChild(taskbarButton);
+      }
+      
+      // --- Taskbar System Panel Logic ---
+      const startButton = document.querySelector('.start-button-win11');
+      const searchButton = document.getElementById('taskbar-search');
+
+      const startPanel = document.getElementById('start-menu-panel');
+      const searchPanel = document.getElementById('search-panel');
+
+      const systemPanels = [startPanel, searchPanel];
+      const systemButtons = [startButton, searchButton];
+
+      function toggleSystemPanel(panelToShow, buttonToActivate) {
+        // Hide all other system panels and deactivate their buttons
+        systemPanels.forEach((panel, index) => {
+          if (panel !== panelToShow) {
+            panel.style.display = 'none';
+            if (systemButtons[index]) systemButtons[index].classList.remove('active');
+          }
+        });
+
+        // Toggle the selected panel
+        if (panelToShow.style.display === 'flex' || panelToShow.style.display === 'block') {
+          panelToShow.style.display = 'none';
+          buttonToActivate.classList.remove('active');
+        } else {
+          showAndBringToFront(panelToShow); // Uses flex for app-window by default
+          buttonToActivate.classList.add('active');
+          // If it's the start panel, adjust its position
+          if (panelToShow.id === 'start-menu-panel' && buttonToActivate) {
+            const taskbar = document.querySelector('.taskbar');
+            const taskbarRect = taskbar.getBoundingClientRect();
+            const buttonRect = buttonToActivate.getBoundingClientRect();
+            // Position panel relative to the viewport, aligning with the button
+            panelToShow.style.left = (buttonRect.left - taskbarRect.left) + 'px'; 
+          }
+        }
+      }
+
+      if (startButton && startPanel) {
+        startButton.addEventListener('click', function(e) {
+          e.stopPropagation();
+          toggleSystemPanel(startPanel, startButton);
+        });
+      }
+      if (searchButton && searchPanel) {
+        searchButton.addEventListener('click', function(e) {
+          e.stopPropagation();
+          toggleSystemPanel(searchPanel, searchButton);
+        });
+      }
+
+      // --- New App Icon Listeners ---
+      const openNotepadIcon = document.getElementById('open-notepad-icon');
+      if (openNotepadIcon) {
+        openNotepadIcon.addEventListener('click', function() {
+          const notepadWindow = document.getElementById('notepad-window');
+          if (notepadWindow) {
+            showAndBringToFront(notepadWindow);
+          }
+        });
+      }
+
+      const openCalculatorIcon = document.getElementById('open-calculator-icon');
+      if (openCalculatorIcon) {
+        openCalculatorIcon.addEventListener('click', function() {
+          const calculatorWindow = document.getElementById('calculator-window');
+          if (calculatorWindow) {
+            showAndBringToFront(calculatorWindow);
+          }
+        });
+      }
+
+      // --- Robust App Launch Interception from within Container Windows ---
+      function setupInternalAppLauncherInterception() {
+        const containerAppIds = [
+          'youware-challenge-app', // YouWare Challenge
+          'prize-center-window',   // Prize Center
+          'faq-window'             // FAQ
+        ];
+
+        const appsToLaunch = {
+          'notepad': 'notepad-window',
+          'calculator': 'calculator-window',
+          'browser': 'browser-window',
+          'bg-switcher': 'bg-switcher-window',
+          'bg switcher': 'bg-switcher-window' // for text matching
+        };
+
+        containerAppIds.forEach(containerId => {
+          const containerWindow = document.getElementById(containerId);
+          if (containerWindow) {
+            containerWindow.addEventListener('click', function(event) {
+              let targetElement = event.target;
+              let launched = false;
+
+              // Check target and its parents up to the container window
+              while (targetElement && targetElement !== containerWindow) {
+                const elementId = targetElement.id ? targetElement.id.toLowerCase() : '';
+                const elementText = targetElement.textContent ? targetElement.textContent.toLowerCase() : '';
+                const elementTitle = targetElement.title ? targetElement.title.toLowerCase() : '';
+
+                for (const appKeyword in appsToLaunch) {
+                  if (elementId.includes(appKeyword) || elementText.includes(appKeyword) || elementTitle.includes(appKeyword)) {
+                    const appToLaunchId = appsToLaunch[appKeyword];
+                    const appWindow = document.getElementById(appToLaunchId);
+
+                    if (appWindow) {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      showAndBringToFront(appWindow); // Ensure this is the global one
+                                            
+                      // Special handling for browser if it's the first launch
+                      if (appToLaunchId === 'browser-window' && typeof browserTabs !== 'undefined' && browserTabs.length === 0 && typeof addNewBrowserTab === 'function') {
+                  addNewBrowserTab('Start Page', 'Welcome to the Browser!');
+                }
+                      launched = true;
+                      break;
+              }
+              }
+                }
+                if (launched) break;
+                targetElement = targetElement.parentElement;
+            }
+          });
+          }
+        });
+      }
+      setupInternalAppLauncherInterception();
+      // --- End Robust App Launch Interception ---
+
+      // --- System Tray Panel Logic ---
+      const volumeIcon = document.getElementById('taskbar-tray-sound');
+      const volumePanel = document.getElementById('volume-panel');
+
+      if (volumeIcon && volumePanel) {
+        volumeIcon.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const isCurrentlyVisible = volumePanel.style.display === 'flex' || volumePanel.style.display === 'block';
+          if (isCurrentlyVisible) {
+            volumePanel.style.display = 'none';
+            volumeIcon.classList.remove('active');
+          } else {
+            showAndBringToFront(volumePanel);
+            volumeIcon.classList.add('active');
+          }
+        });
+      }
+
+      // --- Taskbar Clock Update ---
+      function updateWin11Clock() {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        const clockElement = document.getElementById('clock');
+        if (clockElement) {
+          clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+        }
+      }
+      setInterval(updateWin11Clock, 1000);
+      updateWin11Clock();
+
+      // --- Enhanced BG Switcher Logic ---
+      // SINGLE DECLARATION for bgSwitcherIcon
+      const bgSwitcherIcon = document.getElementById('bg-switcher-icon'); 
+      
+      if (bgSwitcherIcon) {
+        bgSwitcherIcon.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const bgSwitcherWindow = document.getElementById('bg-switcher-window');
+          if (bgSwitcherWindow) {
+            showAndBringToFront(bgSwitcherWindow);
+          }
+        });
+      }
+
+      // --- Minimize, Restore, and Taskbar Icon Management ---
+      const minimizedAppsContainer = document.getElementById('minimized-apps-container');
+
+      // Attach to all existing and future minimize buttons within .app-window
+      document.querySelectorAll('.app-window .minimize-btn').forEach(button => {
+        // Remove existing onclick if any, to prevent double calls if some were inline
+        button.onclick = null;
+        button.addEventListener('click', function() {
+          const windowToMinimize = this.closest('.app-window');
+          if (windowToMinimize) {
+            minimizeWindow(windowToMinimize);
+          }
+        });
+      });
+
+      // --- Maximize/Restore Logic ---
+      function toggleMaximizeRestore(windowEl, buttonEl) {
+        if (!windowEl || !buttonEl) return;
+
+        if (!windowEl.dataset.originalWidth) { // If not maximized (no stored original dimensions)
+          // Store original dimensions and position
+          windowEl.dataset.originalWidth = windowEl.style.width || windowEl.offsetWidth + 'px';
+          windowEl.dataset.originalHeight = windowEl.style.height || windowEl.offsetHeight + 'px';
+          windowEl.dataset.originalTop = windowEl.style.top || windowEl.offsetTop + 'px';
+          windowEl.dataset.originalLeft = windowEl.style.left || windowEl.offsetLeft + 'px';
+          windowEl.dataset.originalTransform = windowEl.style.transform;
+
+
+          // Maximize (leaving space for taskbar, approx 48px)
+          windowEl.style.width = 'calc(100vw - 4px)'; // -4px for a small margin/border visibility
+          windowEl.style.height = 'calc(100vh - 52px)'; // 48px taskbar + 4px margin
+          windowEl.style.top = '0px';
+          windowEl.style.left = '2px';
+          windowEl.style.transform = 'none'; // Remove any centering transforms
+          buttonEl.innerHTML = '🗗'; // Restore icon
+          windowEl.dataset.isMaximized = 'true';
+        } else { // If maximized, restore
+          windowEl.style.width = windowEl.dataset.originalWidth;
+          windowEl.style.height = windowEl.dataset.originalHeight;
+          windowEl.style.top = windowEl.dataset.originalTop;
+          windowEl.style.left = windowEl.dataset.originalLeft;
+          if (windowEl.dataset.originalTransform && windowEl.dataset.originalTransform !== 'none') {
+            windowEl.style.transform = windowEl.dataset.originalTransform;
+          } else {
+            windowEl.style.transform = 'none';
+          }
+          
+          buttonEl.innerHTML = '🗖'; // Maximize icon
+          // Clear stored dimensions
+          delete windowEl.dataset.originalWidth;
+          delete windowEl.dataset.originalHeight;
+          delete windowEl.dataset.originalTop;
+          delete windowEl.dataset.originalLeft;
+          delete windowEl.dataset.originalTransform;
+          delete windowEl.dataset.isMaximized;
+        }
+        bringToFront(windowEl); // Ensure it's on top
+      }
+
+      document.querySelectorAll('.app-window .maximize-restore-btn').forEach(button => {
+        button.addEventListener('click', function() {
+          const windowEl = this.closest('.app-window');
+          toggleMaximizeRestore(windowEl, this);
+        });
+      });
+      // --- End Maximize/Restore Logic ---
+      
+      // --- Update Close Button Logic to also remove taskbar icon ---
+      document.querySelectorAll('.app-window .app-window-title-bar .close-btn, .window .title-bar-controls .close-btn').forEach(button => {
+        if (!button.onclick) { 
+            button.addEventListener('click', function() {
+                const windowToClose = this.closest('.app-window, .window');
+                if (windowToClose) {
+                    windowToClose.style.display = 'none';
+                    if (windowToClose.id) {
+                        removeTaskbarIcon(windowToClose.id);
+                    }
+                }
+            });
+        }
+      });
+
+      // --- Browser App Logic ---
+      const openBrowserIcon = document.getElementById('open-browser-icon');
+      const browserWindow = document.getElementById('browser-window');
+      let browserTabs = [];
+      let nextTabId = 1;
+      const MAX_TABS = 10;
+      let originalStartPageInnerHTML = ''; // To store pristine start page content
+
+      // --- Helper to get pristine start page HTML ---
+      function getOriginalStartPageHTML() {
+        if (!originalStartPageInnerHTML) {
+          const template = document.getElementById('browser-start-page-template');
+          if (template) {
+            originalStartPageInnerHTML = template.innerHTML;
+          } else {
+            // Fallback to grabbing from the first instance if template missing
+            // This is less ideal as it might not be pristine if scripts ran early
+            const firstStartPage = browserWindow.querySelector('.browser-start-page');
+            if (firstStartPage) {
+              originalStartPageInnerHTML = firstStartPage.innerHTML;
+            } else {
+              console.error("Browser start page template not found!");
+              return '<p>Error: Start page content unavailable.</p>';
+            }
+          }
+        }
+        return originalStartPageInnerHTML;
+      }
+
+      function renderBrowserTabs() {
+        if (!browserWindow) return;
+        const tabBar = browserWindow.querySelector('.browser-tab-bar');
+        const contentArea = browserWindow.querySelector('.browser-content-area');
+        if (!tabBar || !contentArea) return;
+
+        tabBar.innerHTML = '';
+
+        browserTabs.forEach(tab => {
+          const tabButton = document.createElement('button');
+          tabButton.className = 'browser-tab' + (tab.active ? ' active' : '');
+          tabButton.setAttribute('data-tab-id', tab.id);
+          tabButton.style.padding = '4px 8px';
+          tabButton.style.border = '1px solid rgba(255,255,255,0.2)';
+          tabButton.style.borderRadius = 'var(--border-radius-sm)';
+          tabButton.style.background = tab.active ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.1)';
+          tabButton.style.cursor = 'pointer';
+          tabButton.style.display = 'flex';
+          tabButton.style.alignItems = 'center';
+          tabButton.style.fontSize = '11px';
+          tabButton.style.color = 'var(--text-primary)';
+          tabButton.style.maxWidth = '120px';
+          tabButton.style.minWidth = '80px';
+          tabButton.style.height = '24px';
+          tabButton.title = tab.title;
+
+          const titleSpan = document.createElement('span');
+          titleSpan.textContent = tab.title.length > 12 ? tab.title.substring(0,9) + '...' : tab.title;
+          titleSpan.style.marginRight = '4px';
+          titleSpan.style.flexGrow = '1';
+          titleSpan.style.overflow = 'hidden';
+          titleSpan.style.textOverflow = 'ellipsis';
+          titleSpan.style.whiteSpace = 'nowrap';
+
+          tabButton.appendChild(titleSpan);
+
+          const closeBtn = document.createElement('span');
+          closeBtn.textContent = '✕';
+          closeBtn.className = 'close-tab-btn';
+          closeBtn.style.cursor = 'pointer';
+          closeBtn.style.padding = '1px 3px';
+          closeBtn.style.borderRadius = 'var(--border-radius-sm)';
+          closeBtn.style.marginLeft = 'auto';
+          closeBtn.style.fontSize = '9px';
+          closeBtn.onmouseover = function() { this.style.backgroundColor = 'rgba(0,0,0,0.1)'; };
+          closeBtn.onmouseout = function() { this.style.backgroundColor = 'transparent'; };
+          closeBtn.onclick = function(e) {
+            e.stopPropagation();
+            closeBrowserTab(tab.id);
+          };
+          tabButton.appendChild(closeBtn);
+
+          tabButton.onclick = function() {
+            switchBrowserTab(tab.id);
+          };
+          tabBar.appendChild(tabButton);
+        });
+
+        if (browserTabs.length < MAX_TABS) {
+            const newTabButton = document.createElement('button');
+            newTabButton.textContent = '+';
+            newTabButton.title = 'Open new tab';
+            newTabButton.className = 'browser-new-tab-btn';
+            newTabButton.style.padding = '4px 8px';
+            newTabButton.style.marginLeft = '2px';
+            newTabButton.style.border = '1px solid rgba(255,255,255,0.2)';
+            newTabButton.style.borderRadius = 'var(--border-radius-sm)';
+            newTabButton.style.background = 'rgba(255,255,255,0.1)';
+            newTabButton.style.cursor = 'pointer';
+            newTabButton.style.fontSize = '11px';
+            newTabButton.style.color = 'var(--text-primary)';
+            newTabButton.style.width = '24px';
+            newTabButton.style.height = '24px';
+            newTabButton.onclick = function() {
+                const pristineStartPageContent = getOriginalStartPageHTML();
+                if (pristineStartPageContent) {
+                    const currentTabIdSuffix = `tab${nextTabId}`; // nextTabId will be incremented by addNewBrowserTab
+                    // Make the search input ID unique for this new tab
+                    let uniqueStartPageContent = pristineStartPageContent.replace(/id="new-tab-search-input"/g, `id="new-tab-search-input-${currentTabIdSuffix}"`);
+                    // Update quick access onclicks to pass the new 'fromQuickAccessInTabId'
+                    uniqueStartPageContent = uniqueStartPageContent.replace(/loadWebsiteInBrowser\(([^,]+),([^,]+)\)/g, `loadWebsiteInBrowser($1, $2, '${currentTabIdSuffix}')`);
+
+
+                    const newTabHTML = `<div class="browser-tab-content browser-start-page" data-tab-content-id="${currentTabIdSuffix}" style="display: block; padding: 0; height: 100%; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">${uniqueStartPageContent}</div>`;
+                    addNewBrowserTab('New Tab', newTabHTML, true, ''); // URL is empty for new start page
+
+                    // Add event listener to the new search input *after* it's in the DOM
+                    setTimeout(() => {
+                        const newSearchInput = document.getElementById(`new-tab-search-input-${currentTabIdSuffix}`);
+                        if (newSearchInput && browserWindow) {
+                            newSearchInput.addEventListener('keypress', function(event) {
+                                if (event.key === 'Enter') {
+                                    event.preventDefault();
+                                    handleBrowserNavigationInput(this.value, browserWindow);
+                                    // this.value = ''; // Clearing is handled by handleBrowserNavigationInput -> loadWebsiteInBrowser for the main URL bar
+                                }
+                            });
+                        }
+                    }, 0);
+                } else {
+                    addNewBrowserTab('New Tab', '<div style="padding: 20px; text-align: center;"><h2>Error</h2><p>Could not load start page.</p></div>', true, '');
+                }
+            };
+            tabBar.appendChild(newTabButton);
+        }
+      }
+
+      function addNewBrowserTab(title, contentHTML, isActive = true, url = '') {
+        if (!browserWindow || browserTabs.length >= MAX_TABS) return;
+        const contentArea = browserWindow.querySelector('.browser-content-area');
+        if (!contentArea) return;
+
+        const startPage = browserWindow.querySelector('.browser-start-page');
+        if (startPage) {
+          startPage.style.display = 'none';
+        }
+
+        const tabId = `tab${nextTabId++}`;
+        const newContentEl = document.createElement('div');
+        newContentEl.className = 'browser-tab-content';
+        newContentEl.setAttribute('data-tab-content-id', tabId);
+        newContentEl.style.padding = '0';
+        newContentEl.style.height = '100%';
+        newContentEl.style.boxSizing = 'border-box';
+        newContentEl.innerHTML = contentHTML;
+        newContentEl.style.display = 'none';
+        contentArea.appendChild(newContentEl);
+
+        const newTab = { id: tabId, title: title, contentEl: newContentEl, active: false, url: url };
+        browserTabs.push(newTab);
+        
+        if (isActive || browserTabs.length === 1) {
+            switchBrowserTab(tabId);
+        } else {
+            renderBrowserTabs();
+        }
+      }
+
+      function switchBrowserTab(tabId) {
+        let foundActive = false;
+        browserTabs.forEach(tab => {
+          tab.active = (tab.id === tabId);
+          tab.contentEl.style.display = tab.active ? 'block' : 'none';
+          if(tab.active) {
+            foundActive = true;
+            // Update address bar with current tab's URL
+            const urlInput = document.getElementById('browser-url-input');
+            if (urlInput) {
+              urlInput.value = tab.url || '';  // Clear URL if tab doesn't have one
+            }
+          }
+        });
+        if (!foundActive && browserTabs.length > 0) {
+            browserTabs[0].active = true;
+            browserTabs[0].contentEl.style.display = 'block';
+            // Update address bar for first tab
+            const urlInput = document.getElementById('browser-url-input');
+            if (urlInput) {
+              urlInput.value = browserTabs[0].url || '';
+            }
+        }
+        renderBrowserTabs();
+      }
+
+      function closeBrowserTab(tabId) {
+        const tabIndex = browserTabs.findIndex(tab => tab.id === tabId);
+        if (tabIndex > -1) {
+          const wasActive = browserTabs[tabIndex].active;
+          browserTabs[tabIndex].contentEl.remove();
+          browserTabs.splice(tabIndex, 1);
+
+          if (wasActive && browserTabs.length > 0) {
+            const newActiveIndex = Math.max(0, tabIndex - 1);
+            switchBrowserTab(browserTabs[newActiveIndex].id);
+          } else if (browserTabs.length > 0 && !browserTabs.some(t => t.active)) {
+            switchBrowserTab(browserTabs[0].id);
+          } else if (browserTabs.length === 0) {
+             renderBrowserTabs(); 
+          } else {
+             renderBrowserTabs();
+          }
+        }
+      }
+
+      // Browser functionality for loading websites
+      function loadWebsiteInBrowser(url, title, fromQuickAccessInTabId = null) {
+        const browserWindow = document.getElementById('browser-window');
+        if (!browserWindow) return;
+        
+        if (browserWindow.style.display === 'none') {
+          showAndBringToFront(browserWindow);
+        }
+        
+        const initialStartPage = browserWindow.querySelector('.browser-content-area > .browser-start-page[data-tab-content-id="start-page"]');
+        if (initialStartPage && initialStartPage.style.display !== 'none') {
+          initialStartPage.style.display = 'none'; // Hide initial placeholder if visible and we are opening a real page/tab
+        }
+        
+        const urlInput = document.getElementById('browser-url-input');
+        if (urlInput) {
+          urlInput.value = url;
+        }
+
+        if (fromQuickAccessInTabId) {
+            const activeTab = browserTabs.find(t => t.id === fromQuickAccessInTabId && t.active);
+            if (activeTab && activeTab.contentEl.classList.contains('browser-start-page')) {
+                // Current tab is the start page where the click happened, replace its content
+                activeTab.contentEl.innerHTML = `<iframe src="${url}" style="width:100%; height:100%; border:none;" frameborder="0" id="browser-iframe-${activeTab.id}"></iframe>`;
+                activeTab.contentEl.classList.remove('browser-start-page');
+                activeTab.title = title;
+                activeTab.url = url;
+                renderBrowserTabs(); // Update tab title display
+                if (urlInput) urlInput.value = url; // Ensure address bar updates
+                return; 
+            }
+        }
+        
+        // Default behavior: open in new tab
+        const iframeId = `browser-iframe-tab${nextTabId}`; // nextTabId will be incremented in addNewBrowserTab
+        addNewBrowserTab(title, `<iframe src="${url}" style="width:100%; height:100%; border:none;" frameborder="0" id="${iframeId}"></iframe>`, true, url);
+      }
+
+      if (openBrowserIcon && browserWindow) {
+        openBrowserIcon.addEventListener('click', function() {
+          showAndBringToFront(browserWindow);
+          const startPage = browserWindow.querySelector('.browser-start-page');
+          if (startPage && browserTabs.length === 0) {
+            startPage.style.display = 'block';
+          }
+          // Render tabs even when there are no browser tabs to show the + button
+          renderBrowserTabs();
+        });
+      }
+
+      // Challenge Icon (Main App)
+      const openChallengeIcon = document.getElementById('open-challenge-icon');
+      if (openChallengeIcon) {
+        openChallengeIcon.addEventListener('click', function() {
+          const mainWindow = document.getElementById('youware-challenge-app');
+          if (mainWindow) {
+            showAndBringToFront(mainWindow);
+            const introTab = mainWindow.querySelector('.win11-tabs .tab[data-tab=\'intro\']');
+            if (introTab) {
+              mainWindow.querySelectorAll('.win11-tabs .tab').forEach(t => t.classList.remove('active'));
+              introTab.classList.add('active');
+              mainWindow.querySelectorAll('.tab-content').forEach(tc => tc.style.display = 'none');
+              const introContent = mainWindow.querySelector('#content-intro');
+              if (introContent) introContent.style.display = 'block';
+            }
+          }
+        });
+      }
+      
+
+      // Prize Icon
+      const openPrizeIcon = document.getElementById('open-prize-icon');
+      if (openPrizeIcon) {
+        openPrizeIcon.addEventListener('click', function() {
+          const prizeCenterWindow = document.getElementById('prize-center-window');
+          if (prizeCenterWindow) {
+            showAndBringToFront(prizeCenterWindow);
+          }
+        });
+      }
+
+      // FAQ Icon
+      const openFaqIcon = document.getElementById('open-faq-icon');
+      if (openFaqIcon) {
+        openFaqIcon.addEventListener('click', function() {
+          showAndBringToFront(document.getElementById('faq-window'));
+        });
+      }
+
+      // Make loadWebsiteInBrowser globally available
+      window.loadWebsiteInBrowser = loadWebsiteInBrowser; // Ensure it's global if not already
+
+      // --- New Browser URL/Search Bar Logic ---
+      function handleBrowserNavigationInput(inputValue, browserWindowElement) {
+        if (!inputValue || !browserWindowElement) return;
+
+        let targetUrl = '';
+        let pageTitle = '';
+
+        // Basic URL check
+        if (inputValue.startsWith('http://') || inputValue.startsWith('https://') || inputValue.includes('.') && !inputValue.includes(' ')) {
+          targetUrl = inputValue;
+          if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
+            targetUrl = 'https://' + targetUrl;
+          }
+          try {
+            pageTitle = new URL(targetUrl).hostname;
+          } catch (e) {
+            pageTitle = inputValue;
+          }
+        } else {
+          // Treat as search query
+          targetUrl = `https://www.google.com/search?q=${encodeURIComponent(inputValue)}`;
+          pageTitle = `Search: ${inputValue}`;
+        }
+
+        if (browserWindowElement.style.display === 'none') {
+          showAndBringToFront(browserWindowElement);
+        }
+        // Searches and direct URL entries should open in a new tab, unless current tab is a truly blank/new one (advanced)
+        // For now, all address bar / new tab search navigations will open a new tab.
+        // Quick access items are handled differently by loadWebsiteInBrowser if fromQuickAccessInTabId is passed.
+        loadWebsiteInBrowser(targetUrl, pageTitle); 
+        
+        // The main address bar (browser-url-input) should reflect the newly loaded page,
+        // loadWebsiteInBrowser handles this for the *newly created* active tab.
+        // If we want to clear the main input:
+        // const mainUrlInput = document.getElementById('browser-url-input');
+        // if (mainUrlInput) mainUrlInput.value = targetUrl; // or keep it as the input value? For now, loadWebsiteInBrowser updates it.
+      }
+
+      const browserUrlInput = document.getElementById('browser-url-input');
+      const browserGoBtn = document.getElementById('browser-go-btn');
+      const newTabSearchInput = document.getElementById('new-tab-search-input');
+      // const browserWindowForSearch = document.getElementById('browser-window'); // Already declared
+
+      if (browserUrlInput && browserGoBtn && browserWindow) {
+        browserUrlInput.addEventListener('keypress', function(event) {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            handleBrowserNavigationInput(this.value, browserWindow);
+          }
+        });
+        browserGoBtn.addEventListener('click', function() {
+          handleBrowserNavigationInput(browserUrlInput.value, browserWindow);
+        });
+      }
+
+      if (newTabSearchInput && browserWindow) {
+        newTabSearchInput.addEventListener('keypress', function(event) {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            handleBrowserNavigationInput(this.value, browserWindow);
+             // Clear the input after search on new tab page for better UX
+            this.value = '';
+          }
+        });
+      }
+      // --- End New Browser URL/Search Bar Logic ---
+
+      // --- Intercept "View Project" links to open in main browser ---
+      function setupProjectLinkInterception() {
+        const projectLinkSelectors = [
+          '#youware-challenge-app #content-themes .projects-grid .project-item .button[href*="youware"]' // Showcase in Challenge App
+        ];
+
+        projectLinkSelectors.forEach(selector => {
+          document.querySelectorAll(selector).forEach(link => {
+            // Remove any existing listeners to prevent duplicates if this script runs multiple times (though it shouldn't)
+            // A more robust way would be to ensure this setup runs only once.
+            // For now, let's assume it's fine.
+            link.addEventListener('click', function(event) {
+              event.preventDefault();
+              event.stopPropagation(); // Prevent any other click listeners on parent elements
+
+              const projectItem = this.closest('.project-item.window'); // Ensure we get the .window class too
+              let title = 'Project'; // Default title
+              if (projectItem) {
+                const titleElement = projectItem.querySelector('.title-bar h4');
+                if (titleElement) {
+                  title = titleElement.textContent.trim();
+                }
+              }
+              const url = this.href;
+
+              if (url) {
+                const browserAppWindow = document.getElementById('browser-window');
+                if (browserAppWindow) {
+                  if (browserAppWindow.style.display === 'none') {
+                    // Ensure showAndBringToFront is available (it's defined in this scope)
+                    if (typeof showAndBringToFront === 'function') {
+                       showAndBringToFront(browserAppWindow);
+                    } else {
+                        console.error('showAndBringToFront function not found for browser window.');
+                        browserAppWindow.style.display = 'flex'; // Basic fallback
+                    }
+                  } else {
+                     // Ensure bringToFront is available
+                    if (typeof bringToFront === 'function') {
+                        bringToFront(browserAppWindow);
+                    }
+                  }
+                  
+                  if (typeof window.loadWebsiteInBrowser === 'function') {
+                    window.loadWebsiteInBrowser(url, title);
+                  } else {
+                    console.error('loadWebsiteInBrowser function is not defined. Opening in new tab as fallback.');
+                    window.open(url, '_blank');
+                  }
+                } else {
+                  console.error('Browser window element #browser-window not found. Opening in new tab as fallback.');
+                  window.open(url, '_blank');
+                }
+              }
+            });
+          });
+        });
+      }
+      setupProjectLinkInterception(); // Call the function to attach listeners
+
+      // --- Tab System for YouWare Challenge App ---
+      function setupChallengeAppTabs() {
+        const challengeApp = document.getElementById('youware-challenge-app');
+        if (!challengeApp) return;
+
+        const tabs = challengeApp.querySelectorAll('.win11-tabs .tab');
+        const tabContents = challengeApp.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+          tab.addEventListener('click', function() {
+            const tabId = this.getAttribute('data-tab');
+            
+            // Remove active class from all tabs and hide all content
+            tabs.forEach(t => t.classList.remove('active'));
+            tabContents.forEach(tc => {
+              tc.style.display = 'none';
+              tc.classList.remove('active');
+            });
+            
+            // Add active class to clicked tab and show corresponding content
+            this.classList.add('active');
+            const content = document.getElementById(`content-${tabId}`);
+            if (content) {
+              content.style.display = 'block';
+              content.classList.add('active');
+            }
+          });
+        });
+      }
+      setupChallengeAppTabs();
+
+      // --- Optimized Dragging for Complex Windows ---
+      function optimizeDraggingPerformance() {
+        const complexWindows = ['youware-challenge-app', 'prize-center-window', 'faq-window'];
+        
+        complexWindows.forEach(windowId => {
+          const windowEl = document.getElementById(windowId);
+          if (!windowEl) return;
+          
+          const titleBar = windowEl.querySelector('.app-window-title-bar');
+          if (!titleBar) return;
+          
+          let isDragging = false;
+          
+          // Add drag start optimization
+          titleBar.addEventListener('mousedown', function() {
+            if (!isDragging) {
+              isDragging = true;
+              windowEl.classList.add('dragging');
+              
+              // Additional performance optimizations
+              const windowBody = windowEl.querySelector('.app-window-body');
+              if (windowBody) {
+                // Temporarily reduce complexity during drag
+                windowBody.style.transform = 'translateZ(0)'; // Force hardware acceleration
+                windowBody.style.willChange = 'transform'; // Optimize for changes
+              }
+              
+              // Show content again when drag ends
+              function restoreContent() {
+                if (isDragging) {
+                  windowEl.classList.remove('dragging');
+                  if (windowBody) {
+                    windowBody.style.transform = '';
+                    windowBody.style.willChange = '';
+                  }
+                  isDragging = false;
+                  document.removeEventListener('mouseup', restoreContent);
+                }
+              }
+              
+              document.addEventListener('mouseup', restoreContent);
+            }
+          });
+        });
+      }
+      optimizeDraggingPerformance();
+
+      // --- Calculator Functionality ---
+      function setupCalculator() {
+        const calculatorWindow = document.getElementById('calculator-window');
+        if (!calculatorWindow) return;
+
+        const display = document.getElementById('calculator-display');
+        const buttons = calculatorWindow.querySelectorAll('button[id^="calc-btn-"]');
+        
+        let currentInput = '';
+        let operator = '';
+        let previousInput = '';
+        let shouldResetDisplay = false;
+
+        function updateDisplay(value = currentInput) {
+          if (display) {
+            display.value = value || '0';
+          }
+        }
+
+        function clearAll() {
+          currentInput = '';
+          operator = '';
+          previousInput = '';
+          shouldResetDisplay = false;
+          updateDisplay('0');
+        }
+
+        function handleNumber(num) {
+          if (shouldResetDisplay) {
+            currentInput = '';
+            shouldResetDisplay = false;
+          }
+          currentInput += num;
+          updateDisplay();
+        }
+
+        function handleOperator(op) {
+          if (previousInput && currentInput && operator) {
+            calculate();
+          }
+          operator = op;
+          previousInput = currentInput;
+          shouldResetDisplay = true;
+        }
+
+        function calculate() {
+          if (!previousInput || !currentInput || !operator) return;
+          
+          const prev = parseFloat(previousInput);
+          const current = parseFloat(currentInput);
+          let result;
+
+          switch (operator) {
+            case '+':
+              result = prev + current;
+              break;
+            case '-':
+              result = prev - current;
+              break;
+            case '*':
+              result = prev * current;
+              break;
+            case '/':
+              result = current !== 0 ? prev / current : 'Error';
+              break;
+            default:
+              return;
+          }
+
+          currentInput = result.toString();
+          operator = '';
+          previousInput = '';
+          shouldResetDisplay = true;
+          updateDisplay(result.toString());
+        }
+
+        // Add event listeners to calculator buttons
+        buttons.forEach(button => {
+          button.addEventListener('click', function() {
+            const btnId = this.id;
+            const btnText = this.textContent;
+
+            if (btnId === 'calc-btn-clear') {
+              clearAll();
+            } else if (btnId === 'calc-btn-equals') {
+              calculate();
+            } else if (['calc-btn-add', 'calc-btn-subtract', 'calc-btn-multiply', 'calc-btn-divide'].includes(btnId)) {
+              let op = '';
+              switch (btnId) {
+                case 'calc-btn-add': op = '+'; break;
+                case 'calc-btn-subtract': op = '-'; break;
+                case 'calc-btn-multiply': op = '*'; break;
+                case 'calc-btn-divide': op = '/'; break;
+              }
+              handleOperator(op);
+            } else if (btnId === 'calc-btn-dot') {
+              if (!currentInput.includes('.')) {
+                handleNumber('.');
+              }
+            } else if (btnId.startsWith('calc-btn-') && /\d/.test(btnText)) {
+              handleNumber(btnText);
+            }
+          });
+        });
+
+        // Initialize display
+        updateDisplay('0');
+      }
+      setupCalculator();
+    });
+  </script>
+</body>
+</html>
